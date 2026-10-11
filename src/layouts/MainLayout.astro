@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Drawer from "../components/Drawer.astro";
+import SVG from "../components/SVG.astro";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, description, image } = Astro.props;
+
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} image={image} />
+  </head>
+
+  <body>
+    <div class="drawer">
+      <input id="my-drawer-2" type="checkbox" class="drawer-toggle" title="Toggle navigation menu"/>
+      <div class="drawer-content flex flex-col h-full">
+        <!-- Page content here -->
+        <div
+          class="flex flex-col flex-1 bg-[linear-gradient(125deg,#F2FAFF,#FFFFFF_50%)]  bg-no-repeat bg-size-[900px_900px]  dark:bg-size-[0_0] bg-top-left"
+        >
+          <Header />
+          <main class="flex-1">
+            <slot />
+          </main>
+        </div>
+        <Footer />
+		<SVG />
+      </div>
+      <Drawer />
+    </div>
+  </body>
+</html>

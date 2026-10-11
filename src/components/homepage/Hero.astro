@@ -1,0 +1,112 @@
+---
+import Image from "astro/components/Image.astro";
+import { ChevronRight } from "@lucide/astro";
+---
+
+<section class="section section-hero py-10 sm:py-20 my-0!">
+  <div class="container">
+    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+      <div class="text-center sm:text-left">
+        <h1>
+          Your <span
+            class="bg-linear-to-r from-[#0179B4] to-[#88D8FF] bg-clip-text text-transparent"
+            >trusted partner</span
+          > in digital healthcare.
+        </h1>
+        <p class="mt-8 mb-10">
+          <span class="text-main-200"
+            >Empowering Your Health at Every Step.</span
+          > Experience personalized medical care from the comfort of your home. Connect
+          with <span class="text-main-200">certified doctors</span>, or manage
+          prescriptions, and schedule appointments with ease. Ready to take
+          control of your health? <span class="text-main-200">Get Started</span> or
+          Book an Appointment today.
+        </p>
+        <a
+          href="#"
+          class="btn bg-[linear-gradient(125deg,var(--color-main-100),var(--color-main-200))] text-white border-0 rounded-xl text-lg py-3 px-6 h-auto shadow-xl hover:shadow-2xl"
+          >Book an appointment <ChevronRight /></a
+        >
+
+        <p class="text-sm text-gray-400 mt-10 mb-6">
+          Trusted by millions across the globe:
+        </p>
+        <Image
+          src="/img/brands.webp"
+          alt="Brands"
+          format="webp"
+          quality="low"
+          fetchpriority="high"
+          width={380}
+          height={43}
+          densities={[1.5, 2]}
+          loading="eager"
+          class="w-auto h-auto mx-auto sm:mx-0"
+        />
+      </div>
+      <div>
+        <div class="grid">
+          <Image
+            src="/img/img1.webp"
+            alt="Hero Image"
+            format="webp"
+            quality="45"
+            fetchpriority="high"
+            loading="eager"
+            width="380"
+            height="375"
+            class="w-auto h-auto mx-auto [grid-area:1/1/2/2]"
+          />
+          <div class="[grid-area:1/1/2/2] mt-auto">
+            <div
+              class="border-main-200 border-2 rounded-xl p-5 bg-[linear-gradient(-125deg,#E9F6FF_0%,#ffffff_100%)] hidden sm:block sm:max-w-[40%] ml-auto"
+            >
+              <div class="flex flex-wrap gap-3 items-center">
+                <Image
+                  src="/img/avatars.webp"
+                  alt="Doctor"
+                  format="webp"
+                  quality="low"
+                  fetchpriority="high"
+                  width="122"
+                  height="38"
+                  class="w-auto h-auto"
+                />
+
+                <p class="text-xl text-black">
+                  2400<span class="text-main-200">+</span>
+                </p>
+              </div>
+              <p class="text-main-200 my-2">Happy Customers</p>
+
+              <div class="flex flex-wrap gap-3 items-center">
+                <Image
+                  src="/img/stars.svg"
+                  alt="Doctor"
+                  width="107"
+                  height="14"
+                  class="w-auto h-auto"
+                />
+                <span class="text-gray-400 text-sm">(4.7 Stars)</span>
+              </div>
+            </div>
+            <div
+              class="bg-white p-4 rounded-xl shadow hidden sm:flex sm:max-w-[50%] text-main-200 text-lg items-center gap-3"
+            >
+              <svg class="icon" width="30" height="30">
+                <use xlink:href="#star"></use>
+              </svg>
+              Easy Appointment Booking
+            </div>
+            <div
+              class="relative border-main-200 border-2 rounded-xl p-5 pt-8 bg-[linear-gradient(-125deg,#E9F6FF_0%,#ffffff_100%)] hidden sm:flex sm:max-w-[60%] ml-auto mt-10 -mb-10 before:content-[''] before:absolute before:w-16.25 before:h-16.25 before:bg-[url('/img/icons/quote.svg')] before:bg-contain before:bg-no-repeat before:-top-8 before:left-5 text-black"
+            >
+              Lorem ipsum dolor sit amet, ligula ego. consectetuer adipiscing
+              elit doloras.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
