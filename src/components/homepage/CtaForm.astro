@@ -1,31 +1,56 @@
 ---
-import { CircleCheck, Mail, Phone, Calendar } from  '@lucide/astro';
+import { CircleCheck, Mail, Users, Building2 } from "@lucide/astro";
 ---
 
 <section class="section my-0! py-10 relative z-0">
 	<div class="container relative after:absolute after:-bottom-5 after:left-0 after:bg-[url('/img/shape/shape1.svg')] after:bg-no-repeat after:w-35 after:h-17 after:bg-position-[left_bottom]] after:bg-contain after:-z-10">
-		<div class="rounded-2xl border-2 border-main-200 p-4 lg:p-10 bg-[linear-gradient(45deg,#F8FDFF,#FFFFFF)] ">
-			<h2 class="font-semibold text-main-200 text-2xl">
-				Easily book an appointment in 3 simple steps.
+		<div class="rounded-2xl border-2 border-main-200 p-4 lg:p-10 bg-[linear-gradient(45deg,#F8FDFF,#FFFFFF)]">
+			<h2 class="font-semibold text-main-200 text-2xl text-center">
+				There are two ways in.
 			</h2>
-			<form action="/" method="POST" class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 items-end">
-				<div class="w-full">
-					<label for="email" class="flex gap-3 items-center mb-3 text-black"><Mail class="text-main-200"/>Email Address</label>
-					<input type="email" id="email" name="email" required class="input bg-white text-black border border-gray-300 w-full py-3 px-6 h-auto rounded-lg text-lg" placeholder="Enter Your Email Address"/>
-				</div>
-				<div class="w-full">
-					<label for="phone" class="flex gap-3 items-center mb-3 text-black"><Phone class="text-main-200"/>Contact Number</label>
-					<input type="tel" id="phone" name="phone" required class="input bg-white text-black border border-gray-300 w-full py-3 px-6 h-auto rounded-lg text-lg" placeholder="Enter Your Contact Number"/>
-				</div>
-				<div class="w-full">
-					<label for="date" class="flex gap-3 items-center mb-3 text-black"><Calendar class="text-main-200"/> Date of Appointment</label>
-					<input type="date" id="date" name="date" required class="input bg-white text-black border border-gray-300 w-full py-3 px-6 h-auto rounded-lg text-lg" placeholder="Select Date of Appointment"/>
-				</div>
-				<div class="w-full">
-					
-						<button type="submit" class="btn bg-[linear-gradient(125deg,var(--color-main-100),var(--color-main-200))] text-white border-0 rounded-xl text-lg py-3 px-6 h-auto shadow-xl hover:shadow-2xl w-full">Book Now <CircleCheck /></button>
-				</div>
-			</form>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+				<article id="apply" class="border-2 border-main-200 rounded-xl p-6 lg:p-8 bg-white text-black">
+					<div class="flex items-center gap-3 text-main-200">
+						<Users size={28} />
+						<h3 class="text-xl">I am a healthcare professional</h3>
+					</div>
+					<p class="mt-4">
+						Nurse, doctor, midwife or paramedic. Register and upload your
+						council registration, licence and references. We will check your
+						record against the issuing body and come back to you before
+						anything is published as verified.
+					</p>
+					<a
+						href="mailto:clinicians@medicsupport.network?subject=Clinician%20registration%20%E2%80%94%20MedicSupport%20Network"
+						class="btn bg-[linear-gradient(125deg,var(--color-main-100),var(--color-main-200))] text-white border-0 rounded-xl text-lg py-3 px-6 h-auto shadow-xl hover:shadow-2xl mt-6"
+						>Start your registration <CircleCheck /></a
+					>
+				</article>
+
+				<article id="employers" class="border-2 border-main-200 rounded-xl p-6 lg:p-8 bg-white text-black">
+					<div class="flex items-center gap-3 text-main-200">
+						<Building2 size={28} />
+						<h3 class="text-xl">I am hiring for a hospital</h3>
+					</div>
+					<p class="mt-4">
+						Tell us the role, the grade, the destination market and the start
+						date. We return a shortlist against that brief, with each
+						clinician&rsquo;s verified record attached and a link to their
+						public profile.
+					</p>
+					<a
+						href="mailto:employers@medicsupport.network?subject=Hospital%20staffing%20requirement%20%E2%80%94%20MedicSupport%20Network"
+						class="btn bg-[linear-gradient(125deg,var(--color-main-100),var(--color-main-200))] text-white border-0 rounded-xl text-lg py-3 px-6 h-auto shadow-xl hover:shadow-2xl mt-6"
+						>Send your requirement <Mail /></a
+					>
+				</article>
+			</div>
+
+			<p class="text-sm mt-8 text-center text-gray-600">
+				Accounts, credential upload and placement tracking are being built.
+				Until then both routes are handled by email.
+			</p>
 		</div>
 	</div>
 </section>

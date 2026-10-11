@@ -1,8 +1,8 @@
 {
-  "name": "HealNet",
-  "short_name": "HealNet",
+  "name": "MedicSupport Network",
+  "short_name": "MedicSupport",
   "start_url": "/",
-  "description": "Experience personalized medical care from the comfort of your home.",
+  "description": "MedicSupport Network verifies and places African healthcare professionals with hospitals in Europe, the United States and the Gulf.",
   "display_override": ["window-control-overlay", "minimal-ui"],
   "orientation": "portrait",
   "theme_color": "#ffffff",

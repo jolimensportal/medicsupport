@@ -3,4 +3,4 @@
 
 export const SITE_TITLE = "MedicSupport Network";
 export const SITE_DESCRIPTION =
-  "Experience personalized medical care from the comfort of your home.";
+  "MedicSupport Network verifies and places African nurses, doctors, midwives and paramedics with hospitals in Europe, the United States and the Gulf.";

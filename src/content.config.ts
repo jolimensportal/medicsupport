@@ -26,30 +26,8 @@ const services = defineCollection({
     }),
 });
 
-const doctors = defineCollection({
-  loader: glob({ base: "./src/content/doctors", pattern: "**/*.{md,mdx}" }),
-  schema: ({ image }) =>
-    z.object({
-      name: z.string(),
-      specialty: z.string(),
-      description: z.string(),
-      experience: z.string().optional(),
-      email: z.string().email().optional(),
-      phone: z.string().optional(),
-      image: image(),
-      featured: z.boolean().default(false),
-      socials: z
-        .object({
-          linkedin: z.string().url().optional(),
-          twitter: z.string().url().optional(),
-          facebook: z.string().url().optional(),
-        })
-        .optional(),
-    }),
-});
 
 export const collections = {
   blog,
   services,
-  doctors,
 };

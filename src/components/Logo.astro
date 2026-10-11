@@ -1,15 +1,14 @@
 ---
-import Image from "astro/components/Image.astro"
+const companyName = "MedicSupport Network";
+const markPart = "MedicSupport";
+const namePart = "Network";
 ---
 
-<a href="/">
-<Image
-    src="/img/logo.svg"
-    alt="logo"
-    width="168"
-    height="48"
-    fetchpriority="high"
-    loading="eager"
-    class="w-auto h-auto"
-  />
+<a href="/" class="flex items-center gap-2" aria-label={`${companyName} home`}>
+	<span
+		class="font-bold tracking-tight leading-none"
+		style="font-size: 1.35rem; color: var(--color-main-200);">{markPart}</span
+	><span class="font-normal tracking-tight leading-none" style="font-size: 1.35rem"
+		>{namePart}</span
+	>
 </a>

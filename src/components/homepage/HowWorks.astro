@@ -8,36 +8,41 @@ import Image from "astro/components/Image.astro";
       <h2>
         How <span
           class="bg-linear-to-r from-[#0179B4] to-[#88D8FF] bg-clip-text text-transparent"
-          >our platform</span
-        > works
+          >it works</span
+        >
       </h2>
       <p>
-        Navigating your healthcare journey with HealNet is seamless. Just follow
-        these steps mentioned below to proceed with your selected services. You
-        can also see our FAQ section for more guidance:
+        Three steps from a nurse in Kumasi to a verified profile, and from that
+        profile to a hospital that can actually check it.
       </p>
     </hgroup>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10 items-center">
       <div class="grid gap-10 grid-cols-[52px_1fr] relative after:absolute after:top-0 after:left-6.5 after:border-main-200 after:border-dashed after:border-l-2 after:bg-no-repeat after:w-13 after:h-[calc((100%*2)/3+20px)] after:-z-10 order-2 lg:order-1 dark:text-white">
 		<div class="w-13 h-13 rounded-full bg-[linear-gradient(45deg,#A7E2FF,#0095DE)] text-white text-xl font-semibold flex items-center justify-center">1</div>
 		<div>
-			<h3>Create Your Profile</h3>
+			<h3>Build your profile</h3>
 			<p>
-				Sign up and fill in your medical history securely. Setting up your profile this way would ensure that you stay up-to-date with your medical processes.
+				Register and upload your council registration, licence, identity
+				document and references. You get a permanent public address at
+				<code>/profilename</code> that you can send to an employer yourself.
 			</p>
 		</div>
 		<div class="w-13 h-13 rounded-full bg-[linear-gradient(45deg,#A7E2FF,#0095DE)] text-white text-xl font-semibold flex items-center justify-center">2</div>
 		<div>
-			<h3>Choose Your Service</h3>
+			<h3>Get verified</h3>
 			<p>
-				Select from our range of services and book a consultation. Booking a consultation with HealNet is fairly simple and straight-forward.
+				We check your registration against the issuing council and your
+				identity against your documents. An unverified profile stays visible
+				but marked &mdash; we never publish a credential we have not confirmed.
 			</p>
 		</div>
 		<div class="w-13 h-13 rounded-full bg-[linear-gradient(45deg,#A7E2FF,#0095DE)] text-white text-xl font-semibold flex items-center justify-center">3</div>
 		<div>
-			<h3>Meet Your Doctor</h3>
+			<h3>Get placed</h3>
 			<p>
-				Have a virtual consultation with one of our certified specialists, or go for a physical visit to the doctor in case you opted for a physical check-up.
+				Verified clinicians are matched to hospital roles in your destination
+				market. We handle the destination regulator&rsquo;s requirements; the
+				hospital makes the hiring decision.
 			</p>
 		</div>
 
@@ -45,7 +50,7 @@ import Image from "astro/components/Image.astro";
       <div class="grid order-1 lg:order-2">
         <Image
           src="/img/img3.png"
-          alt="How it works"
+          alt="Illustrative reference image"
           width={374}
           height={398}
           format="webp"
@@ -58,7 +63,7 @@ import Image from "astro/components/Image.astro";
           <svg class="icon" width="30" height="30">
             <use xlink:href="#star"></use>
           </svg>
-          Best Certified Team of Specialists
+          Your record travels with you
         </div>
       </div>
     </div>

@@ -8,47 +8,39 @@ import { ChevronRight } from "@lucide/astro";
     <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
       <div class="text-center sm:text-left">
         <h1>
-          Your <span
+          African clinicians, verified and placed{" "}
+          <span
             class="bg-linear-to-r from-[#0179B4] to-[#88D8FF] bg-clip-text text-transparent"
-            >trusted partner</span
-          > in digital healthcare.
+            >where the shortage is worst.</span
+          >
         </h1>
         <p class="mt-8 mb-10">
-          <span class="text-main-200"
-            >Empowering Your Health at Every Step.</span
-          > Experience personalized medical care from the comfort of your home. Connect
-          with <span class="text-main-200">certified doctors</span>, or manage
-          prescriptions, and schedule appointments with ease. Ready to take
-          control of your health? <span class="text-main-200">Get Started</span> or
-          Book an Appointment today.
+          MedicSupport Network sources nurses, doctors, midwives and paramedics
+          across Africa, checks their registration, licence and identity
+          against the issuing bodies, and places them with hospitals and health
+          groups in{" "}
+          <span class="text-main-200">Europe, the United States and the Gulf.</span>{" "}
+          Every clinician we represent holds a public profile you can open before
+          you make contact.
         </p>
-        <a
-          href="#"
-          class="btn bg-[linear-gradient(125deg,var(--color-main-100),var(--color-main-200))] text-white border-0 rounded-xl text-lg py-3 px-6 h-auto shadow-xl hover:shadow-2xl"
-          >Book an appointment <ChevronRight /></a
-        >
-
-        <p class="text-sm text-gray-400 mt-10 mb-6">
-          Trusted by millions across the globe:
-        </p>
-        <Image
-          src="/img/brands.webp"
-          alt="Brands"
-          format="webp"
-          quality="low"
-          fetchpriority="high"
-          width={380}
-          height={43}
-          densities={[1.5, 2]}
-          loading="eager"
-          class="w-auto h-auto mx-auto sm:mx-0"
-        />
+        <div class="flex flex-wrap gap-4 justify-center sm:justify-start">
+          <a
+            href="/#apply"
+            class="btn bg-[linear-gradient(125deg,var(--color-main-100),var(--color-main-200))] text-white border-0 rounded-xl text-lg py-3 px-6 h-auto shadow-xl hover:shadow-2xl"
+            >Register as a clinician <ChevronRight /></a
+          >
+          <a
+            href="/#employers"
+            class="btn border-2 border-main-200 bg-transparent text-white rounded-xl text-lg py-3 px-6 h-auto shadow-none hover:bg-white hover:text-black hover:border-white"
+            >Source clinicians for your hospital</a
+          >
+        </div>
       </div>
       <div>
         <div class="grid">
           <Image
             src="/img/img1.webp"
-            alt="Hero Image"
+            alt="Illustrative reference image"
             format="webp"
             quality="45"
             fetchpriority="high"
@@ -59,36 +51,15 @@ import { ChevronRight } from "@lucide/astro";
           />
           <div class="[grid-area:1/1/2/2] mt-auto">
             <div
-              class="border-main-200 border-2 rounded-xl p-5 bg-[linear-gradient(-125deg,#E9F6FF_0%,#ffffff_100%)] hidden sm:block sm:max-w-[40%] ml-auto"
+              class="border-main-200 border-2 rounded-xl p-5 bg-[linear-gradient(-125deg,#E9F6FF_0%,#ffffff_100%)] hidden sm:block sm:max-w-[46%] ml-auto"
             >
-              <div class="flex flex-wrap gap-3 items-center">
-                <Image
-                  src="/img/avatars.webp"
-                  alt="Doctor"
-                  format="webp"
-                  quality="low"
-                  fetchpriority="high"
-                  width="122"
-                  height="38"
-                  class="w-auto h-auto"
-                />
-
-                <p class="text-xl text-black">
-                  2400<span class="text-main-200">+</span>
-                </p>
-              </div>
-              <p class="text-main-200 my-2">Happy Customers</p>
-
-              <div class="flex flex-wrap gap-3 items-center">
-                <Image
-                  src="/img/stars.svg"
-                  alt="Doctor"
-                  width="107"
-                  height="14"
-                  class="w-auto h-auto"
-                />
-                <span class="text-gray-400 text-sm">(4.7 Stars)</span>
-              </div>
+              <h3 class="text-main-200 mb-3">Checked before you ever call</h3>
+              <ul class="text-black text-sm space-y-1.5">
+                <li>Registration verified with the nursing or medical council</li>
+                <li>Licence verified with the destination regulator</li>
+                <li>Identity and right to work confirmed</li>
+                <li>References and clinical history on file</li>
+              </ul>
             </div>
             <div
               class="bg-white p-4 rounded-xl shadow hidden sm:flex sm:max-w-[50%] text-main-200 text-lg items-center gap-3"
@@ -96,13 +67,14 @@ import { ChevronRight } from "@lucide/astro";
               <svg class="icon" width="30" height="30">
                 <use xlink:href="#star"></use>
               </svg>
-              Easy Appointment Booking
+              Africa &rarr; Europe &middot; United States &middot; Gulf
             </div>
             <div
               class="relative border-main-200 border-2 rounded-xl p-5 pt-8 bg-[linear-gradient(-125deg,#E9F6FF_0%,#ffffff_100%)] hidden sm:flex sm:max-w-[60%] ml-auto mt-10 -mb-10 before:content-[''] before:absolute before:w-16.25 before:h-16.25 before:bg-[url('/img/icons/quote.svg')] before:bg-contain before:bg-no-repeat before:-top-8 before:left-5 text-black"
             >
-              Lorem ipsum dolor sit amet, ligula ego. consectetuer adipiscing
-              elit doloras.
+              We publish the credential, not just the CV. A hospital should be
+              able to check a clinician before it books them, and a clinician
+              should be able to show their record without emailing anyone.
             </div>
           </div>
         </div>
