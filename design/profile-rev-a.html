@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rev A — Air</title>
+<style>
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-regular.woff);font-weight:400;font-display:swap}
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-bold.woff);font-weight:700;font-display:swap}
+:root{--paper:#fbf8f3;--ink:#1a1714;--ink-2:#514a42;--ink-3:#8a8078;--rule:#e4ddd4;
+ --ok:#1f7a4d;--warn:#9a6b12;--seal:#0f3d57;--brand:#0086C4}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Atkinson,system-ui,sans-serif;background:#efe9e1;color:var(--ink);
+ font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.serif{font-family:Georgia,serif;font-weight:400;letter-spacing:-.015em}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:.88em}
+.wrap{max-width:760px;margin:34px auto;background:var(--paper)}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:20px 64px;
+ border-bottom:1px solid var(--rule)}
+.bar img{height:24px}
+.bar a{font-size:14px;color:var(--ink-3);text-decoration:none;margin-left:22px}
+
+/* verification bar stays but slimmer + calmer */
+.vbar{background:var(--seal);color:#fff;padding:11px 64px;display:flex;align-items:center;gap:14px}
+.vbar svg{width:24px;height:24px;flex-shrink:0}
+.vbar .t{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8fb6c9;font-weight:700}
+.vbar .v{font-weight:700;font-size:15px}
+.vbar .r{margin-left:auto;font-size:13px;color:#c4d9e4}
+
+/* opening gets real air */
+.open{padding:80px 64px 72px}
+.open h1{font-size:clamp(2.9rem,7vw,4.4rem);line-height:.98;margin-bottom:26px}
+.open p{font-size:1.18rem;color:var(--ink-2);max-width:40ch;margin-bottom:44px}
+.figure{background:var(--seal);aspect-ratio:16/7;margin-bottom:44px;position:relative;overflow:hidden;
+ border-radius:2px}
+.figure::before{content:"";position:absolute;inset:0;
+ background:radial-gradient(circle at 22% 40%,#4a7f9b 0 13%,transparent 13.5%),
+ radial-gradient(ellipse 16% 24% at 22% 96%,#4a7f9b 0 100%,transparent 100.5%),
+ linear-gradient(150deg,#1d4a63,#0f3d57)}
+.figure::after{content:"Portrait supplied by the clinician — no stock faces on verified records.";
+ position:absolute;left:20px;bottom:16px;font-size:12px;color:#bcd3e4;letter-spacing:.03em}
+
+/* sections: ONE rhythm, generous, hairline only */
+.sec{padding:0 64px 76px}
+.sec h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
+ font-weight:700;margin-bottom:28px}
+
+/* credentials: no cards, just ruled rows — removes the boxy grid entirely */
+.credlist{border-top:1px solid var(--ink)}
+.cred{padding:26px 0;border-bottom:1px solid var(--rule)}
+.cred .top{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:7px}
+.cred .lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.cred .st{font-size:13px;font-weight:700;color:var(--ok);white-space:nowrap}
+.cred.pending .st{color:var(--warn)}
+.cred .body{font-size:19px;font-weight:700;line-height:1.35}
+.cred .ref{color:var(--brand);font-weight:700;margin-top:3px}
+.cred .chk{font-size:13px;color:var(--ink-3);margin-top:11px;display:flex;gap:8px;align-items:center;line-height:1.45}
+.cred .chk svg{width:14px;height:14px;flex-shrink:0}
+.cred .chk b{color:var(--ink-2)}
+.cred.pending .chk{color:var(--warn)}
+
+/* career */
+.cr{position:relative;padding-left:38px;padding-bottom:40px}
+.cr:last-child{padding-bottom:0}
+.cr::before{content:"";position:absolute;left:6px;top:9px;bottom:0;width:1px;background:var(--rule)}
+.cr:last-child::before{display:none}
+.cr::after{content:"";position:absolute;left:0;top:8px;width:13px;height:13px;border-radius:50%;
+ background:var(--paper);border:2px solid var(--brand)}
+.cr.now::after{background:var(--brand)}
+.cr .y{font-size:13px;color:var(--ink-3);letter-spacing:.05em;margin-bottom:5px}
+.cr .r{font-size:21px;margin-bottom:4px}
+.cr .o{color:var(--ink-2)}
+
+/* three simple columns, but hairline not cards */
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
+.cols h3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+ font-weight:700;margin-bottom:16px}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;font-size:15px;
+ border-bottom:1px solid var(--rule)}
+.kv:last-child{border-bottom:0}
+.kv .cap{color:var(--ink-3);font-size:13px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:8px}
+.dot.active{background:var(--ok)}.dot.in_progress{background:var(--brand)}.dot.not_started{background:var(--rule)}
+
+.acts{padding:0 64px 80px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.btn{background:var(--seal);color:#fff;padding:14px 26px;font-weight:700;text-decoration:none;font-size:16px}
+.btn.g{background:transparent;color:var(--seal);border:1px solid var(--seal)}
+.fine{font-size:14px;color:var(--ink-3);margin-left:auto}
+@media(max-width:760px){.bar,.vbar,.open,.sec,.acts{padding-left:26px;padding-right:26px}
+ .cols{grid-template-columns:1fr;gap:36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar"><img src="brand/wordmark-blue.png" alt="MedicSupport Network">
+    <div><a href="#">Directory</a><a href="#">Employers</a><a href="#">Clinicians</a></div></div>
+
+  <div class="vbar">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#0086C4"/>
+      <path d="M 38.4,18.1 H 61.6 V 38.4 H 81.9 V 61.6 H 61.6 V 81.9 H 38.4 V 61.6 H 18.1 V 38.4 H 38.4 Z" fill="#fff"/></svg>
+    <div><div class="t">Credential status</div><div class="v">Verified 3 Mar 2026</div></div>
+    <div class="r">Re-verifies 03 Mar 2027 &nbsp;·&nbsp; Record 7f2a…c914</div>
+  </div>
+
+  <div class="open">
+    <h1 class="serif">Eight years<br>on the ward.</h1>
+    <p>Ama Boateng has kept a bedside record since 2018 — surgical and emergency nursing
+    across three hospitals in Ghana and Côte d’Ivoire. She is registered with the Ghana
+    Nursing and Midwifery Council and licensed by the UK Nursing and Midwifery Council.</p>
+    <div class="figure"></div>
+  </div>
+
+  <div class="sec">
+    <h2>Credentials on file</h2>
+    <div class="credlist">
+      <div class="cred">
+        <div class="top"><span class="lbl">Professional registration</span><span class="st">Active</span></div>
+        <div class="body">Ghana Nursing &amp; Midwifery Council</div>
+        <div class="ref mono">GNMC-NUR-88214</div>
+        <div class="chk"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#0086C4"/>
+          <path d="M 38.4,18.1 H 61.6 V 38.4 H 81.9 V 61.6 H 61.6 V 81.9 H 38.4 V 61.6 H 18.1 V 38.4 H 38.4 Z" fill="#fff"/></svg>
+          Checked against the council register <b>3 March 2026</b></div>
+      </div>
+      <div class="cred">
+        <div class="top"><span class="lbl">UK licence</span><span class="st">Active</span></div>
+        <div class="body">Nursing &amp; Midwifery Council</div>
+        <div class="ref mono">NMC-UK-EN/A-4471</div>
+        <div class="chk"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#0086C4"/>
+          <path d="M 38.4,18.1 H 61.6 V 38.4 H 81.9 V 61.6 H 61.6 V 81.9 H 38.4 V 61.6 H 18.1 V 38.4 H 38.4 Z" fill="#fff"/></svg>
+          Checked against the UK register <b>3 March 2026</b></div>
+      </div>
+      <div class="cred pending">
+        <div class="top"><span class="lbl">Republic of Ireland</span><span class="st">In progress</span></div>
+        <div class="body">Nursing and Midwifery Board</div>
+        <div class="chk">Application submitted. We will not mark this verified until the board confirms it.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Career</h2>
+    <div class="cr now"><div class="y mono">2022 — 2026</div><div class="r serif">Senior Registered Nurse, surgical ward</div><div class="o">Korhogo Regional Hospital, Côte d’Ivoire</div></div>
+    <div class="cr"><div class="y mono">2019 — 2022</div><div class="r serif">Registered Nurse, medical ward</div><div class="o">Cape Coast Teaching Hospital, Ghana</div></div>
+    <div class="cr"><div class="y mono">2018 — 2019</div><div class="r serif">Staff Nurse, emergency</div><div class="o">Aburi Poly Clinic, Ghana</div></div>
+  </div>
+
+  <div class="sec">
+    <div class="cols">
+      <div><h3>Scope</h3>
+        <div class="kv"><span>Surgical</span><span class="cap">7 yrs</span></div>
+        <div class="kv"><span>Emergency</span><span class="cap">5 yrs</span></div>
+        <div class="kv"><span>Paediatric</span><span class="cap">2 yrs</span></div>
+      </div>
+      <div><h3>Eligible markets</h3>
+        <div class="kv"><span><i class="dot active"></i>United Kingdom</span><span class="cap">Licensed</span></div>
+        <div class="kv"><span><i class="dot in_progress"></i>Ireland</span><span class="cap">In progress</span></div>
+        <div class="kv"><span><i class="dot in_progress"></i>UAE</span><span class="cap">In progress</span></div>
+        <div class="kv"><span><i class="dot not_started"></i>United States</span><span class="cap">Not started</span></div>
+      </div>
+      <div><h3>Documents</h3>
+        <div class="kv"><span>Registration cert</span><span class="cap">Held</span></div>
+        <div class="kv"><span>Passport</span><span class="cap">Held</span></div>
+        <div class="kv"><span>IELTS / OET</span><span class="cap">Outstanding</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acts">
+    <a class="btn" href="#">Request this clinician</a>
+    <a class="btn g" href="#">Download verified record</a>
+    <span class="fine">Contact details released only to employers she nominates.</span>
+  </div>
+</div>
+</body>
+</html>

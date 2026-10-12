@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rev B — Rail</title>
+<style>
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-regular.woff);font-weight:400;font-display:swap}
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-bold.woff);font-weight:700;font-display:swap}
+:root{--paper:#fbf8f3;--ink:#1a1714;--ink-2:#514a42;--ink-3:#8a8078;--rule:#e4ddd4;
+ --ok:#1f7a4d;--warn:#9a6b12;--seal:#0f3d57;--brand:#0086C4}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Atkinson,system-ui,sans-serif;background:#efe9e1;color:var(--ink);
+ font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.serif{font-family:Georgia,serif;font-weight:400;letter-spacing:-.015em}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:.88em}
+.wrap{max-width:1100px;margin:34px auto;background:var(--paper)}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:20px 48px;
+ border-bottom:1px solid var(--rule)}
+.bar img{height:24px}
+.bar a{font-size:14px;color:var(--ink-3);text-decoration:none;margin-left:22px}
+
+/* THE FIX: one sticky column owns identity + proof + action.
+   The right column just reads. Nothing competes for the same job. */
+.split{display:grid;grid-template-columns:360px 1fr}
+.rail{border-right:1px solid var(--rule);padding:44px 36px 44px 48px;
+ background:#f7f3ec;position:sticky;top:0;align-self:start}
+.rail h1{font-size:2.6rem;line-height:1.05;letter-spacing:-.02em;margin-bottom:8px}
+.rail .prof{color:var(--ink-2);margin-bottom:24px}
+.figure{background:var(--seal);aspect-ratio:4/3;margin-bottom:24px;position:relative;overflow:hidden;
+ border-radius:2px}
+.figure::before{content:"";position:absolute;inset:0;
+ background:radial-gradient(circle at 50% 38%,#4a7f9b 0 19%,transparent 19.5%),
+ radial-gradient(ellipse 26% 34% at 50% 100%,#4a7f9b 0 100%,transparent 100.5%),
+ linear-gradient(160deg,#1d4a63,#0f3d57)}
+.figure::after{content:"Portrait supplied by the clinician";position:absolute;left:14px;bottom:12px;
+ font-size:11px;color:#bcd3e4}
+
+.seal{background:var(--seal);color:#fff;padding:20px;margin-bottom:24px;border-radius:2px}
+.seal .t{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8fb6c9;font-weight:700}
+.seal .v{font-size:19px;font-weight:700;margin:4px 0 10px}
+.seal .m{font-size:12.5px;color:#c4d9e4;line-height:1.5;border-top:1px solid rgba(255,255,255,.18);
+ padding-top:9px}
+.seal .m b{color:#fff;font-family:ui-monospace,Menlo,monospace}
+
+.rail .acts{display:flex;flex-direction:column;gap:9px}
+.btn{background:var(--seal);color:#fff;padding:13px 18px;font-weight:700;text-decoration:none;
+ text-align:center;font-size:15px;border-radius:2px}
+.btn.g{background:transparent;color:var(--seal);border:1px solid var(--seal)}
+.rail .fine{font-size:12.5px;color:var(--ink-3);margin-top:14px;line-height:1.45}
+
+.rec{padding:52px 52px 64px}
+.rec .lede{font-size:1.2rem;color:var(--ink-2);margin-bottom:56px;max-width:48ch}
+.rec h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
+ font-weight:700;margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid var(--ink)}
+
+/* credentials: ruled rows again, no card grid */
+.cred{padding:22px 0;border-bottom:1px solid var(--rule)}
+.cred:last-child{border-bottom:0}
+.cred .lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.cred .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin:5px 0 6px}
+.cred .body{font-size:18px;font-weight:700;line-height:1.3}
+.cred .st{font-size:13px;font-weight:700;color:var(--ok);white-space:nowrap}
+.cred.pending .st{color:var(--warn)}
+.cred .ref{color:var(--brand);font-weight:700}
+.cred .chk{font-size:13px;color:var(--ink-3);margin-top:9px;display:flex;gap:8px;align-items:center}
+.cred .chk svg{width:13px;height:13px;flex-shrink:0}
+.cred .chk b{color:var(--ink-2)}
+.cred.pending .chk{color:var(--warn)}
+
+.cr{position:relative;padding-left:34px;padding-bottom:34px}
+.cr:last-child{padding-bottom:0}
+.cr::before{content:"";position:absolute;left:6px;top:9px;bottom:0;width:1px;background:var(--rule)}
+.cr:last-child::before{display:none}
+.cr::after{content:"";position:absolute;left:0;top:8px;width:12px;height:12px;border-radius:50%;
+ background:var(--paper);border:2px solid var(--brand)}
+.cr.now::after{background:var(--brand)}
+.cr .y{font-size:13px;color:var(--ink-3);margin-bottom:4px}
+.cr .r{font-size:19px;margin-bottom:3px}
+.cr .o{color:var(--ink-2);font-size:15px}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.cols h3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+ font-weight:700;margin-bottom:14px}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:8px 0;font-size:15px;
+ border-bottom:1px solid var(--rule)}
+.kv:last-child{border-bottom:0}
+.kv .cap{color:var(--ink-3);font-size:13px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:8px}
+.dot.active{background:var(--ok)}.dot.in_progress{background:var(--brand)}.dot.not_started{background:var(--rule)}
+@media(max-width:900px){.split{grid-template-columns:1fr}.rail{border-right:0;border-bottom:1px solid var(--rule);
+ position:static}.cols{grid-template-columns:1fr;gap:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar"><img src="brand/wordmark-blue.png" alt="MedicSupport Network">
+    <div><a href="#">Directory</a><a href="#">Employers</a><a href="#">Clinicians</a></div></div>
+
+  <div class="split">
+    <aside class="rail">
+      <h1>Ama Boateng</h1>
+      <div class="prof">Registered Nurse, Adult &amp; Surgical<br>Accra, Ghana · available September 2026</div>
+      <div class="figure"></div>
+
+      <div class="seal">
+        <div class="t">Credential status</div>
+        <div class="v">Verified 3 Mar 2026</div>
+        <div class="m">
+          <div><b>GNMC</b> GNMC-NUR-88214</div>
+          <div><b>UK NMC</b> EN/A-4471</div>
+          <div>Re-verifies <b>03 Mar 2027</b></div>
+        </div>
+      </div>
+
+      <div class="acts">
+        <a class="btn" href="#">Request this clinician</a>
+        <a class="btn g" href="#">Download verified record</a>
+      </div>
+      <p class="fine">Contact details are released only to employers she nominates.</p>
+    </aside>
+
+    <main class="rec">
+      <p class="lede">Eight years on the ward — surgical and emergency nursing across three
+      hospitals in Ghana and Côte d’Ivoire. Registered with the Ghana Nursing and Midwifery
+      Council, licensed by the UK Nursing and Midwifery Council.</p>
+
+      <h2>Credentials on file</h2>
+      <div class="cred">
+        <div class="lbl">Professional registration</div>
+        <div class="row"><div class="body">Ghana Nursing &amp; Midwifery Council</div><div class="st">Active</div></div>
+        <div class="ref mono">GNMC-NUR-88214</div>
+        <div class="chk"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#0086C4"/>
+          <path d="M 38.4,18.1 H 61.6 V 38.4 H 81.9 V 61.6 H 61.6 V 81.9 H 38.4 V 61.6 H 18.1 V 38.4 H 38.4 Z" fill="#fff"/></svg>
+          Checked against the council register <b>3 March 2026</b></div>
+      </div>
+      <div class="cred">
+        <div class="lbl">UK licence</div>
+        <div class="row"><div class="body">Nursing &amp; Midwifery Council</div><div class="st">Active</div></div>
+        <div class="ref mono">NMC-UK-EN/A-4471</div>
+        <div class="chk"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#0086C4"/>
+          <path d="M 38.4,18.1 H 61.6 V 38.4 H 81.9 V 61.6 H 61.6 V 81.9 H 38.4 V 61.6 H 18.1 V 38.4 H 38.4 Z" fill="#fff"/></svg>
+          Checked against the UK register <b>3 March 2026</b></div>
+      </div>
+      <div class="cred pending">
+        <div class="lbl">Republic of Ireland</div>
+        <div class="row"><div class="body">Nursing and Midwifery Board</div><div class="st">In progress</div></div>
+        <div class="chk">Application submitted. We will not mark this verified until the board confirms it.</div>
+      </div>
+
+      <h2 style="margin-top:56px">Career</h2>
+      <div class="cr now"><div class="y mono">2022 — 2026</div><div class="r serif">Senior Registered Nurse, surgical ward</div><div class="o">Korhogo Regional Hospital, Côte d’Ivoire</div></div>
+      <div class="cr"><div class="y mono">2019 — 2022</div><div class="r serif">Registered Nurse, medical ward</div><div class="o">Cape Coast Teaching Hospital, Ghana</div></div>
+      <div class="cr"><div class="y mono">2018 — 2019</div><div class="r serif">Staff Nurse, emergency</div><div class="o">Aburi Poly Clinic, Ghana</div></div>
+
+      <h2 style="margin-top:56px">Scope, markets &amp; documents</h2>
+      <div class="cols">
+        <div>
+          <h3>Scope</h3>
+          <div class="kv"><span>Surgical</span><span class="cap">7 yrs</span></div>
+          <div class="kv"><span>Emergency</span><span class="cap">5 yrs</span></div>
+          <div class="kv"><span>Paediatric</span><span class="cap">2 yrs</span></div>
+          <h3 style="margin-top:32px">Languages</h3>
+          <div class="kv"><span>English</span><span class="cap">Fluent</span></div>
+          <div class="kv"><span>Twi</span><span class="cap">Native</span></div>
+          <div class="kv"><span>Ga</span><span class="cap">Conversational</span></div>
+        </div>
+        <div>
+          <h3>Eligible markets</h3>
+          <div class="kv"><span><i class="dot active"></i>United Kingdom</span><span class="cap">Licensed</span></div>
+          <div class="kv"><span><i class="dot in_progress"></i>Ireland</span><span class="cap">In progress</span></div>
+          <div class="kv"><span><i class="dot in_progress"></i>UAE</span><span class="cap">In progress</span></div>
+          <div class="kv"><span><i class="dot not_started"></i>United States</span><span class="cap">Not started</span></div>
+          <h3 style="margin-top:32px">Documents</h3>
+          <div class="kv"><span>Registration cert</span><span class="cap">Held</span></div>
+          <div class="kv"><span>Passport</span><span class="cap">Held</span></div>
+          <div class="kv"><span>IELTS / OET</span><span class="cap">Outstanding</span></div>
+          <div class="kv"><span>Criminal record</span><span class="cap">Pending</span></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>
