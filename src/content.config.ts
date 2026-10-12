@@ -49,6 +49,8 @@ const clinicians = defineCollection({
 
 		/** Verification of the record as a whole. */
 		record: z.object({
+			/** Short public code a third party can look up without an account. */
+			reference: z.string(),
 			verifiedOn: z.coerce.date(),
 			reverifyOn: z.coerce.date(),
 			hash: z.string(),

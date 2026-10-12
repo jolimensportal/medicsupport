@@ -7,6 +7,7 @@ availableFrom: September 2026
 slug: ama-boateng
 
 record:
+  reference: MSN-4A7C92
   verifiedOn: 2026-03-03
   reverifyOn: 2027-03-03
   hash: "7f2a…c914"

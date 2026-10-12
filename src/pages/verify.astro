@@ -1,0 +1,213 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/MainLayout.astro";
+
+const clinicians = await getCollection("clinicians");
+
+const fmt = (date: Date) =>
+	date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+
+// Only what a third party is entitled to see: that a record exists, who it
+// belongs to, when it was checked, and which bodies confirmed it. No contact
+// details, no document copies, nothing that would make this a data dump.
+const index = clinicians.map((c) => ({
+	ref: c.data.record.reference,
+	name: c.data.name,
+	profession: c.data.profession,
+	specialism: c.data.specialism,
+	location: c.data.location,
+	slug: c.data.slug,
+	verifiedOn: fmt(c.data.record.verifiedOn),
+	reverifyOn: fmt(c.data.record.reverifyOn),
+	credentials: c.data.credentials
+		.filter((cr) => cr.status === "active" && cr.reference)
+		.map((cr) => ({
+			label: cr.label,
+			body: cr.body,
+			reference: cr.reference,
+			checkedAgainst: cr.checkedAgainst,
+			checkedOn: cr.checkedOn ? fmt(cr.checkedOn) : null,
+		})),
+}));
+
+const examples = index.map((r) => r.ref);
+---
+
+<Layout
+	title="Verify a credential record | MedicSupport Network"
+	description="Look up a MedicSupport-issued credential record by its reference. Returns the verification status, the date of the last check and the bodies that confirmed it. No account needed."
+>
+	<div class="bg-[#fbf8f3] text-[#1a1714] min-h-[70vh]">
+		<div class="max-w-[760px] mx-auto px-6 sm:px-10 pt-16 pb-20">
+
+			<header class="mb-10">
+				<h1
+					class="font-[Georgia,serif] text-[clamp(2.2rem,5.5vw,3.2rem)] leading-[1.05] tracking-[-0.015em] mb-4"
+				>
+					Verify a record.
+				</h1>
+				<p class="text-[1.1rem] text-[#514a42] max-w-[52ch]">
+					Enter the reference printed on a MedicSupport credential record. You get back
+					the verification status, the date of the last check, and the bodies that
+					confirmed it. No account, no sign-in.
+				</p>
+			</header>
+
+			<!-- the scoping note. This is the single most important element on the page. -->
+			<div class="border-l-2 border-[#0086C4] pl-4 mb-9">
+				<p class="text-[0.88rem] text-[#514a42] leading-relaxed">
+					<strong class="text-[#1a1714]">What this does and does not check.</strong>{" "}
+					This looks up records <em>we</em> have issued. A result is our statement that
+					we checked that record against the issuing body. A result is
+					<strong class="text-[#1a1714]">not</strong> a search of any national register,
+					and a reference that returns nothing here says only that we hold no
+					MedicSupport record under it — it is not a finding about the person.
+				</p>
+			</div>
+
+			<form id="verify-form" class="flex flex-wrap gap-3 mb-3" novalidate>
+				<label for="ref" class="sr-only">Record reference</label>
+				<input
+					id="ref"
+					name="ref"
+					type="text"
+					autocomplete="off"
+					spellcheck="false"
+					placeholder="MSN-4A7C92"
+					class="flex-1 min-w-[240px] bg-white border border-[#d8d1c7] px-4 py-3.5 text-[1.05rem] font-mono tracking-[0.04em] uppercase focus:outline-none focus:border-[#0086C4]"
+				/>
+				<button
+					type="submit"
+					class="bg-[#0f3d57] text-white px-7 py-3.5 font-bold text-[1rem]"
+				>
+					Check record
+				</button>
+			</form>
+
+			<p class="text-[0.82rem] text-[#8a8078] mb-12">
+				References are printed on the record itself and in its URL. Example:{" "}
+				{examples.length > 0 && <button type="button" class="verify-example font-mono underline" data-ref={examples[0]}>{examples[0]}</button>}
+				{examples.length > 1 && <span> · </span>}
+				{examples.length > 1 && <button type="button" class="verify-example font-mono underline" data-ref={examples[1]}>{examples[1]}</button>}
+			</p>
+
+			<div id="result" aria-live="polite"></div>
+
+		</div>
+	</div>
+
+	<script type="application/json" id="verify-index" set:html={JSON.stringify(index)} />
+</Layout>
+
+<script is:inline define:vars={{ index }}>
+	const form = document.getElementById("verify-form");
+	const input = document.getElementById("ref");
+	const out = document.getElementById("result");
+
+	const seal = (colour) => `
+		<svg class="w-12 h-12 shrink-0" viewBox="0 0 100 100" aria-hidden="true">
+			<circle cx="50" cy="50" r="48" fill="${colour}"></circle>
+			<path d="M 38.4,18.1 H 61.6 V 38.4 H 81.9 V 61.6 H 61.6 V 81.9 H 38.4 V 61.6 H 18.1 V 38.4 H 38.4 Z" fill="#fff"></path>
+		</svg>`;
+
+	function render(html) {
+		out.innerHTML = html;
+		out.scrollIntoView({ behavior: "auto", block: "nearest" });
+	}
+
+	function card(inner, tone) {
+		return `<div class="border border-[#e4ddd4] bg-white p-6 sm:p-7">${inner}</div>`;
+	}
+
+	function notFound(ref) {
+		return card(
+			`<p class="text-[0.68rem] tracking-[0.16em] uppercase font-bold text-[#8a8078] mb-3">No record found</p>
+			 <p class="text-[1.15rem] font-bold mb-3">We hold no MedicSupport record under
+			 <span class="font-mono">${ref}</span>.</p>
+			 <p class="text-[0.9rem] text-[#514a42] leading-relaxed">
+				This means only that no record was issued to that reference. It is not a statement
+				about whether the person is registered or employed. If you were told this
+				reference exists, check it with whoever issued it before relying on it.</p>`,
+		);
+	}
+
+	function found(r) {
+		const rows = r.credentials.length
+			? r.credentials
+					.map(
+						(c) => `<div class="border-b border-[#e4ddd4] py-4 last:border-b-0">
+						<p class="text-[0.68rem] tracking-[0.1em] uppercase font-bold text-[#8a8078] mb-1">${c.label}</p>
+						<p class="font-bold text-[1.05rem]">${c.body}</p>
+						<p class="font-mono text-[#0086C4] font-bold text-[0.92rem]">${c.reference}</p>
+						<p class="text-[0.82rem] text-[#8a8078] mt-1.5">Checked against ${c.checkedAgainst}
+						<b class="text-[#514a42]">${c.checkedOn}</b></p>
+					</div>`,
+					)
+					.join("")
+			: `<p class="text-[0.9rem] text-[#514a42]">No published credential references on this record.</p>`;
+
+		return card(
+			`<div class="flex items-start gap-4 mb-5">
+				${seal("#0086C4")}
+				<div>
+					<p class="text-[0.68rem] tracking-[0.16em] uppercase font-bold text-[#1f7a4d]">Verified</p>
+					<p class="text-[1.35rem] font-bold leading-tight">${r.name}</p>
+					<p class="text-[#514a42] text-[0.95rem]">${r.profession}, ${r.specialism} · ${r.location}</p>
+				</div>
+			</div>
+			<div class="flex flex-wrap gap-x-8 gap-y-2 border-y border-[#e4ddd4] py-3 mb-5 text-[0.88rem]">
+				<span>Reference <b class="font-mono">${r.ref}</b></span>
+				<span>Last checked <b>${r.verifiedOn}</b></span>
+				<span>Re-verifies <b>${r.reverifyOn}</b></span>
+			</div>
+			${rows}
+			<div class="mt-6 flex flex-wrap items-center gap-3">
+				<a href="/${r.slug}" class="bg-[#0f3d57] text-white px-5 py-3 font-bold text-[0.95rem] no-underline">Open the full profile</a>
+				<span class="text-[0.82rem] text-[#8a8078]">Contact details are not published here.</span>
+			</div>`,
+		);
+	}
+
+	const norm = (s) => s.trim().toUpperCase().replace(/[\s-]/g, "");
+
+	function lookup(raw) {
+		const ref = raw.trim().toUpperCase();
+		return index.find((r) => norm(r.ref) === norm(ref));
+	}
+
+	form.addEventListener("submit", (e) => {
+		e.preventDefault();
+		const ref = input.value.trim().toUpperCase().replace(/\s+/g, "");
+		if (!ref) return;
+		const hit = lookup(ref);
+		render(hit ? found(hit) : notFound(ref));
+	});
+
+	document.querySelectorAll(".verify-example").forEach((b) => {
+		b.addEventListener("click", () => {
+			input.value = b.dataset.ref;
+			form.requestSubmit();
+		});
+	});
+
+	// Deep link: /verify?ref=MSN-XXXX so a record reference can be shared as a URL
+	const initial = new URLSearchParams(location.search).get("ref");
+	if (initial) {
+		input.value = initial.toUpperCase();
+		form.requestSubmit();
+	}
+</script>
+
+<style>
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>
