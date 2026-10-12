@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hero A — The footprint</title>
+<style>
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-regular.woff);font-weight:400;font-display:swap}
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-bold.woff);font-weight:700;font-display:swap}
+:root{--brand:#0086C4;--brand-deep:#005f8c;--seal:#0f3d57}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Atkinson,system-ui,sans-serif;background:#fff}
+.tag{font:600 11px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.14em;
+ color:#b45309;background:#fef3c7;padding:7px 14px;display:block}
+section.hero{padding:56px 48px;background:#0b1220;color:#fff;display:grid;
+ grid-template-columns:1fr 1.05fr;gap:52px;align-items:center}
+h1{font-size:clamp(2rem,3.2vw,2.9rem);line-height:1.06;letter-spacing:-.02em;font-weight:700}
+h1 .g{background:linear-gradient(100deg,#0179B4,#88D8FF);-webkit-background-clip:text;
+ -webkit-text-fill-color:transparent;background-clip:text}
+p.lede{margin:26px 0 30px;font-size:1.05rem;color:#c3d2e0;max-width:44ch;line-height:1.6}
+p.lede b{color:#fff;font-weight:700}
+.btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn{padding:13px 24px;font-weight:700;text-decoration:none;display:inline-block;font-size:1rem}
+.btn.p{background:linear-gradient(125deg,var(--brand-deep),var(--brand));color:#fff}
+.btn.s{border:2px solid rgba(255,255,255,.28);color:#fff}
+.btn.s:hover{background:#fff;color:#0b1220}
+
+/* ── the footprint panel ── */
+.fp{background:var(--seal);border:1px solid rgba(255,255,255,.14);padding:28px 30px 26px}
+.fp .ttl{font:700 10px/1 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;
+ color:#8fb6c9;margin-bottom:22px}
+.reg{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative}
+.reg::before{content:"";position:absolute;left:0;right:0;top:11px;height:1px;
+ background:rgba(255,255,255,.2)}
+.reg .col{position:relative;padding-top:26px}
+.reg .col::before{content:"";position:absolute;left:0;top:6px;width:11px;height:11px;
+ border-radius:50%;background:#0b1220;border:2px solid var(--brand)}
+.reg .col h4{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+ color:#fff;margin-bottom:10px}
+.reg .site{font-size:.82rem;color:#b9cbd9;line-height:1.5;margin-bottom:5px;
+ display:flex;align-items:baseline;gap:6px}
+.reg .site i{width:6px;height:6px;border-radius:50%;flex-shrink:0;
+ background:transparent;border:1.5px solid rgba(255,255,255,.45)}
+.reg .site.ter i{background:var(--brand);border-color:var(--brand)}
+.fp .foot{margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.16);
+ display:flex;gap:30px;font-size:.78rem;color:#c4d9e4;flex-wrap:wrap}
+.fp .foot b{color:#fff;font-family:ui-monospace,Menlo,monospace}
+.fp .foot span span{color:#8fb6c9}
+.legend{margin-top:14px;font-size:.68rem;color:#8fb6c9;display:flex;gap:16px;flex-wrap:wrap}
+.legend em{font-style:normal;display:flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:50%;background:var(--brand);display:inline-block}
+.legend i.s{background:transparent;border:1.5px solid rgba(255,255,255,.5)}
+.legend i.t{background:#7fd3f0}
+@media(max-width:980px){section.hero{grid-template-columns:1fr;padding:40px 26px}
+ .reg{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<span class="tag">Hero option A — “The footprint” · schematic, generated from the facilities data</span>
+<section class="hero">
+  <div>
+    <h1>We run hospitals.<span class="g"> And we staff them with our own people.</span></h1>
+    <p class="lede">MedicSupport Network has operated hospitals and clinics across
+      <b>Africa and Asia</b> for 18 years — 18 facilities, 6 countries, 3,950 licensed beds.
+      Our doctors, nurses, midwives and paramedics work in our hospitals. Some are seconded
+      to hospitals and health systems in <b>Europe and America</b>.</p>
+    <div class="btns">
+      <a class="btn p" href="#">See our facilities</a>
+      <a class="btn s" href="#">Contact the group</a>
+    </div>
+  </div>
+
+  <div class="fp">
+    <div class="ttl">Where we operate</div>
+    <div class="reg">
+      <div class="col">
+        <h4>West Africa</h4>
+        <div class="site ter"><i></i>Ikoyi Private Hospital · Lagos</div>
+        <div class="site ter"><i></i>Victoria Island · Lagos</div>
+        <div class="site"><i></i>Lekki · Lagos</div>
+        <div class="site"><i></i>Maitama · Abuja</div>
+        <div class="site"><i></i>Rumuola · Port Harcourt</div>
+        <div class="site ter"><i></i>Adenta · Accra</div>
+        <div class="site"><i></i>Asokore Mampong · Kumasi</div>
+        <div class="site"><i></i>Sekondi-Takoradi</div>
+      </div>
+      <div class="col">
+        <h4>East Africa</h4>
+        <div class="site ter"><i></i>Westlands · Nairobi</div>
+        <div class="site"><i></i>Kilimani · Nairobi</div>
+        <div class="site"><i></i>Nyali · Mombasa</div>
+        <div class="site"><i></i>Naivasha</div>
+      </div>
+      <div class="col">
+        <h4>Southern Africa</h4>
+        <div class="site ter"><i></i>Sandton · Johannesburg</div>
+        <div class="site ter"><i></i>Century City · Cape Town</div>
+        <div class="site"><i></i>Umhlanga · Durban</div>
+      </div>
+      <div class="col">
+        <h4>North Africa &amp; Asia</h4>
+        <div class="site ter"><i></i>Clinique Ibn Rochd · Casablanca</div>
+        <div class="site ter"><i></i>Sampaloc · Manila</div>
+        <div class="site"><i></i>Mandaue · Cebu City</div>
+      </div>
+    </div>
+    <div class="foot">
+      <span><span>Beds</span> <b>3,950</b></span>
+      <span><span>Staffed</span> <b>3,250</b></span>
+      <span><span>Workforce</span> <b>~7,800</b></span>
+      <span><span>Since</span> <b>2007</b></span>
+    </div>
+    <div class="legend">
+      <em><i class="t"></i> Tertiary referral centre</em>
+      <em><i class="s"></i> Secondary / community</em>
+    </div>
+  </div>
+</section>
+</body>
+</html>

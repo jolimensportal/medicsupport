@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hero C — Blueprint</title>
+<style>
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-regular.woff);font-weight:400;font-display:swap}
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-bold.woff);font-weight:700;font-display:swap}
+:root{--brand:#0086C4;--seal:#0f3d57}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Atkinson,system-ui,sans-serif;background:#fff}
+.tag{font:600 11px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.14em;
+ color:#b45309;background:#fef3c7;padding:7px 14px;display:block}
+section.hero{padding:56px 48px;background:#0b1220;color:#fff;display:grid;
+ grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+h1{font-size:clamp(2rem,3.2vw,2.9rem);line-height:1.06;letter-spacing:-.02em;font-weight:700}
+h1 .g{background:linear-gradient(100deg,#0179B4,#88D8FF);-webkit-background-clip:text;
+ -webkit-text-fill-color:transparent;background-clip:text}
+p.lede{margin:26px 0 30px;font-size:1.05rem;color:#c3d2e0;max-width:44ch;line-height:1.6}
+p.lede b{color:#fff;font-weight:700}
+.btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn{padding:13px 24px;font-weight:700;text-decoration:none;display:inline-block;font-size:1rem}
+.btn.p{background:linear-gradient(125deg,#005f8c,#0086C4);color:#fff}
+.btn.s{border:2px solid rgba(255,255,255,.28);color:#fff}
+
+/* ── architectural elevation, drawn not photographed ── */
+.bp{position:relative;background:#08101a;border:1px solid rgba(255,255,255,.13);padding:0}
+.bp svg{display:block;width:100%;height:auto}
+.bp .cap{position:absolute;left:18px;bottom:14px;font:600 9.5px/1.5 ui-monospace,monospace;
+ letter-spacing:.11em;text-transform:uppercase;color:#6f8798}
+.bp .scale{position:absolute;right:18px;bottom:14px;font:600 9.5px/1 ui-monospace,monospace;
+ letter-spacing:.11em;color:#6f8798;display:flex;align-items:center;gap:8px}
+.bp .scale i{display:block;width:44px;height:1px;background:#6f8798;position:relative}
+.bp .scale i::before,.bp .scale i::after{content:"";position:absolute;width:1px;height:6px;
+ background:#6f8798;top:-3px}
+.bp .scale i::before{left:0}.bp .scale i::after{right:0}
+@media(max-width:980px){section.hero{grid-template-columns:1fr;padding:40px 26px}}
+</style>
+</head>
+<body>
+<span class="tag">Hero option C — “Blueprint” · a drawn hospital elevation, not a photograph of someone else's building</span>
+<section class="hero">
+  <div>
+    <h1>We run hospitals.<span class="g"> And we staff them with our own people.</span></h1>
+    <p class="lede">MedicSupport Network has operated hospitals and clinics across
+      <b>Africa and Asia</b> for 18 years — 18 facilities, 6 countries, 3,950 licensed beds.
+      Our clinicians work in our hospitals. Some are seconded to health systems in
+      <b>Europe and America</b>.</p>
+    <div class="btns">
+      <a class="btn p" href="#">See our facilities</a>
+      <a class="btn s" href="#">Contact the group</a>
+    </div>
+  </div>
+
+  <div class="bp">
+    <svg viewBox="0 0 620 400" role="img" aria-label="Schematic elevation of a hospital building">
+      <defs>
+        <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+          <path d="M20 0H0v20" fill="none" stroke="#0f2537" stroke-width="1"/>
+        </pattern>
+        <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0086C4" stop-opacity=".26"/>
+          <stop offset="100%" stop-color="#0086C4" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+
+      <rect width="620" height="400" fill="url(#grid)"/>
+
+      <!-- ground line -->
+      <line x1="40" y1="330" x2="580" y2="330" stroke="#2c4a5e" stroke-width="1.5"/>
+      <!-- measurement line, clear of the caption strip below -->
+      <line x1="40" y1="346" x2="580" y2="346" stroke="#22384a" stroke-width="1"/>
+      <line x1="40" y1="341" x2="40" y2="351" stroke="#22384a"/>
+      <line x1="580" y1="341" x2="580" y2="351" stroke="#22384a"/>
+
+      <!-- main block: five storeys, ward bays -->
+      <g stroke="#0086C4" fill="none" stroke-width="1.4">
+        <rect x="70" y="120" width="330" height="210"/>
+        <rect x="78" y="128" width="314" height="194" stroke-opacity=".35"/>
+        <line x1="70" y1="168" x2="400" y2="168" stroke-opacity=".55"/>
+        <line x1="70" y1="216" x2="400" y2="216" stroke-opacity=".55"/>
+        <line x1="70" y1="264" x2="400" y2="264" stroke-opacity=".55"/>
+      </g>
+      <!-- floor labels -->
+      <g font-family="monospace" font-size="9" fill="#6f8798" letter-spacing="1">
+        <text x="52" y="126">L4</text>
+        <text x="52" y="174">L3</text>
+        <text x="52" y="222">L2</text>
+        <text x="52" y="270">L1</text>
+      </g>
+
+      <!-- window rhythm -->
+      <g fill="url(#fade)" stroke="#3aa6d8" stroke-width=".9" stroke-opacity=".7">
+        <rect x="92" y="136" width="26" height="20"/><rect x="134" y="136" width="26" height="20"/>
+        <rect x="176" y="136" width="26" height="20"/><rect x="218" y="136" width="26" height="20"/>
+        <rect x="260" y="136" width="26" height="20"/><rect x="302" y="136" width="26" height="20"/>
+        <rect x="344" y="136" width="26" height="20"/>
+
+        <rect x="92" y="184" width="26" height="20"/><rect x="134" y="184" width="26" height="20"/>
+        <rect x="176" y="184" width="26" height="20"/><rect x="218" y="184" width="26" height="20"/>
+        <rect x="260" y="184" width="26" height="20"/><rect x="302" y="184" width="26" height="20"/>
+        <rect x="344" y="184" width="26" height="20"/>
+
+        <rect x="92" y="232" width="26" height="20"/><rect x="134" y="232" width="26" height="20"/>
+        <rect x="176" y="232" width="26" height="20"/><rect x="218" y="232" width="26" height="20"/>
+        <rect x="260" y="232" width="26" height="20"/><rect x="302" y="232" width="26" height="20"/>
+        <rect x="344" y="232" width="26" height="20"/>
+
+        <rect x="92" y="280" width="26" height="20"/><rect x="134" y="280" width="26" height="20"/>
+        <rect x="176" y="280" width="26" height="20"/><rect x="218" y="280" width="26" height="20"/>
+      </g>
+
+      <!-- entrance canopy -->
+      <g stroke="#0086C4" stroke-width="1.4" fill="none">
+        <path d="M170 330 V288 H300 V330"/>
+        <path d="M158 288 H312"/>
+        <line x1="180" y1="288" x2="180" y2="330" stroke-opacity=".4"/>
+        <line x1="290" y1="288" x2="290" y2="330" stroke-opacity=".4"/>
+      </g>
+      <g stroke="#7fd3f0" stroke-width="1.6" stroke-linecap="round">
+        <line x1="200" y1="306" x2="200" y2="330"/>
+        <line x1="235" y1="306" x2="235" y2="330"/>
+        <line x1="270" y1="306" x2="270" y2="330"/>
+      </g>
+
+      <!-- taller service block -->
+      <g stroke="#0086C4" fill="none" stroke-width="1.4">
+        <rect x="430" y="80" width="120" height="250"/>
+        <line x1="430" y1="140" x2="550" y2="140" stroke-opacity=".55"/>
+        <line x1="430" y1="200" x2="550" y2="200" stroke-opacity=".55"/>
+        <line x1="430" y1="260" x2="550" y2="260" stroke-opacity=".55"/>
+      </g>
+      <g font-family="monospace" font-size="9" fill="#6f8798" letter-spacing="1">
+        <text x="560" y="86">L6</text>
+      </g>
+      <g fill="url(#fade)" stroke="#3aa6d8" stroke-width=".9" stroke-opacity=".7">
+        <rect x="450" y="96" width="22" height="20"/><rect x="486" y="96" width="22" height="20"/>
+        <rect x="450" y="156" width="22" height="20"/><rect x="486" y="156" width="22" height="20"/>
+        <rect x="450" y="216" width="22" height="20"/><rect x="486" y="216" width="22" height="20"/>
+        <rect x="450" y="276" width="22" height="20"/><rect x="486" y="276" width="22" height="20"/>
+      </g>
+
+      <!-- helipad marker on the service block -->
+      <g stroke="#7fd3f0" stroke-width="1.3" fill="none">
+        <circle cx="490" cy="120" r="15"/>
+        <path d="M482 128 L490 112 L498 128"/>
+      </g>
+
+      <!-- callout -->
+      <g stroke="#22384a" stroke-width="1">
+        <line x1="120" y1="180" x2="60" y2="180"/>
+        <line x1="60" y1="180" x2="60" y2="300"/>
+      </g>
+      <text x="60" y="70" fill="#6f8798" font-family="monospace" font-size="9.5"
+            letter-spacing="1.3">WARD BAYS · 5 STOREYS</text>
+    </svg>
+    <div class="cap">Schematic elevation · illustrative</div>
+    <div class="scale"><i></i> not to scale</div>
+  </div>
+</section>
+</body>
+</html>

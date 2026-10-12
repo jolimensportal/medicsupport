@@ -28,7 +28,15 @@ PATTERNS = [
     # are excluded via lookahead so "3rd" and "500kg" do not false-positive.
     (re.compile(r"\d+(?!rd|st|nd|th|kg|mg|ml|km|cm|mm|m2|m3|lb|oz|in|ft)[a-z]{3,}"),
      "number running into a word, e.g. '18across'"),
-    (re.compile(r">[a-z]+[A-Z][a-z]+"), "lowerCamel in a text node, e.g. 'check.This'"),
+    # lowerCamel mid-word. This is the most common Astro collapse and it is
+    # NOT confined to the start of a text node - "across\n<span>Africa" renders
+    # as "acrossAfrica" with the camel in the middle of a run. The earlier
+    # `>[a-z]+[A-Z]` form missed exactly that.
+    # Guarded so legitimate camelCase (McCoy, iPhone, eBay) is reported as a
+    # WARNING candidate rather than silently dropped, so it stays reviewable.
+    #   Lookbehind excludes "Medi|cSupport" - the company name is legitimately
+    #   camelCase and appears on every page, which was 95 false positives.
+    (re.compile(r"(?<!Medi)[a-z][A-Z][a-z]"), "lowerCamel mid-word, e.g. 'acrossAfrica'"),
 ]
 
 bad = []

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hero B — Type-forward</title>
+<style>
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-regular.woff);font-weight:400;font-display:swap}
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-bold.woff);font-weight:700;font-display:swap}
+:root{--brand:#0086C4;--seal:#0f3d57}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Atkinson,system-ui,sans-serif;background:#fff}
+.tag{font:600 11px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.14em;
+ color:#b45309;background:#fef3c7;padding:7px 14px;display:block}
+section.hero{padding:64px 48px 58px;background:#0b1220;color:#fff}
+.eyebrow{font:700 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;
+ color:#8fb6c9;margin-bottom:28px}
+h1{font-size:clamp(2.6rem,5.4vw,4.6rem);line-height:0.98;letter-spacing:-.035em;
+ font-weight:700;max-width:16ch}
+h1 .ln{display:block}
+h1 em{font-style:normal;background:linear-gradient(100deg,#0179B4,#88D8FF);
+ -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.rule{height:1px;background:rgba(255,255,255,.2);margin:38px 0 30px}
+.grid{display:grid;grid-template-columns:1.4fr 1fr;gap:52px;align-items:end}
+p.lede{font-size:1.08rem;color:#c3d2e0;max-width:50ch;line-height:1.62}
+p.lede b{color:#fff;font-weight:700}
+.btns{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.btn{padding:13px 24px;font-weight:700;text-decoration:none;display:inline-block;font-size:1rem}
+.btn.p{background:linear-gradient(125deg,#005f8c,#0086C4);color:#fff}
+.btn.s{border:2px solid rgba(255,255,255,.28);color:#fff}
+
+/* the figures become the ornament */
+.figs{display:grid;grid-template-columns:repeat(2,1fr);gap:26px 34px}
+.figs .f .n{font-size:2.5rem;line-height:1;letter-spacing:-.03em;color:#fff;
+ font-family:Georgia,serif}
+.figs .f .l{font:700 9.5px/1.4 ui-monospace,monospace;letter-spacing:.14em;
+ text-transform:uppercase;color:#8fb6c9;margin-top:8px}
+@media(max-width:900px){.grid{grid-template-columns:1fr;gap:34px}section.hero{padding:40px 26px}}
+</style>
+</head>
+<body>
+<span class="tag">Hero option B — “Type-forward” · no image at all, the figures become the ornament</span>
+<section class="hero">
+  <div class="eyebrow">MedicSupport Network</div>
+
+  <h1>
+    <span class="ln">We run</span>
+    <span class="ln">hospitals.</span>
+    <span class="ln"><em>And we staff them</em></span>
+    <span class="ln"><em>with our own people.</em></span>
+  </h1>
+
+  <div class="rule"></div>
+
+  <div class="grid">
+    <div>
+      <p class="lede">Eighteen years of operating hospitals and clinics across <b>Africa and Asia</b>.
+        The clinicians we place in Europe and America are not strangers we sourced — they are our
+        own employees, already working in our own licensed facilities, already held to our standard.</p>
+      <div class="btns">
+        <a class="btn p" href="#">See our facilities</a>
+        <a class="btn s" href="#">Enquire about secondment</a>
+      </div>
+    </div>
+
+    <div class="figs">
+      <div class="f"><div class="n">18</div><div class="l">Hospitals &amp; clinics</div></div>
+      <div class="f"><div class="n">6</div><div class="l">Countries</div></div>
+      <div class="f"><div class="n">3,950</div><div class="l">Licensed beds</div></div>
+      <div class="f"><div class="n">18</div><div class="l">Years, since 2007</div></div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
