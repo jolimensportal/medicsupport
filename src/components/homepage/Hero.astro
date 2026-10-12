@@ -62,14 +62,18 @@ const fmt = (n: number) => n.toLocaleString("en-GB");
                 <li>18 years of continuous operation</li>
               </ul>
             </div>
-            <div
-              class="bg-white p-4 rounded-xl shadow hidden sm:flex sm:max-w-[56%] text-main-200 text-lg items-center gap-3"
+            <a
+              href="/secondment"
+              class="bg-white p-4 rounded-xl shadow hidden sm:flex sm:max-w-[56%] text-main-200 text-lg items-center gap-3 no-underline group"
             >
               <svg class="icon" width="30" height="30">
                 <use xlink:href="#star"></use>
               </svg>
-              Africa &amp; Asia &rarr; deployed to Europe &amp; America
-            </div>
+              <span>Africa &amp; Asia &rarr; deployed to Europe &amp; America<span
+                class="block text-sm text-main-200/70 group-hover:text-main-200 transition-colors"
+                >How this works &rarr;</span
+              ></span>
+            </a>
             <div
               class="relative border-main-200 border-2 rounded-xl p-5 pt-8 bg-[linear-gradient(-125deg,#E9F6FF_0%,#ffffff_100%)] hidden sm:flex sm:max-w-[62%] ml-auto mt-10 -mb-10 before:content-[''] before:absolute before:w-16.25 before:h-16.25 before:bg-[url('/img/icons/quote.svg')] before:bg-contain before:bg-no-repeat before:-top-8 before:left-5 text-black"
             >

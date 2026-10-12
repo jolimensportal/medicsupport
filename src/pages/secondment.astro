@@ -1,0 +1,292 @@
+---
+import Layout from "../layouts/MainLayout.astro";
+import { HOSPITALS, COUNTRIES, totalStaff } from "../data/hospitals";
+
+const fmt = (n: number) => n.toLocaleString("en-GB");
+
+const travelsWith = [
+	{
+		title: "The employment relationship",
+		body: "They remain MedicSupport employees. We are the employer, not the receiving hospital acting alone. That relationship does not change when they move, and it is why we can be held to something.",
+	},
+	{
+		title: "A verified credential record",
+		body: "Every clinician we employ is checked against their registering body. The resulting record is publicly verifiable by anyone, at /verify, without an account and without asking us.",
+	},
+	{
+		title: "Training in our own hospitals",
+		body: "Our fellows are trained at our own tertiary sites — cardiac catheterisation at Accra, Lagos, Nairobi and Casablanca, advanced imaging at Sandton, emergency retrieval from Cape Town.",
+	},
+	{
+		title: "Our clinical and governance standard",
+		body: "The standard applied in Accra is applied in Manchester. Group clinical governance, incident reporting and duty of candour apply to our clinicians wherever they are practising.",
+	},
+];
+
+const steps = [
+	{
+		n: "01",
+		title: "You tell us the requirement",
+		body: "The role, the grade, the ward or specialty, the start date and the duration. If it is a shortage you have already tried to fill, say so — that tells us more than the job description does.",
+	},
+	{
+		n: "02",
+		title: "We come back with our own people",
+		body: "Not CVs we have collected. Clinicians currently employed by the group, in our hospitals, whose registration and fit for the post we can evidence on request.",
+	},
+	{
+		n: "03",
+		title: "Registration and documentation",
+		body: "We handle the destination regulator's requirements for each clinician, and provide the documentation your clinical governance, HR and compliance functions will ask for.",
+	},
+	{
+		n: "04",
+		title: "They arrive and stay accountable",
+		body: "The clinician works in your hospital under your supervision and your policies, and remains ours for employment, registration and clinical governance.",
+	},
+];
+
+const weRemain = [
+	"Employment, contracts and payroll",
+	"Professional registration and its currency",
+	"Access to our clinical governance framework",
+	"Incident reporting and duty of candour for our clinician",
+	"Return, rotation or repatriation if the placement ends",
+];
+
+const youLead = [
+	"Day-to-day clinical supervision of the placement",
+	"Ward induction and local policies",
+	"Practice in accordance with your regulator's requirements",
+	"Patient safety and clinical governance within your hospital",
+];
+
+const comparison = [
+	{
+		row: "Who employs the clinician",
+		them: "Usually the agency, on a temporary contract",
+		us: "MedicSupport — a direct employment relationship",
+	},
+	{
+		row: "Where they work today",
+		them: "Unknown to you until they arrive",
+		us: "Our own licensed hospitals, verifiable",
+	},
+	{
+		row: "Credential check",
+		them: "A CV, and whatever the recruiter bothered to do",
+		us: "Checked against the registering body, and publicly verifiable",
+	},
+	{
+		row: "Specialist training",
+		them: "Wherever they last happened to work",
+		us: "Trained at our own tertiary referral centres",
+	},
+	{
+		row: "Who is accountable",
+		them: "Divided, and argued over afterwards",
+		us: "Named, and ours",
+	},
+	{
+		row: "If it goes wrong",
+		them: "A claims process",
+		us: "An employer who still employs them",
+	},
+];
+---
+
+<Layout
+	title="Secondment to hospitals in Europe and America | MedicSupport Network"
+	description="MedicSupport Network seconds its own clinicians — employees working in our own hospitals across Africa and Asia — to hospitals and health systems in Europe and America. Not an agency. Not a CV list."
+>
+	<div class="bg-[#fbf8f3] text-[#1a1714] min-h-[60vh]">
+		<div class="max-w-[880px] mx-auto px-6 sm:px-10 pt-16 pb-20">
+
+			<header class="mb-14">
+				<p class="text-[0.68rem] tracking-[0.16em] uppercase font-bold text-[#8a8078] mb-5">
+					Working with hospitals and health systems
+				</p>
+				<h1
+					class="font-[Georgia,serif] text-[clamp(2.5rem,6.5vw,4rem)] leading-[1] tracking-[-0.02em] mb-7"
+				>
+					Europe and America.
+				</h1>
+				<p class="text-[1.22rem] text-[#514a42] max-w-[56ch] leading-relaxed">
+					Hospitals across Europe and America are short of nurses, midwives and paramedics.
+					We second our own clinicians to them. They are people we employ, working in our
+					own hospitals, held to our standard — and we remain their employer when they
+					arrive at yours.
+				</p>
+			</header>
+
+			<!-- the distinction -->
+			<div class="border-l-2 border-[#0086C4] pl-6 mb-16">
+				<p class="text-[1.05rem] text-[#514a42] leading-relaxed max-w-[62ch]">
+					<span class="text-[#1a1714] font-bold">This is not recruitment.</span> We are not
+					an agency, and we are not introducing you to strangers. The clinicians we place
+					work for MedicSupport. They are in our hospitals today, on our payroll, under
+					our clinical governance. When they work in your hospital they are still ours —
+					which is precisely why you can hold us to something.
+				</p>
+			</div>
+
+			<!-- what travels with them -->
+			<section class="mb-16">
+				<h2
+					class="text-[0.68rem] tracking-[0.18em] uppercase font-bold text-[#8a8078] mb-7 pt-6 border-t border-[#1a1714]"
+				>
+					What travels with the clinician
+				</h2>
+				<div class="grid sm:grid-cols-2 gap-x-12 gap-y-8">
+					{travelsWith.map((t) => (
+						<div>
+							<h3 class="font-bold text-[1.05rem] mb-2 leading-snug">{t.title}</h3>
+							<p class="text-[0.95rem] text-[#514a42] leading-relaxed">{t.body}</p>
+						</div>
+					))}
+				</div>
+			</section>
+
+			<!-- process -->
+			<section class="mb-16">
+				<h2
+					class="text-[0.68rem] tracking-[0.18em] uppercase font-bold text-[#8a8078] mb-8 pt-6 border-t border-[#1a1714]"
+				>
+					How a placement runs
+				</h2>
+				<ol class="grid gap-8">
+					{steps.map((s) => (
+						<li class="grid grid-cols-[44px_1fr] gap-5">
+							<span class="font-[Georgia,serif] text-[1.6rem] text-[#0086C4] leading-none pt-0.5">
+								{s.n}
+							</span>
+							<div>
+								<h3 class="font-bold text-[1.1rem] mb-1.5 leading-snug">{s.title}</h3>
+								<p class="text-[0.95rem] text-[#514a42] leading-relaxed max-w-[62ch]">{s.body}</p>
+							</div>
+						</li>
+					))}
+				</ol>
+			</section>
+
+			<!-- division of responsibility -->
+			<section class="mb-16">
+				<h2
+					class="text-[0.68rem] tracking-[0.18em] uppercase font-bold text-[#8a8078] mb-7 pt-6 border-t border-[#1a1714]"
+				>
+					Who is responsible for what
+				</h2>
+				<p class="text-[0.98rem] text-[#514a42] mb-8 max-w-[62ch] leading-relaxed">
+					Placements go wrong when nobody has said who owns what. So, plainly:
+				</p>
+				<div class="grid sm:grid-cols-2 gap-x-14 gap-y-10">
+					<div>
+						<h3 class="text-[0.72rem] tracking-[0.12em] uppercase font-bold text-[#0086C4] mb-4">
+							We remain responsible for
+						</h3>
+						<ul>
+							{weRemain.map((r) => (
+								<li class="py-2.5 text-[0.95rem] border-b border-[#e4ddd4] flex gap-2.5">
+									<span class="w-1.5 h-1.5 rounded-full bg-[#0086C4] mt-2.5 shrink-0"></span>
+									{r}
+								</li>
+							))}
+						</ul>
+					</div>
+					<div>
+						<h3 class="text-[0.72rem] tracking-[0.12em] uppercase font-bold text-[#8a8078] mb-4">
+							You lead on
+						</h3>
+						<ul>
+							{youLead.map((r) => (
+								<li class="py-2.5 text-[0.95rem] border-b border-[#e4ddd4] flex gap-2.5">
+									<span class="w-1.5 h-1.5 rounded-full bg-[#c9c2b8] mt-2.5 shrink-0"></span>
+									{r}
+								</li>
+							))}
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- comparison -->
+			<section class="mb-16">
+				<h2
+					class="text-[0.68rem] tracking-[0.18em] uppercase font-bold text-[#8a8078] mb-7 pt-6 border-t border-[#1a1714]"
+				>
+					Against a recruitment agency
+				</h2>
+				<div class="border border-[#e4ddd4] bg-white overflow-x-auto">
+					<table class="w-full border-collapse text-[0.92rem] min-w-[620px]">
+						<thead>
+							<tr>
+								<th class="text-left py-3 px-4 text-[0.68rem] tracking-[0.12em] uppercase font-bold text-[#8a8078] border-b border-[#e4ddd4] bg-[#f7f3ec]">
+									&nbsp;
+								</th>
+								<th class="text-left py-3 px-4 text-[0.68rem] tracking-[0.12em] uppercase font-bold text-[#8a8078] border-b border-[#e4ddd4] bg-[#f7f3ec]">
+									A recruitment agency
+								</th>
+								<th class="text-left py-3 px-4 text-[0.68rem] tracking-[0.12em] uppercase font-bold text-[#0086C4] border-b border-[#e4ddd4] bg-[#f7f3ec]">
+									MedicSupport Network
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{comparison.map((c) => (
+								<tr>
+									<td class="py-3.5 px-4 border-b border-[#e4ddd4] font-bold align-top">
+										{c.row}
+									</td>
+									<td class="py-3.5 px-4 border-b border-[#e4ddd4] text-[#8a8078] align-top">
+										{c.them}
+									</td>
+									<td class="py-3.5 px-4 border-b border-[#e4ddd4] align-top">{c.us}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</section>
+
+			<!-- scale -->
+			<div class="border-l-2 border-[#0086C4] pl-6 mb-16">
+				<p class="text-[1rem] text-[#514a42] leading-relaxed max-w-[62ch]">
+					The clinicians we place come from {HOSPITALS.length} facilities we operate across
+					{COUNTRIES.length} countries in Africa and Asia, from a workforce of
+					approximately <strong class="text-[#1a1714]">{fmt(totalStaff)} people</strong>. They
+					are not pulled from a database. They are colleagues, working in our hospitals,
+					who we are prepared to put their name to.
+				</p>
+			</div>
+
+			<!-- CTA -->
+			<section class="border-t border-[#1a1714] pt-10">
+				<h2 class="font-[Georgia,serif] text-[1.9rem] leading-tight mb-3 tracking-[-0.01em]">
+					If you have a vacancy you cannot fill, talk to us.
+				</h2>
+				<p class="text-[1rem] text-[#514a42] mb-7 max-w-[58ch] leading-relaxed">
+					Tell us the role, the grade, the market and the start date. If we cannot fill it,
+					we will tell you that rather than send you a list.
+				</p>
+				<div class="flex flex-wrap gap-3.5">
+					<a
+						href="mailto:employers@medicsupport.network?subject=Secondment%20enquiry%20%E2%80%94%20MedicSupport%20Network"
+						class="bg-[#0f3d57] text-white px-7 py-3.5 font-bold text-[1rem] no-underline"
+						>Enquire about secondment</a
+					>
+					<a
+						href="/hospitals"
+						class="border border-[#0f3d57] text-[#0f3d57] px-7 py-3.5 font-bold text-[1rem] no-underline"
+						>See our facilities</a
+					>
+				</div>
+				<p class="text-[0.85rem] text-[#8a8078] mt-6 max-w-[58ch] leading-relaxed">
+					Clinical governance documentation, professional indemnity arrangements and
+					registration evidence for any proposed clinician are provided on request, per
+					placement.
+				</p>
+			</section>
+
+		</div>
+	</div>
+</Layout>
