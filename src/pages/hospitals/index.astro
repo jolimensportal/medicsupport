@@ -3,16 +3,16 @@ import Layout from "../../layouts/MainLayout.astro";
 import {
 	HOSPITALS,
 	COUNTRIES,
+	byCountrySize,
 	totalBeds,
 	totalStaffed,
 	totalStaff,
-	type Hospital,
 } from "../../data/hospitals";
 
-const byCountry = COUNTRIES.map((c) => ({
-	country: c,
-	facilities: HOSPITALS.filter((h) => h.country === c),
-})).sort((a, b) => a.country.localeCompare(b.country));
+const byCountry = byCountrySize.map(({ country }) => ({
+	country,
+	facilities: HOSPITALS.filter((h) => h.country === country),
+}));
 
 const fmt = (n: number) => n.toLocaleString("en-GB");
 

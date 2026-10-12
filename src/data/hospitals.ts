@@ -16,6 +16,17 @@
  *
  *  The exported `Hospital` type is the contract. Keep it and you can change
  *  anything about the content without touching a template.
+ *
+ *  NAMING: hospital names are built the way real ones are actually named in
+ *  each market — anchored to a real district or suburb, with the word that
+ *  market actually uses (Community Hospital in Ghana/Kenya, Medical Centre in
+ *  Nigeria/Kenya/Philippines, Private Hospital in South Africa, Clinique in
+ *  Morocco). They are NOT prefixed with the group name; real hospital groups
+ *  do not put their brand on every door.
+ *
+ *  ⚠ BECAUSE THESE NAMES ARE LOCATION-ANCHORED TO REAL DISTRICTS, SOME MAY
+ *  COINCIDE WITH A REAL INSTITUTION. They must be checked against real
+ *  hospital registers per country before this site is used publicly.
  * ============================================================================
  */
 
@@ -24,7 +35,7 @@ export type Hospital = {
 	name: string;
 	city: string;
 	country: string;
-	/** ISO-3166 alpha-2, used for the flag/region chip. */
+	/** ISO-3166 alpha-2, used for the region chip. */
 	countryCode: string;
 	beds: number;
 	opened: number;
@@ -40,155 +51,153 @@ export type Hospital = {
 };
 
 export const HOSPITALS: Hospital[] = [
-	// ─────────────────────────── GHANA ───────────────────────────
+	// ─────────────────────── NIGERIA — 5 (our largest market) ───────────────────────
 	{
-		slug: "medicsupport-accra",
-		name: "MedicSupport Accra Hospital",
-		city: "Accra",
-		country: "Ghana",
-		countryCode: "GH",
-		beds: 320,
-		staffedBeds: 268,
-		opened: 2009,
-		level: "Tertiary",
-		status: "Operating",
-		specialisms: ["Cardiology", "General surgery", "Obstetrics & gynaecology", "Nephrology"],
-		services: ["24-hour emergency", "Cardiac catheterisation", "Dialysis", "Neonatal intensive care"],
-		blurb:
-			"Our flagship Ghanaian site and the group's largest referral centre on the West African corridor, taking complex cardiac and obstetric referrals from the surrounding region.",
-		accreditation: ["National Health Service Licence", "Healthcare Professions Council registration"],
-	},
-	{
-		slug: "medicsupport-kumasi",
-		name: "MedicSupport Ashanti Medical Centre",
-		city: "Kumasi",
-		country: "Ghana",
-		countryCode: "GH",
-		beds: 180,
-		staffedBeds: 151,
-		opened: 2014,
-		level: "Secondary",
-		status: "Expanded",
-		specialisms: ["General medicine", "Orthopaedics", "Paediatrics", "General surgery"],
-		services: ["24-hour emergency", "Physiotherapy", "Diagnostic imaging", "Outpatient clinics"],
-		blurb:
-			"Situated in Kumasi, the Ashanti regional capital. Extended in 2023 with a 40-bed orthopaedic block commissioned to absorb fracture caseloads from the northern catchments.",
-		accreditation: ["National Health Service Licence"],
-	},
-	{
-		slug: "medicsupport-takoradi",
-		name: "MedicSupport Western Regional Hospital",
-		city: "Takoradi",
-		country: "Ghana",
-		countryCode: "GH",
-		beds: 120,
-		staffedBeds: 96,
-		opened: 2018,
-		level: "Secondary",
-		status: "Operating",
-		specialisms: ["General medicine", "General surgery", "Maternity"],
-		services: ["24-hour emergency", "Maternity", "Outpatient clinics", "Occupational health"],
-		blurb:
-			"Built to serve the industrial and offshore workforce of the Western Region, with occupational health provision for energy and marine operators.",
-		accreditation: ["National Health Service Licence"],
-	},
-
-	// ─────────────────────────── NIGERIA ───────────────────────────
-	{
-		slug: "medicsupport-lagos",
-		name: "MedicSupport Lagos Central Hospital",
+		slug: "ikoyi-private-hospital",
+		name: "Ikoyi Private Hospital",
 		city: "Lagos",
 		country: "Nigeria",
 		countryCode: "NG",
-		beds: 410,
-		staffedBeds: 344,
-		opened: 2011,
+		beds: 340,
+		staffedBeds: 286,
+		opened: 2009,
 		level: "Tertiary",
 		status: "Operating",
-		specialisms: ["Cardiology", "Neurology", "General surgery", "Oncology"],
-		services: ["24-hour emergency", "Intensive care", "Linear accelerator", "Cardiac catheterisation"],
+		specialisms: ["Cardiology", "General surgery", "Neurology", "Obstetrics & gynaecology"],
+		services: ["24-hour emergency", "Intensive care", "Cardiac catheterisation", "Dialysis"],
 		blurb:
-			"The group's largest Nigerian facility and its principal oncology and neurology referral centre, operating a 24-bed intensive care unit opened in 2022.",
-		accreditation: ["Federal Ministry of Health licence", "Corporate Affairs Commission registration"],
+			"Our flagship Nigerian site and the group's largest referral centre, taking complex cardiac and obstetric work from across Lagos and the western corridor.",
+		accreditation: ["Federal Ministry of Health licence", "Lagos State Hospitals licence"],
 	},
 	{
-		slug: "medicsupport-abuja",
-		name: "MedicSupport Abuja Meridian Medical Centre",
+		slug: "victoria-island-medical-centre",
+		name: "Victoria Island Medical Centre",
+		city: "Lagos",
+		country: "Nigeria",
+		countryCode: "NG",
+		beds: 220,
+		staffedBeds: 184,
+		opened: 2013,
+		level: "Tertiary",
+		status: "Operating",
+		specialisms: ["General surgery", "Oncology", "Orthopaedics", "General medicine"],
+		services: ["24-hour emergency", "Linear accelerator", "Intensive care", "Diagnostic imaging"],
+		blurb:
+			"Opened to serve the island corporate and expatriate population, and since extended into private referral work for mainland facilities.",
+		accreditation: ["Federal Ministry of Health licence"],
+	},
+	{
+		slug: "lekki-community-hospital",
+		name: "Lekki Community Hospital",
+		city: "Lagos",
+		country: "Nigeria",
+		countryCode: "NG",
+		beds: 130,
+		staffedBeds: 98,
+		opened: 2018,
+		level: "Secondary",
+		status: "Expanded",
+		specialisms: ["General medicine", "General surgery", "Paediatrics"],
+		services: ["24-hour emergency", "Maternity", "Outpatient clinics", "Physiotherapy"],
+		blurb:
+			"Situated on the Lekki peninsula expansion corridor, built to absorb the population growth the corridor has taken since opening.",
+		accreditation: ["Lagos State Hospitals licence"],
+	},
+	{
+		slug: "maitama-medical-centre",
+		name: "Maitama Medical Centre",
 		city: "Abuja",
 		country: "Nigeria",
 		countryCode: "NG",
-		beds: 250,
-		staffedBeds: 205,
+		beds: 260,
+		staffedBeds: 214,
 		opened: 2016,
 		level: "Tertiary",
 		status: "Expanded",
 		specialisms: ["General surgery", "Cardiology", "Urology", "Orthopaedics"],
-		services: ["24-hour emergency", "Dialysis", "Theatre services", "Diagnostic imaging"],
+		services: ["24-hour emergency", "Theatre services", "Dialysis", "Intensive care"],
 		blurb:
-			"Opened ahead of the capital's tertiary expansion programme, now serving as a private referral partner to several federal public hospitals.",
-		accreditation: ["Federal Ministry of Health licence"],
+			"Opened ahead of the capital's tertiary expansion programme, now a private referral partner to several federal public hospitals in Abuja.",
+		accreditation: ["Federal Ministry of Health licence", "FCT Hospitals licence"],
 	},
 	{
-		slug: "medicsupport-port-harcourt",
-		name: "MedicSupport Port Harcourt Clinical Hospital",
+		slug: "rumuola-medical-centre",
+		name: "Rumuola Medical Centre",
 		city: "Port Harcourt",
 		country: "Nigeria",
 		countryCode: "NG",
-		beds: 160,
-		staffedBeds: 121,
+		beds: 150,
+		staffedBeds: 111,
 		opened: 2019,
 		level: "Secondary",
 		status: "Operating",
-		specialisms: ["General medicine", "Paediatrics", "General surgery"],
-		services: ["24-hour emergency", "Maternity", "Outpatient clinics", "Physiotherapy"],
+		specialisms: ["General medicine", "General surgery", "Paediatrics"],
+		services: ["24-hour emergency", "Occupational health", "Maternity", "Outpatient clinics"],
 		blurb:
-			"Established to carry caseload from the oil and gas belt, including occupational health provision for offshore and onshore contractors.",
-		accreditation: ["Federal Ministry of Health licence"],
+			"Established to carry caseload from the oil and gas belt, with occupational health provision for offshore and onshore contractors.",
+		accreditation: ["Rivers State Hospitals licence"],
 	},
 
-	// ─────────────────────────── KENYA ───────────────────────────
+	// ─────────────────────── KENYA — 4 (our East African hub) ───────────────────────
 	{
-		slug: "medicsupport-nairobi",
-		name: "MedicSupport Nairobi Hospital",
+		slug: "westlands-medical-centre",
+		name: "Westlands Medical Centre",
 		city: "Nairobi",
 		country: "Kenya",
 		countryCode: "KE",
 		beds: 280,
-		staffedBeds: 239,
+		staffedBeds: 237,
 		opened: 2013,
 		level: "Tertiary",
 		status: "Operating",
 		specialisms: ["Cardiology", "General surgery", "Orthopaedics", "Gynaecology"],
 		services: ["24-hour emergency", "Intensive care", "Cardiac catheterisation", "Dialysis"],
 		blurb:
-			"The group's East African hub and the referral destination for complex cases from across the region, including from neighbouring hospital groups.",
+			"Our Kenyan flagship and the regional referral destination for complex cases, accepting work from across East Africa.",
 		accreditation: ["Kenya Medical Practitioners and Dentists Council", "Nursing Council of Kenya"],
 	},
 	{
-		slug: "medicsupport-mombasa",
-		name: "MedicSupport Coast General Hospital",
+		slug: "kilimani-hospital",
+		name: "Kilimani Hospital",
+		city: "Nairobi",
+		country: "Kenya",
+		countryCode: "KE",
+		beds: 170,
+		staffedBeds: 138,
+		opened: 2016,
+		level: "Secondary",
+		status: "Operating",
+		specialisms: ["General medicine", "General surgery", "Orthopaedics", "Paediatrics"],
+		services: ["24-hour emergency", "Maternity", "Diagnostic imaging", "Physiotherapy"],
+		blurb:
+			"A second Nairobi site covering the residential catchment to the north and west of the flagship.",
+		accreditation: ["Nursing Council of Kenya"],
+	},
+	{
+		slug: "nyali-community-hospital",
+		name: "Nyali Community Hospital",
 		city: "Mombasa",
 		country: "Kenya",
 		countryCode: "KE",
 		beds: 140,
-		staffedBeds: 112,
+		staffedBeds: 108,
 		opened: 2018,
 		level: "Secondary",
 		status: "Operating",
 		specialisms: ["General medicine", "General surgery", "Orthopaedics"],
-		services: ["24-hour emergency", "Maternity", "Diagnostic imaging", "Outpatient clinics"],
+		services: ["24-hour emergency", "Maternity", "Outpatient clinics", "Diagnostic imaging"],
 		blurb:
-			"Serving the coastal belt and the port economy, with substantial elective orthopaedic caseload from the surrounding tourism and hospitality sector.",
+			"Serving the coastal belt and the port economy, with substantial elective orthopaedic caseload from tourism and hospitality employers.",
 		accreditation: ["Nursing Council of Kenya"],
 	},
 	{
-		slug: "medicsupport-nakuru",
-		name: "MedicSupport Rift Valley Medical Centre",
-		city: "Nakuru",
+		slug: "naivasha-medical-centre",
+		name: "Naivasha Medical Centre",
+		city: "Naivasha",
 		country: "Kenya",
 		countryCode: "KE",
 		beds: 110,
-		staffedBeds: 84,
+		staffedBeds: 79,
 		opened: 2021,
 		level: "Secondary",
 		status: "New",
@@ -199,15 +208,68 @@ export const HOSPITALS: Hospital[] = [
 		accreditation: ["Nursing Council of Kenya"],
 	},
 
-	// ─────────────────────────── SOUTH AFRICA ───────────────────────────
+	// ─────────────────────── GHANA — 3 (where we began) ───────────────────────
 	{
-		slug: "medicsupport-johannesburg",
-		name: "MedicSupport Gauteng Hospital",
+		slug: "adenta-medical-centre",
+		name: "Adenta Medical Centre",
+		city: "Accra",
+		country: "Ghana",
+		countryCode: "GH",
+		beds: 320,
+		staffedBeds: 271,
+		opened: 2007,
+		level: "Tertiary",
+		status: "Operating",
+		specialisms: ["Cardiology", "General surgery", "Obstetrics & gynaecology", "Nephrology"],
+		services: ["24-hour emergency", "Cardiac catheterisation", "Dialysis", "Neonatal intensive care"],
+		blurb:
+			"The group's first hospital, opened in Adenta in 2007, and still our principal tertiary referral centre on the West African corridor.",
+		accreditation: ["Ghana Health Service facility licence", "Health Professions Council registration"],
+	},
+	{
+		slug: "asokore-mampong-community-hospital",
+		name: "Asokore Mampong Community Hospital",
+		city: "Kumasi",
+		country: "Ghana",
+		countryCode: "GH",
+		beds: 180,
+		staffedBeds: 148,
+		opened: 2014,
+		level: "Secondary",
+		status: "Expanded",
+		specialisms: ["General medicine", "Orthopaedics", "Paediatrics", "General surgery"],
+		services: ["24-hour emergency", "Physiotherapy", "Diagnostic imaging", "Outpatient clinics"],
+		blurb:
+			"Kumasi is the Asante capital and a long-standing route into the northern catchments. Extended in 2023 with a 40-bed orthopaedic block.",
+		accreditation: ["Ghana Health Service facility licence"],
+	},
+	{
+		slug: "sekondi-takoradi-community-hospital",
+		name: "Sekondi-Takoradi Community Hospital",
+		city: "Sekondi-Takoradi",
+		country: "Ghana",
+		countryCode: "GH",
+		beds: 120,
+		staffedBeds: 93,
+		opened: 2018,
+		level: "Secondary",
+		status: "Operating",
+		specialisms: ["General medicine", "General surgery", "Maternity"],
+		services: ["24-hour emergency", "Maternity", "Occupational health", "Outpatient clinics"],
+		blurb:
+			"Built to serve the industrial and offshore workforce of the Western Region, with occupational health provision for energy and marine operators.",
+		accreditation: ["Ghana Health Service facility licence"],
+	},
+
+	// ─────────────────────── SOUTH AFRICA — 3 ───────────────────────
+	{
+		slug: "sandton-private-hospital",
+		name: "Sandton Private Hospital",
 		city: "Johannesburg",
 		country: "South Africa",
 		countryCode: "ZA",
 		beds: 360,
-		staffedBeds: 312,
+		staffedBeds: 311,
 		opened: 2010,
 		level: "Tertiary",
 		status: "Operating",
@@ -215,157 +277,107 @@ export const HOSPITALS: Hospital[] = [
 		services: ["24-hour emergency", "Intensive care", "Advanced imaging", "Cardiac catheterisation"],
 		blurb:
 			"Our most technically equipped site and the training base for the group's specialist fellows, with an accredited cardiothoracic programme.",
-		accreditation: ["Council for Health Professions accredited", "Health Professions Council of South Africa"],
+		accreditation: ["Council for Health Professions accreditation", "Health Professions Council of South Africa"],
 	},
 	{
-		slug: "medicsupport-cape-town",
-		name: "MedicSupport Cape Town Medical Institute",
+		slug: "century-city-medical-centre",
+		name: "Century City Medical Centre",
 		city: "Cape Town",
 		country: "South Africa",
 		countryCode: "ZA",
-		beds: 220,
-		staffedBeds: 188,
+		beds: 200,
+		staffedBeds: 171,
 		opened: 2015,
 		level: "Tertiary",
 		status: "Operating",
-		specialisms: ["Oncology", "General surgery", "Cardiology", "Emergency medicine"],
+		specialisms: ["Oncology", "Emergency medicine", "General surgery", "Cardiology"],
 		services: ["24-hour emergency", "Intensive care", "Linear accelerator", "Emergency retrieval"],
 		blurb:
 			"Operates the group's emergency retrieval service, running a dedicated advanced life support unit with hospital-based response across the Western Cape.",
 		accreditation: ["Health Professions Council of South Africa"],
 	},
 	{
-		slug: "medicsupport-durban",
-		name: "MedicSupport Durban Coastal Hospital",
+		slug: "umhlanga-hospital",
+		name: "Umhlanga Hospital",
 		city: "Durban",
 		country: "South Africa",
 		countryCode: "ZA",
 		beds: 190,
-		staffedBeds: 153,
+		staffedBeds: 152,
 		opened: 2017,
 		level: "Secondary",
 		status: "Expanded",
-		specialisms: ["Orthopaedics", "General medicine", "General surgery", "Emergency medicine"],
+		specialisms: ["Orthopaedics", "Emergency medicine", "General medicine", "General surgery"],
 		services: ["24-hour emergency", "Theatre services", "Physiotherapy", "Diagnostic imaging"],
 		blurb:
 			"Expanded in 2024 with a dedicated trauma theatre, reflecting the volume of major trauma presentations from the N2 corridor.",
 		accreditation: ["Health Professions Council of South Africa"],
 	},
 
-	// ─────────────────────────── PHILIPPINES ───────────────────────────
+	// ─────────────────────── PHILIPPINES — 2 ───────────────────────
 	{
-		slug: "medicsupport-manila",
-		name: "MedicSupport Metro Manila Hospital",
+		slug: "sampaloc-medical-centre",
+		name: "Sampaloc Medical Centre",
 		city: "Manila",
 		country: "Philippines",
 		countryCode: "PH",
 		beds: 340,
-		staffedBeds: 289,
+		staffedBeds: 287,
 		opened: 2012,
 		level: "Tertiary",
 		status: "Operating",
 		specialisms: ["General surgery", "Cardiology", "Neurology", "Obstetrics & gynaecology"],
 		services: ["24-hour emergency", "Intensive care", "Cardiac catheterisation", "Dialysis"],
 		blurb:
-			"The group's principal Philippine facility and the largest single employer of nurses in the group, running a structured overseas deployment programme.",
+			"Our principal Philippine facility and the largest single employer of nurses in the group, running a structured secondment programme to hospitals abroad.",
 		accreditation: ["Department of Health licence", "Philippine Nurses Association registration"],
 	},
 	{
-		slug: "medicsupport-cebu",
-		name: "MedicSupport Cebu Central Hospital",
+		slug: "mandaue-community-hospital",
+		name: "Mandaue Community Hospital",
 		city: "Cebu City",
 		country: "Philippines",
 		countryCode: "PH",
 		beds: 200,
-		staffedBeds: 167,
+		staffedBeds: 163,
 		opened: 2016,
 		level: "Tertiary",
 		status: "Expanded",
 		specialisms: ["General medicine", "General surgery", "Paediatrics", "Orthopaedics"],
 		services: ["24-hour emergency", "Maternity", "Intensive care", "Diagnostic imaging"],
 		blurb:
-			"Central Visayas referral centre, expanded in 2022 with a 30-bed paediatric intensive care unit.",
-		accreditation: ["Department of Health licence"],
-	},
-	{
-		slug: "medicsupport-davao",
-		name: "MedicSupport Davao Regional Hospital",
-		city: "Davao City",
-		country: "Philippines",
-		countryCode: "PH",
-		beds: 150,
-		staffedBeds: 118,
-		opened: 2020,
-		level: "Secondary",
-		status: "Operating",
-		specialisms: ["General medicine", "General surgery", "Maternity"],
-		services: ["24-hour emergency", "Maternity", "Outpatient clinics", "Tele-radiology"],
-		blurb:
-			"Serves the Mindanao mainland and the southern island belt, with tele-radiology links back to Metro Manila for second-opinion reporting.",
+			"The Central Visayas referral centre, expanded in 2022 with a 30-bed paediatric intensive care unit.",
 		accreditation: ["Department of Health licence"],
 	},
 
-	// ─────────────────────────── MOROCCO ───────────────────────────
+	// ─────────────────────── MOROCCO — 1 (our Francophone flagship) ───────────────────────
 	{
-		slug: "medicsupport-casablanca",
-		name: "MedicSupport Clinique Atlas Casablanca",
+		slug: "clinique-ibn-rochd",
+		name: "Clinique Ibn Rochd",
 		city: "Casablanca",
 		country: "Morocco",
 		countryCode: "MA",
 		beds: 240,
-		staffedBeds: 201,
+		staffedBeds: 199,
 		opened: 2015,
 		level: "Tertiary",
 		status: "Operating",
 		specialisms: ["Cardiology", "General surgery", "Neurology", "Urology"],
 		services: ["24-hour emergency", "Intensive care", "Cardiac catheterisation", "Advanced imaging"],
 		blurb:
-			"Our Moroccan flagship and the group's main Francophone site, operating to French clinical accreditation standards.",
+			"Our Moroccan flagship and the group's main Francophone site, operating to French clinical accreditation standards and serving referrals from across the Maghreb.",
 		accreditation: ["Ministère de la Santé licence", "French-language clinical accreditation"],
-	},
-	{
-		slug: "medicsupport-rabat",
-		name: "MedicSupport Clinique Amal Rabat",
-		city: "Rabat",
-		country: "Morocco",
-		countryCode: "MA",
-		beds: 130,
-		staffedBeds: 102,
-		opened: 2018,
-		level: "Secondary",
-		status: "Operating",
-		specialisms: ["General medicine", "General surgery", "Paediatrics", "Maternity"],
-		services: ["24-hour emergency", "Maternity", "Outpatient clinics", "Diagnostic imaging"],
-		blurb:
-			"Situated in the administrative capital, serving a predominantly public-sector referral population alongside private patients.",
-		accreditation: ["Ministère de la Santé licence"],
-	},
-	{
-		slug: "medicsupport-marrakech",
-		name: "MedicSupport Clinique Palmeraie Marrakech",
-		city: "Marrakech",
-		country: "Morocco",
-		countryCode: "MA",
-		beds: 100,
-		staffedBeds: 74,
-		opened: 2022,
-		level: "Secondary",
-		status: "New",
-		specialisms: ["General medicine", "Orthopaedics", "General surgery"],
-		services: ["24-hour emergency", "Maternity", "Outpatient clinics", "Physiotherapy"],
-		blurb:
-			"Our newest Moroccan site, opened to meet seasonal and resident demand in the Marrakech region.",
-		accreditation: ["Ministère de la Santé licence"],
 	},
 ];
 
-export const COUNTRIES = [
-	...new Set(HOSPITALS.map((h) => h.country)),
-];
+export const COUNTRIES = [...new Set(HOSPITALS.map((h) => h.country))];
+
+/** Facility counts per country, for the index summary. */
+export const byCountrySize = COUNTRIES.map((c) => ({
+	country: c,
+	count: HOSPITALS.filter((h) => h.country === c).length,
+})).sort((a, b) => b.count - a.count);
 
 export const totalBeds = HOSPITALS.reduce((n, h) => n + h.beds, 0);
 export const totalStaffed = HOSPITALS.reduce((n, h) => n + h.staffedBeds, 0);
-export const totalStaff = HOSPITALS.reduce(
-	(n, h) => n + Math.round(h.staffedBeds * 2.4),
-	0,
-);
+export const totalStaff = HOSPITALS.reduce((n, h) => n + Math.round(h.staffedBeds * 2.4), 0);
