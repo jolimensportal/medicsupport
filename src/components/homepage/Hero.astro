@@ -1,6 +1,9 @@
 ---
 import Image from "astro/components/Image.astro";
 import { ChevronRight } from "@lucide/astro";
+import { HOSPITALS, COUNTRIES, totalBeds, totalStaffed } from "../../data/hospitals";
+
+const fmt = (n: number) => n.toLocaleString("en-GB");
 ---
 
 <section class="section section-hero py-10 sm:py-20 my-0!">
@@ -8,31 +11,29 @@ import { ChevronRight } from "@lucide/astro";
     <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
       <div class="text-center sm:text-left">
         <h1>
-          African clinicians, verified and placed{" "}
+          We run hospitals.{" "}
           <span
             class="bg-linear-to-r from-[#0179B4] to-[#88D8FF] bg-clip-text text-transparent"
-            >where the shortage is worst.</span
+            >And we staff them with our own people.</span
           >
         </h1>
         <p class="mt-8 mb-10">
-          MedicSupport Network sources nurses, doctors, midwives and paramedics
-          across Africa, checks their registration, licence and identity
-          against the issuing bodies, and places them with hospitals and health
-          groups in{" "}
-          <span class="text-main-200">Europe, the United States and the Gulf.</span>{" "}
-          Every clinician we represent holds a public profile you can open before
-          you make contact.
+          MedicSupport Network has operated hospitals and clinics across{" "}
+          <span class="text-main-200">Africa and Asia</span>{" "}for 18 years — {HOSPITALS.length} facilities,{" "}
+          {COUNTRIES.length} countries, {fmt(totalBeds)} licensed beds. Our doctors, nurses, midwives and
+          paramedics work in our hospitals. Some are seconded to hospitals and health systems in{" "}
+          <span class="text-main-200">Europe and America</span>.
         </p>
         <div class="flex flex-wrap gap-4 justify-center sm:justify-start">
           <a
-            href="/#apply"
+            href="/hospitals"
             class="btn bg-[linear-gradient(125deg,var(--color-main-100),var(--color-main-200))] text-white border-0 rounded-xl text-lg py-3 px-6 h-auto shadow-xl hover:shadow-2xl"
-            >Register as a clinician <ChevronRight /></a
+            >See our facilities <ChevronRight /></a
           >
           <a
-            href="/#employers"
+            href="mailto:info@medicsupport.network?subject=MedicSupport%20Network%20%E2%80%94%20enquiry"
             class="btn border-2 border-main-200 bg-transparent text-white rounded-xl text-lg py-3 px-6 h-auto shadow-none hover:bg-white hover:text-black hover:border-white"
-            >Source clinicians for your hospital</a
+            >Contact the group</a
           >
         </div>
       </div>
@@ -53,28 +54,27 @@ import { ChevronRight } from "@lucide/astro";
             <div
               class="border-main-200 border-2 rounded-xl p-5 bg-[linear-gradient(-125deg,#E9F6FF_0%,#ffffff_100%)] hidden sm:block sm:max-w-[46%] ml-auto"
             >
-              <h3 class="text-main-200 mb-3">Checked before you ever call</h3>
+              <h3 class="text-main-200 mb-3">The group at a glance</h3>
               <ul class="text-black text-sm space-y-1.5">
-                <li>Registration verified with the nursing or medical council</li>
-                <li>Licence verified with the destination regulator</li>
-                <li>Identity and right to work confirmed</li>
-                <li>References and clinical history on file</li>
+                <li>{HOSPITALS.length} hospitals and clinics</li>
+                <li>{COUNTRIES.length} countries — Africa and Asia</li>
+                <li>{fmt(totalBeds)} licensed · {fmt(totalStaffed)} staffed beds</li>
+                <li>18 years of continuous operation</li>
               </ul>
             </div>
             <div
-              class="bg-white p-4 rounded-xl shadow hidden sm:flex sm:max-w-[50%] text-main-200 text-lg items-center gap-3"
+              class="bg-white p-4 rounded-xl shadow hidden sm:flex sm:max-w-[56%] text-main-200 text-lg items-center gap-3"
             >
               <svg class="icon" width="30" height="30">
                 <use xlink:href="#star"></use>
               </svg>
-              Africa &rarr; Europe &middot; United States &middot; Gulf
+              Africa &amp; Asia &rarr; deployed to Europe &amp; America
             </div>
             <div
-              class="relative border-main-200 border-2 rounded-xl p-5 pt-8 bg-[linear-gradient(-125deg,#E9F6FF_0%,#ffffff_100%)] hidden sm:flex sm:max-w-[60%] ml-auto mt-10 -mb-10 before:content-[''] before:absolute before:w-16.25 before:h-16.25 before:bg-[url('/img/icons/quote.svg')] before:bg-contain before:bg-no-repeat before:-top-8 before:left-5 text-black"
+              class="relative border-main-200 border-2 rounded-xl p-5 pt-8 bg-[linear-gradient(-125deg,#E9F6FF_0%,#ffffff_100%)] hidden sm:flex sm:max-w-[62%] ml-auto mt-10 -mb-10 before:content-[''] before:absolute before:w-16.25 before:h-16.25 before:bg-[url('/img/icons/quote.svg')] before:bg-contain before:bg-no-repeat before:-top-8 before:left-5 text-black"
             >
-              We publish the credential, not just the CV. A hospital should be
-              able to check a clinician before it books them, and a clinician
-              should be able to show their record without emailing anyone.
+              The clinicians we second abroad are not strangers we found. They are our own staff, already
+              working in our own hospitals, already held to our standards.
             </div>
           </div>
         </div>

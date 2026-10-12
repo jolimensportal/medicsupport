@@ -1,0 +1,126 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import { HOSPITALS, type Hospital } from "../../data/hospitals";
+
+export async function getStaticPaths() {
+	return HOSPITALS.map((hospital) => ({
+		params: { slug: hospital.slug },
+		props: { hospital },
+	}));
+}
+
+const { hospital: h } = Astro.props;
+const all = HOSPITALS;
+const idx = all.findIndex((x) => x.slug === h.slug);
+const next = all[(idx + 1) % all.length];
+
+const fmt = (n: number) => n.toLocaleString("en-GB");
+const clinical = h.services.length + h.specialisms.length;
+---
+
+<Layout
+	title={`${h.name}, ${h.city} | MedicSupport Network`}
+	description={`${h.name} in ${h.city}, ${h.country} — a ${h.level.toLowerCase()} hospital operated by MedicSupport Network, ${h.beds} beds, opened ${h.opened}.`}
+>
+	<div class="bg-[#fbf8f3] text-[#1a1714] min-h-[60vh]">
+		<div class="max-w-[900px] mx-auto px-6 sm:px-10 pt-14 pb-20">
+
+			<nav class="text-[0.82rem] text-[#8a8078] mb-8">
+				<a href="/hospitals" class="hover:underline text-[#0086C4]">Hospitals and clinics</a>
+				<span class="mx-2">/</span>
+				<span>{h.country}</span>
+			</nav>
+
+			<header class="mb-10">
+				<div class="flex flex-wrap items-center gap-3 mb-4">
+					<span class="text-[0.68rem] tracking-[0.14em] uppercase font-bold text-[#8a8078]">
+						{h.level} · {h.city}
+					</span>
+					{h.status === "New" && (
+						<span class="text-[0.6rem] tracking-[0.1em] uppercase font-bold text-white bg-[#0086C4] px-2 py-1">
+							Opened {h.opened}
+						</span>
+					)}
+				</div>
+				<h1
+					class="font-[Georgia,serif] text-[clamp(2.1rem,5vw,3.1rem)] leading-[1.05] tracking-[-0.015em] mb-4"
+				>
+					{h.name}
+				</h1>
+				<p class="text-[1.12rem] text-[#514a42] max-w-[58ch]">{h.blurb}</p>
+			</header>
+
+			<!-- facts -->
+			<div class="grid grid-cols-2 sm:grid-cols-4 border-y border-[#1a1714] mb-12">
+				<div class="py-5 pr-5 border-r border-[#e4ddd4]">
+					<p class="font-[Georgia,serif] text-[1.7rem] leading-none mb-1">{h.beds}</p>
+					<p class="text-[0.7rem] tracking-[0.1em] uppercase font-bold text-[#8a8078]">Licensed beds</p>
+				</div>
+				<div class="py-5 px-5 border-r border-[#e4ddd4]">
+					<p class="font-[Georgia,serif] text-[1.7rem] leading-none mb-1">{h.staffedBeds}</p>
+					<p class="text-[0.7rem] tracking-[0.1em] uppercase font-bold text-[#8a8078]">Staffed</p>
+				</div>
+				<div class="py-5 px-5 border-r border-[#e4ddd4]">
+					<p class="font-[Georgia,serif] text-[1.7rem] leading-none mb-1">{h.opened}</p>
+					<p class="text-[0.7rem] tracking-[0.1em] uppercase font-bold text-[#8a8078]">Opened</p>
+				</div>
+				<div class="py-5 pl-5">
+					<p class="font-[Georgia,serif] text-[1.7rem] leading-none mb-1">{clinical}</p>
+					<p class="text-[0.7rem] tracking-[0.1em] uppercase font-bold text-[#8a8078]">Service lines</p>
+				</div>
+			</div>
+
+			<div class="grid sm:grid-cols-2 gap-x-12 gap-y-10 mb-14">
+				<div>
+					<h2 class="text-[0.68rem] tracking-[0.16em] uppercase font-bold text-[#8a8078] mb-4 pb-3 border-b border-[#e4ddd4]">
+						Specialisms
+					</h2>
+					<ul>
+						{h.specialisms.map((s) => (
+							<li class="py-2.5 text-[1rem] border-b border-[#e4ddd4]">{s}</li>
+						))}
+					</ul>
+				</div>
+				<div>
+					<h2 class="text-[0.68rem] tracking-[0.16em] uppercase font-bold text-[#8a8078] mb-4 pb-3 border-b border-[#e4ddd4]">
+						Services
+					</h2>
+					<ul>
+						{h.services.map((s) => (
+							<li class="py-2.5 text-[1rem] border-b border-[#e4ddd4]">{s}</li>
+						))}
+					</ul>
+					<h2 class="text-[0.68rem] tracking-[0.16em] uppercase font-bold text-[#8a8078] mt-9 mb-4 pb-3 border-b border-[#e4ddd4]">
+						Registration
+					</h2>
+					<ul>
+						{h.accreditation.map((s) => (
+							<li class="py-2.5 text-[0.92rem] text-[#514a42] border-b border-[#e4ddd4]">
+								<span class="inline-block w-2 h-2 rounded-full bg-[#1f7a4d] mr-2.5 align-middle"></span>
+								{s}
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+
+			<div class="border-l-2 border-[#0086C4] pl-5 mb-14">
+				<p class="text-[1rem] text-[#514a42] leading-relaxed max-w-[60ch]">
+					{h.name} is operated by MedicSupport Network and staffed by our own clinical team.
+					Clinicians from our hospitals are seconded to hospitals and health systems in Europe
+					and America under the same governance and the same standards applied here.
+				</p>
+			</div>
+
+			<nav class="flex items-center justify-between border-t border-[#1a1714] pt-6">
+				<a href="/hospitals" class="text-[0.88rem] text-[#0086C4] hover:underline">
+					← All facilities
+				</a>
+				<a href={`/hospitals/${next.slug}`} class="text-[0.88rem] text-[#514a42] hover:underline text-right">
+					Next: {next.name} →
+				</a>
+			</nav>
+
+		</div>
+	</div>
+</Layout>
