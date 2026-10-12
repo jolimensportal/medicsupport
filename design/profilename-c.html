@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Candidate C — The Card</title>
+<style>
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-regular.woff);font-weight:400;font-display:swap}
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-bold.woff);font-weight:700;font-display:swap}
+:root{
+  --bg:#0a0e13; --panel:#11161d; --panel-2:#161d26; --line:#232d3a; --line-2:#2e3a4a;
+  --fg:#e6edf3; --fg-2:#9fb0c0; --fg-3:#6b7d8f;
+  --brand:#3BA9DD; --ok:#4ADE80; --warn:#FBBF24;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Atkinson,system-ui,sans-serif;background:var(--bg);color:var(--fg);
+  -webkit-font-smoothing:antialiased;font-size:15px;line-height:1.5;padding:26px 20px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.93em;letter-spacing:-.01em}
+.app{max-width:1180px;margin:0 auto}
+
+/* top */
+.top{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:6px}
+.top img{height:22px;width:auto;filter:brightness(0) invert(1)}
+.top .crumb{font-size:14px;color:var(--fg-3)}
+.top .crumb b{color:var(--fg-2);font-weight:400}
+.top .crumb span{color:var(--brand)}
+
+.mock-banner{background:#1d2733;color:#93a7b8;padding:7px 14px;border-radius:5px;font-size:13px;
+  margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;border:1px solid var(--line)}
+
+/* card */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;
+  padding:20px 22px;border-bottom:1px solid var(--line);background:var(--panel-2)}
+.who{display:flex;gap:16px;align-items:center}
+.av{width:52px;height:52px;border-radius:6px;background:var(--line-2);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;color:var(--fg-3);font-size:19px;font-weight:700}
+.who h1{font-size:26px;line-height:1.15;letter-spacing:-.01em}
+.who .meta{color:var(--fg-2);font-size:15px;margin-top:2px}
+.badge{display:flex;align-items:center;gap:8px;background:rgba(74,222,128,.10);border:1px solid rgba(74,222,128,.32);
+  color:var(--ok);padding:9px 15px;border-radius:6px;font-size:14px;font-weight:700;white-space:nowrap}
+.badge .pin{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+
+/* metric strip — the triage layer */
+.strip{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--line)}
+.m{padding:14px 18px;border-right:1px solid var(--line)}
+.m:last-child{border-right:0}
+.m .k{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--fg-3);font-weight:700}
+.m .v{font-size:20px;font-weight:700;margin-top:4px;letter-spacing:-.01em}
+.m .v small{font-size:13px;color:var(--fg-3);font-weight:400}
+.m .v.g{color:var(--ok)} .m .v.b{color:var(--warn)}
+
+/* grid body */
+.grid{display:grid;grid-template-columns:1.05fr 1fr 1fr}
+.cols{padding:18px 22px;border-right:1px solid var(--line)}
+.cols:last-child{border-right:0}
+.cols h3{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-3);
+  font-weight:700;margin-bottom:12px}
+.kv{display:flex;justify-content:space-between;gap:14px;padding:7px 0;font-size:15px;
+  border-bottom:1px solid rgba(35,45,58,.55)}
+.kv:last-child{border-bottom:0}
+.kv .k{color:var(--fg-2)}
+.kv .v{font-weight:700;text-align:right}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px}
+.dot.g{background:var(--ok)} .dot.a{background:var(--brand)} .dot.n{background:var(--line-2)}
+.post{padding:9px 0;border-bottom:1px solid rgba(35,45,58,.55);font-size:15px}
+.post:last-child{border-bottom:0}
+.post .r{font-weight:700} .post .o{color:var(--fg-2);font-size:14px}
+.post .y{color:var(--fg-3);font-size:13px}
+
+.foot{display:flex;align-items:center;gap:12px;padding:14px 22px;border-top:1px solid var(--line);
+  background:var(--panel-2);flex-wrap:wrap}
+.btn{padding:10px 18px;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer;
+  border:1px solid var(--line-2);background:var(--line-2);color:var(--fg)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#05121a}
+.foot .fine{font-size:13px;color:var(--fg-3);margin-left:auto}
+
+/* comparison context — this direction only makes sense in a list */
+.ctx{margin-top:22px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 20px}
+.ctx h3{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-3);
+  font-weight:700;margin-bottom:11px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;color:var(--fg-3);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:0 12px 8px 0;font-weight:700;border-bottom:1px solid var(--line)}
+td{padding:9px 12px 9px 0;border-bottom:1px solid rgba(35,45,58,.55);color:var(--fg-2)}
+tr.me td{color:var(--fg);font-weight:700;background:rgba(59,169,221,.07)}
+tr.me td:first-child{border-left:2px solid var(--brand);padding-left:10px}
+tr:last-child td{border-bottom:0}
+@media(max-width:980px){.strip{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}
+  .cols{border-right:0;border-bottom:1px solid var(--line)}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="top">
+    <img src="brand/wordmark-white.png" alt="MedicSupport Network">
+    <div class="crumb">Shortlist &rsaquo; Medical ward, London &rsaquo; <span>candidate 3 of 8</span></div>
+  </div>
+
+  <div class="mock-banner">
+    <span><strong>Design mockup C — “The Card”.</strong> Sample data. Avatar is a placeholder, not a real person.</span>
+    <span>/ama-boateng</span>
+  </div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="who">
+        <div class="av">AB</div>
+        <div>
+          <h1>Ama Boateng</h1>
+          <div class="meta">Registered Nurse, Adult &amp; Surgical &middot; Accra, Ghana &middot; available Sep 2026</div>
+        </div>
+      </div>
+      <div class="badge"><span class="pin"></span> Verified 3 Mar 2026</div>
+    </div>
+
+    <div class="strip">
+      <div class="m"><div class="k">Experience</div><div class="v">7 <small>yrs</small></div></div>
+      <div class="m"><div class="k">UK licence</div><div class="v g">Active</div></div>
+      <div class="m"><div class="k">Matched to</div><div class="v">2 <small>posts</small></div></div>
+      <div class="m"><div class="k">English</div><div class="v">Fluent</div></div>
+      <div class="m"><div class="k">Documents</div><div class="v b">2 <small>outstanding</small></div></div>
+    </div>
+
+    <div class="grid">
+      <div class="cols">
+        <h3>Registration</h3>
+        <div class="kv"><span class="k">GNMC number</span><span class="v mono">GNMC-NUR-88214</span></div>
+        <div class="kv"><span class="k">Status</span><span class="v"><span class="dot g"></span>Active</span></div>
+        <div class="kv"><span class="k">UK NMC</span><span class="v mono">EN/A-4471</span></div>
+        <div class="kv"><span class="k">Restrictions</span><span class="v">None</span></div>
+        <div class="kv"><span class="k">Re-verify due</span><span class="v mono">Mar 2027</span></div>
+        <h3 style="margin-top:20px">Documents</h3>
+        <div class="kv"><span class="k">Registration cert</span><span class="v"><span class="dot g"></span>Held</span></div>
+        <div class="kv"><span class="k">Passport</span><span class="v"><span class="dot g"></span>Held</span></div>
+        <div class="kv"><span class="k">IELTS / OET</span><span class="v"><span class="dot b"></span>Not taken</span></div>
+      </div>
+
+      <div class="cols">
+        <h3>Clinical history</h3>
+        <div class="post"><div class="y mono">2022 — 2026</div><div class="r">Senior RN, surgical</div><div class="o">Korhogo Regional Hospital</div></div>
+        <div class="post"><div class="y mono">2019 — 2022</div><div class="r">RN, medical ward</div><div class="o">Cape Coast Teaching Hospital</div></div>
+        <div class="post"><div class="y mono">2018 — 2019</div><div class="r">Staff Nurse, emergency</div><div class="o">Aburi Poly Clinic</div></div>
+        <h3 style="margin-top:20px">Scope</h3>
+        <div class="kv"><span class="k">Surgical</span><span class="v">7 yrs</span></div>
+        <div class="kv"><span class="k">Emergency</span><span class="v">5 yrs</span></div>
+      </div>
+
+      <div class="cols">
+        <h3>Eligible markets</h3>
+        <div class="kv"><span class="k"><span class="dot g"></span>United Kingdom</span><span class="v">Licensed</span></div>
+        <div class="kv"><span class="k"><span class="dot a"></span>Ireland</span><span class="v">In progress</span></div>
+        <div class="kv"><span class="k"><span class="dot a"></span>UAE</span><span class="v">In progress</span></div>
+        <div class="kv"><span class="k"><span class="dot n"></span>United States</span><span class="v">Not started</span></div>
+        <h3 style="margin-top:20px">Contact</h3>
+        <div style="font-size:14px;color:var(--fg-2);line-height:1.55">
+          Direct details are withheld. Nominate the role and they are released
+          to you with her consent.
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span class="btn pri">Request contact</span>
+      <span class="btn">Save to shortlist</span>
+      <span class="btn">Full record</span>
+      <span class="fine">Record hash 7f2a…c914</span>
+    </div>
+  </div>
+
+  <div class="ctx">
+    <h3>In this shortlist — 8 candidates for “medical ward, London”</h3>
+    <table>
+      <tr><th>Candidate</th><th>Experience</th><th>UK licence</th><th>English</th><th>Available</th></tr>
+      <tr class="me"><td>Ama Boateng</td><td>7 yrs</td><td>Active</td><td>Fluent</td><td>Sep 2026</td></tr>
+      <tr><td>Kofi Mensah</td><td>4 yrs</td><td>Active</td><td>Fluent</td><td>Oct 2026</td></tr>
+      <tr><td>Ngozi Eze</td><td>9 yrs</td><td>Pending</td><td>Fluent</td><td>Aug 2026</td></tr>
+      <tr><td>Samuel Adeyemi</td><td>2 yrs</td><td>Active</td><td>Intermediate</td><td>Nov 2026</td></tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

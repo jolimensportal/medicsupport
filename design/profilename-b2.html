@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Candidate B2 — The Case File + Persistent Verification Bar</title>
+<style>
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-regular.woff);font-weight:400;font-display:swap}
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-bold.woff);font-weight:700;font-display:swap}
+:root{
+  --paper:#fbf8f3; --paper-2:#ffffff; --ink:#1a1714; --ink-2:#514a42; --ink-3:#8a8078;
+  --rule:#e2dad0; --brand:#0086C4; --brand-deep:#005f8c;
+  --ok:#1f7a4d; --seal:#0f3d57;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Atkinson,system-ui,sans-serif;color:var(--ink);background:#efe9e1;
+  -webkit-font-smoothing:antialiased;font-size:16px;line-height:1.6}
+.serif{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.015em}
+.wrap{max-width:960px;margin:28px auto;background:var(--paper);box-shadow:0 1px 3px rgba(26,23,20,.09)}
+
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;padding:20px 40px;
+  border-bottom:1px solid var(--rule)}
+.bar img{height:24px;width:auto}
+.bar .links{display:flex;gap:22px;font-size:14px;color:var(--ink-3)}
+.bar .links a{color:inherit;text-decoration:none}
+
+.mock-banner{background:var(--seal);color:#e8eef2;padding:8px 40px;font-size:13px;
+  display:flex;justify-content:space-between;gap:16px;white-space:nowrap;overflow:hidden}
+
+/* opening */
+.open{display:grid;grid-template-columns:1fr 268px;gap:44px;padding:52px 40px 44px}
+.open h1{font-size:clamp(44px,6vw,68px);line-height:.98;margin-bottom:18px}
+.open .lede{font-size:19px;color:var(--ink-2);max-width:44ch}
+.open .lede em{font-style:normal;color:var(--brand-deep);font-weight:700}
+
+/* portrait placeholder — deliberately abstract, real faces come from real clinicians */
+.portrait{position:relative;background:var(--seal);aspect-ratio:4/5;display:flex;
+  align-items:flex-end;padding:16px;overflow:hidden}
+.portrait .figure{position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 50% 34%, #4a7f9b 0 17%, transparent 17.5%),
+    radial-gradient(ellipse 38% 30% at 50% 88%, #4a7f9b 0 100%, transparent 100.5%),
+    linear-gradient(160deg,#1d4a63,#0f3d57);}
+.portrait .tag{position:relative;font-size:11px;color:#bcd3de;letter-spacing:.06em;line-height:1.4}
+
+/* verified line */
+.vline{display:flex;align-items:center;gap:11px;padding:0 40px 34px;font-size:15px;color:var(--ink-2)}
+.vseal{flex-shrink:0;width:44px;height:44px}
+.vline b{color:var(--ink)}
+
+/* body: timeline spine */
+.body{display:grid;grid-template-columns:200px 1fr;gap:0;border-top:1px solid var(--rule)}
+.rail{padding:34px 24px 34px 40px;border-right:1px solid var(--rule)}
+.rail h4,.col h4{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:700;margin-bottom:14px}
+.rail dl{font-size:14px}
+.rail dt{color:var(--ink-3);margin-top:14px;font-size:13px}
+.rail dt:first-of-type{margin-top:0}
+.rail dd{font-weight:700;color:var(--ink)}
+.col{padding:34px 40px 44px}
+
+/* timeline */
+.tl{position:relative;padding-left:34px}
+.tl::before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:1px;background:var(--rule)}
+.tl .node{position:relative;padding-bottom:30px}
+.tl .node:last-child{padding-bottom:0}
+.tl .node::before{content:"";position:absolute;left:-34px;top:7px;width:13px;height:13px;
+  border-radius:50%;background:var(--paper);border:2px solid var(--brand)}
+.tl .node.cur::before{background:var(--brand)}
+.tl .yr{font-size:13px;color:var(--ink-3);letter-spacing:.06em;margin-bottom:3px}
+.tl .role{font-size:19px;margin-bottom:2px}
+.tl .org{color:var(--ink-2);font-size:15px}
+
+/* credential cards */
+.certs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+.cert{background:var(--paper-2);border:1px solid var(--rule);padding:16px 18px}
+.cert .k{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:7px}
+.cert .n{font-size:16px;font-weight:700;line-height:1.35}
+.cert .s{font-size:13px;color:var(--ok);font-weight:700;margin-top:7px;display:flex;
+  align-items:center;gap:6px}
+.cert .s.pend{color:var(--warn,#9a6b12)}
+.cert code{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--brand-deep)}
+
+/* closing */
+.close{border-top:1px solid var(--rule);padding:30px 40px;display:flex;align-items:center;
+  gap:20px;flex-wrap:wrap;background:var(--paper-2)}
+.btn{padding:13px 24px;font-size:16px;font-weight:700;background:var(--seal);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--seal);border:1px solid var(--seal)}
+.close .fine{font-size:14px;color:var(--ink-3);margin-left:auto}
+/* PERSISTENT VERIFICATION BAR — the structural change in B2 */
+.vstick{position:sticky;top:0;z-index:40;background:var(--seal);color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.16)}
+.vstick-in{display:flex;align-items:center;gap:18px;padding:11px 40px}
+.vstick .seal{width:26px;height:26px;flex-shrink:0}
+.vstick .tagx{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8fb6c9;font-weight:700}
+.vstick .val{font-size:15px;font-weight:700}
+.vstick .sep{width:1px;height:22px;background:rgba(255,255,255,.22);flex-shrink:0}
+.vstick .facts{display:flex;gap:26px;margin-left:auto;font-size:13px;color:#c4d9e4;
+  align-items:center;overflow-x:auto}
+.vstick .facts span b{color:#fff;font-weight:700;font-family:ui-monospace,Menlo,monospace}
+.vstick .live{width:8px;height:8px;border-radius:50%;background:#4ADE80;flex-shrink:0}
+@media(max-width:860px){.vstick .facts .opt{display:none}}
+
+/* per-credential check line */
+.cert .chk{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-3);margin-top:9px;
+  padding-top:9px;border-top:1px solid var(--rule);letter-spacing:.01em}
+.cert .chk b{color:var(--ink-2);font-weight:700}
+.seal-dot{width:15px;height:15px;flex-shrink:0}
+@media(max-width:760px){.open{grid-template-columns:1fr}.body{grid-template-columns:1fr}
+  .rail{border-right:0;border-bottom:1px solid var(--rule)}.certs{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="bar">
+    <img src="brand/wordmark-blue.png" alt="MedicSupport Network">
+    <div class="links"><a href="#">Directory</a><a href="#">Employers</a><a href="#">Clinicians</a><a href="#">Verify</a></div>
+  </div>
+
+  <div class="mock-banner">
+    <span><strong>Design mockup B2 — “The Case File” + persistent verification bar.</strong> Sample data; portrait is an abstract placeholder, not a real person.</span>
+    <span>/ama-boateng</span>
+  </div>
+
+  <div class="vstick">
+    <div class="vstick-in">
+      <svg class="seal" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="48" fill="#0086C4"/>
+        <path d="M 38.4,18.1 H 61.6 V 38.4 H 81.9 V 61.6 H 61.6 V 81.9 H 38.4 V 61.6 H 18.1 V 38.4 H 38.4 Z" fill="#fff"/>
+      </svg>
+      <div>
+        <div class="tagx">Credential status</div>
+        <div class="val"><span class="live" style="display:inline-block;vertical-align:middle;margin-right:8px"></span>Verified 3 March 2026</div>
+      </div>
+      <div class="sep"></div>
+      <div class="facts">
+        <span class="opt">Re-verifies <b>03 Mar 2027</b></span>
+        <span class="opt">GNMC <b>GNMC-NUR-88214</b></span>
+        <span class="opt">UK NMC <b>EN/A-4471</b></span>
+        <span>Record <b>7f2a…c914</b></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="open">
+    <div>
+      <h1 class="serif">Seven years<br>on the ward.</h1>
+      <p class="lede">
+        Ama Boateng has kept a bedside record since 2018 — surgical and emergency
+        nursing across three hospitals in Ghana. She is
+        <em>registered with the GNMC</em> and <em>licensed by the UK NMC</em>,
+        and she is looking for a permanent post abroad.
+      </p>
+    </div>
+    <div class="portrait">
+      <div class="figure"></div>
+      <span class="tag">Portrait supplied by the clinician.<br>No stock faces are used on verified records.</span>
+    </div>
+  </div>
+
+  <div class="vline">
+    <svg class="vseal" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="48" fill="#0086C4"/>
+      <path d="M 38.4,18.1 H 61.6 V 38.4 H 81.9 V 61.6 H 61.6 V 81.9 H 38.4 V 61.6 H 18.1 V 38.4 H 38.4 Z" fill="#fff"/>
+    </svg>
+    <span><b>Verified 3 March 2026.</b> Registration checked against the Ghana Nursing and Midwifery
+    Council; licence checked with the UK Nursing and Midwifery Council. Re-verification due March 2027.</span>
+  </div>
+
+  <div class="body">
+    <div class="rail">
+      <h4>At a glance</h4>
+      <dl>
+        <dt>Registration</dt><dd>GNMC-NUR-88214</dd>
+        <dt>UK licence</dt><dd>NMC-UK-EN/A-4471</dd>
+        <dt>Specialism</dt><dd>Adult &amp; surgical</dd>
+        <dt>Experience</dt><dd>7 years</dd>
+        <dt>Languages</dt><dd>English, Twi, Ga</dd>
+        <dt>Available from</dt><dd>September 2026</dd>
+      </dl>
+    </div>
+
+    <div class="col">
+      <h4>Career</h4>
+      <div class="tl">
+        <div class="node cur">
+          <div class="yr">2022 — 2026</div>
+          <div class="role serif">Senior Registered Nurse, surgical ward</div>
+          <div class="org">Korhogo Regional Hospital, Côte d’Ivoire</div>
+        </div>
+        <div class="node">
+          <div class="yr">2019 — 2022</div>
+          <div class="role serif">Registered Nurse, medical ward</div>
+          <div class="org">Cape Coast Teaching Hospital, Ghana</div>
+        </div>
+        <div class="node">
+          <div class="yr">2018 — 2019</div>
+          <div class="role serif">Staff Nurse, emergency</div>
+          <div class="org">Aburi Poly Clinic, Ghana</div>
+        </div>
+      </div>
+
+      <h4 style="margin-top:40px">Credentials on file</h4>
+      <div class="certs">
+        <div class="cert">
+          <div class="k">Professional registration</div>
+          <div class="n">Ghana Nursing &amp; Midwifery Council</div>
+          <div class="n" style="margin-top:8px"><code>GNMC-NUR-88214</code></div>
+          <div class="s">● Active</div>
+          <div class="chk"><svg class="seal-dot" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#0086C4"/><path d="M 38.4,18.1 H 61.6 V 38.4 H 81.9 V 61.6 H 61.6 V 81.9 H 38.4 V 61.6 H 18.1 V 38.4 H 38.4 Z" fill="#fff"/></svg>Checked against the council register <b>03 Mar 2026</b></div>
+        </div>
+        <div class="cert">
+          <div class="k">UK licence</div>
+          <div class="n">Nursing &amp; Midwifery Council</div>
+          <div class="n" style="margin-top:8px"><code>NMC-UK-EN/A-4471</code></div>
+          <div class="s">● Active</div>
+          <div class="chk"><svg class="seal-dot" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#0086C4"/><path d="M 38.4,18.1 H 61.6 V 38.4 H 81.9 V 61.6 H 61.6 V 81.9 H 38.4 V 61.6 H 18.1 V 38.4 H 38.4 Z" fill="#fff"/></svg>Checked against the UK register <b>03 Mar 2026</b></div>
+        </div>
+        <div class="cert">
+          <div class="k">Republic of Ireland</div>
+          <div class="n">Nursing and Midwifery Board</div>
+          <div class="n" style="margin-top:8px">Application submitted</div>
+          <div class="s pend">◐ In progress</div>
+          <div class="chk">Not yet verified — we will not mark this until the board confirms it.</div>
+        </div>
+        <div class="cert">
+          <div class="k">Documents</div>
+          <div class="n">Registration, passport, 2 references</div>
+          <div class="n" style="margin-top:8px">IELTS not yet taken</div>
+          <div class="s pend">◐ Outstanding</div>
+          <div class="chk">3 of 5 on file · criminal record check pending</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="close">
+    <span class="btn">Request this clinician</span>
+    <span class="btn ghost">Download verified record</span>
+    <span class="fine">Contact details released only to employers she nominates.</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,255 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/MainLayout.astro";
+import VerificationBar from "../components/profile/VerificationBar.astro";
+import CredentialCard from "../components/profile/CredentialCard.astro";
+
+export async function getStaticPaths() {
+	const clinicians = await getCollection("clinicians");
+	return clinicians.map((clinician) => ({
+		params: { profile: clinician.data.slug },
+		props: { clinician },
+	}));
+}
+
+const { clinician } = Astro.props;
+const d = clinician.data;
+
+const fmt = (date: Date) =>
+	date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+const yr = (date: Date) => date.getFullYear().toString();
+
+const yearsOfPractice = d.career.reduce(
+	(acc, role) => acc + (role.to.getTime() - role.from.getTime()) / 31_557_600_000,
+	0,
+);
+const marketLabel = (status: string) =>
+	status === "active"
+		? "Licensed"
+		: status === "in_progress"
+			? "In progress"
+			: status === "not_started"
+				? "Not started"
+				: status;
+
+// The markdown body is the editorial lede. It lives on the entry, not on .data.
+const renderedBody = (clinician.body ?? "").trim();
+const headline = `${d.profession}, ${d.specialism} · ${d.location} · available ${d.availableFrom}`;
+---
+
+<Layout
+	title={`${d.name} — ${d.profession} | MedicSupport Network`}
+	description={`Verified credential record for ${d.name}, ${d.profession} (${d.specialism}). Registration checked against the issuing body on ${fmt(d.record.verifiedOn)}.`}
+>
+	<VerificationBar record={d.record} />
+
+	{d.sample && (
+		<div class="sample-note">
+			<strong>Demonstration record.</strong> This is a design sample — Ama Boateng is
+			not a real person and no clinician records are published yet. It shows what a
+			verified profile will look like.
+		</div>
+	)}
+
+	<div class="page">
+		<div class="open">
+			<div>
+				<h1 class="serif">{Math.round(yearsOfPractice)} years<br />on the ward.</h1>
+				<p class="lede" set:html={renderedBody} />
+				<dl class="glance">
+					<div><dt>Registration</dt><dd class="mono">{d.credentials.find((c) => c.reference)?.reference}</dd></div>
+					<div><dt>Specialism</dt><dd>{d.specialism}</dd></div>
+					<div><dt>Experience</dt><dd>{Math.round(yearsOfPractice)} years</dd></div>
+					<div><dt>Languages</dt><dd>{d.languages.map((l) => l.language).join(", ")}</dd></div>
+					<div><dt>Available from</dt><dd>{d.availableFrom}</dd></div>
+				</dl>
+			</div>
+
+			<figure class="portrait">
+				<div class="figure" aria-hidden="true"></div>
+				<figcaption>
+					Portrait supplied by the clinician. No stock faces are used on verified records.
+				</figcaption>
+			</figure>
+		</div>
+
+		<section class="strip">
+			<h2>Credentials on file</h2>
+			<div class="certs">
+				{d.credentials.map((c) => <CredentialCard credential={c} fmt={fmt} />)}
+			</div>
+		</section>
+
+		<section class="strip">
+			<h2>Career</h2>
+			<div class="career">
+				{d.career.map((role) => (
+					<article class:list={["role", { now: role.current }]}>
+						<div class="yr mono">{yr(role.from)} — {yr(role.to)}</div>
+						<h3 class="serif">{role.role}</h3>
+						<p class="org">{role.org}{role.location ? `, ${role.location}` : ""}</p>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="strip two-up">
+			<div>
+				<h2>Scope of practice</h2>
+				<ul class="plain">
+					{d.scope.map((s) => (
+						<li><span>{s.specialism}</span><span class="mono">{s.years} yrs</span></li>
+					))}
+				</ul>
+			</div>
+			<div>
+				<h2>Credentialed for</h2>
+				<ul class="plain">
+					{d.markets.map((m) => (
+						<li>
+							<span><i class={`dot ${m.status}`} aria-hidden="true"></i>{m.market}</span>
+							<span class="cap">{marketLabel(m.status)}</span>
+						</li>
+					))}
+				</ul>
+			</div>
+			<div>
+				<h2>Documents</h2>
+				<ul class="plain">
+					{d.documents.map((doc) => (
+						<li><span>{doc.document}</span><span class="cap">{doc.status}</span></li>
+					))}
+				</ul>
+			</div>
+		</section>
+
+		<div class="actions">
+			<a class="btn" href={`mailto:employers@medicsupport.network?subject=Request%20contact%20%E2%80%94%20${encodeURIComponent(d.name)}`}>
+				Request this clinician
+			</a>
+			<a class="btn ghost" href="mailto:employers@medicsupport.network?subject=Verified%20record%20download%20%E2%80%94%20MedicSupport">
+				Download verified record
+			</a>
+			<p class="fine">
+				Contact details are released only to employers the clinician nominates.
+			</p>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	:global(.page) {
+		--paper: #fbf8f3;
+		--ink: #1a1714;
+		--ink-2: #514a42;
+		--ink-3: #8a8078;
+		--rule: #e2dad0;
+		--ok: #1f7a4d;
+		--warn: #9a6b12;
+		--brand: #0086c4;
+		background: var(--paper);
+		color: var(--ink);
+		min-height: 60vh;
+	}
+	.serif { font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: -0.015em; }
+
+	.sample-note {
+		position: relative; z-index: 30;
+		background: #fdf3e0; color: #9a6b12; border-bottom: 1px solid #ecd9ae;
+		padding: 12px 40px; font-size: 0.9rem; line-height: 1.5;
+	}
+	.sample-note strong { color: #7d550d; }
+
+	.open {
+		display: grid; grid-template-columns: 1fr 268px; gap: 44px;
+		padding: 52px 40px 44px; max-width: 960px; margin: 0 auto;
+	}
+	.open h1 { font-size: clamp(2.75rem, 6vw, 4.25rem); line-height: 0.98; margin-bottom: 18px; }
+	.lede { font-size: 1.15rem; color: var(--ink-2); max-width: 44ch; margin-bottom: 26px; }
+	.lede :global(strong) { color: #005f8c; }
+
+	.glance { display: grid; gap: 0; border-top: 1px solid var(--rule); max-width: 46ch; }
+	.glance > div {
+		display: grid; grid-template-columns: 150px 1fr; gap: 14px;
+		padding: 8px 0; border-bottom: 1px solid var(--rule); font-size: 0.95rem;
+	}
+	.glance dt { color: var(--ink-3); font-size: 0.85rem; }
+	.glance dd { font-weight: 700; }
+
+	.portrait {
+		position: relative; background: #0f3d57; aspect-ratio: 4 / 5;
+		display: flex; align-items: flex-end; margin: 0; overflow: hidden;
+	}
+	.portrait .figure {
+		position: absolute; inset: 0;
+		background:
+			radial-gradient(circle at 50% 34%, #4a7f9b 0 17%, transparent 17.5%),
+			radial-gradient(ellipse 38% 30% at 50% 88%, #4a7f9b 0 100%, transparent 100.5%),
+			linear-gradient(160deg, #1d4a63, #0f3d57);
+	}
+	.portrait figcaption {
+		position: relative; font-size: 0.7rem; color: #bcd3de;
+		letter-spacing: 0.03em; line-height: 1.4; padding: 16px;
+	}
+
+	.strip {
+		max-width: 880px; margin: 0 auto; padding: 0 0 40px;
+	}
+	.strip h2 {
+		font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+		color: var(--ink-3); font-weight: 700; margin-bottom: 14px;
+	}
+	.two-up { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
+
+	.certs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+	.career { position: relative; padding-left: 34px; }
+	.career::before {
+		content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px;
+		width: 1px; background: var(--rule);
+	}
+	.role { position: relative; padding-bottom: 30px; }
+	.role:last-child { padding-bottom: 0; }
+	.role::before {
+		content: ""; position: absolute; left: -34px; top: 7px; width: 13px; height: 13px;
+		border-radius: 50%; background: var(--paper); border: 2px solid var(--brand);
+	}
+	.role.now::before { background: var(--brand); }
+	.role .yr { font-size: 0.8rem; color: var(--ink-3); letter-spacing: 0.05em; margin-bottom: 3px; }
+	.role h3 { font-size: 1.2rem; margin-bottom: 2px; }
+	.role .org { color: var(--ink-2); font-size: 0.95rem; }
+
+	.plain { list-style: none; }
+	.plain li {
+		display: flex; justify-content: space-between; gap: 12px; align-items: center;
+		padding: 7px 0; font-size: 0.95rem; border-bottom: 1px solid var(--rule);
+	}
+	.plain li:last-child { border-bottom: 0; }
+	.plain span:first-child { display: flex; align-items: center; gap: 9px; }
+	.cap { color: var(--ink-3); font-size: 0.8rem; text-transform: capitalize; }
+	.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88em; letter-spacing: -0.01em; }
+	.dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+	.dot.active { background: var(--ok); }
+	.dot.in_progress, .dot.pending { background: var(--brand); }
+	.dot.not_started, .dot.outstanding { background: var(--rule); }
+	.dot.held { background: var(--ok); }
+
+	.actions {
+		max-width: 880px; margin: 0 auto; padding: 30px 0 46px;
+		display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+	}
+	.btn {
+		background: #0f3d57; color: #fff; padding: 12px 22px; font-weight: 700;
+		text-decoration: none; display: inline-block;
+	}
+	.btn.ghost { background: transparent; color: #0f3d57; border: 1px solid #0f3d57; }
+	.fine { font-size: 0.85rem; color: var(--ink-3); margin-left: auto; margin-bottom: 0; }
+
+	@media (max-width: 900px) {
+		.two-up { grid-template-columns: 1fr; }
+	}
+	@media (max-width: 760px) {
+		.open { grid-template-columns: 1fr; padding: 34px 24px 30px; }
+		.strip, .actions { padding-left: 24px; padding-right: 24px; }
+		.certs { grid-template-columns: 1fr; }
+	}
+</style>

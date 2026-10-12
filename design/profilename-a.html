@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Candidate A — The Ledger</title>
+<style>
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-regular.woff);font-weight:400;font-display:swap}
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-bold.woff);font-weight:700;font-display:swap}
+:root{
+  --ink:#0d1117; --ink-2:#3d4754; --ink-3:#6b7683;
+  --rule:#d9dee4; --rule-soft:#eceff2;
+  --paper:#ffffff; --paper-2:#f7f9fa;
+  --brand:#0086C4; --brand-deep:#005f8c; --brand-wash:#eaf5fb;
+  --ok:#1f7a4d; --ok-wash:#e9f5ef;
+  --warn:#9a6b12; --warn-wash:#fdf3e0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Atkinson,system-ui,sans-serif;color:var(--ink);background:var(--paper-2);
+  -webkit-font-smoothing:antialiased;font-size:15px;line-height:1.55}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;letter-spacing:-.01em}
+.sheet{max-width:1080px;margin:32px auto;background:var(--paper);border:1px solid var(--rule)}
+
+/* masthead */
+.mast{display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:18px 32px;border-bottom:2px solid var(--ink)}
+.mast .lockup{display:flex;align-items:center;gap:10px}
+.mast .lockup img{height:26px;width:auto;display:block}
+.mast nav{display:flex;gap:26px;font-size:14px;color:var(--ink-3)}
+.mast nav a{color:var(--ink-3);text-decoration:none}
+.mast nav a.on{color:var(--ink);font-weight:700;border-bottom:2px solid var(--brand);padding-bottom:2px}
+
+/* mockup banner */
+.mock-banner{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  background:var(--warn-wash);border-bottom:1px solid #ecd9ae;padding:9px 32px;font-size:13px;color:var(--warn)}
+
+/* record header */
+.rec-head{padding:34px 32px 28px;border-bottom:1px solid var(--rule);display:flex;
+  justify-content:space-between;align-items:flex-start;gap:32px}
+.rec-id{font-size:13px;color:var(--ink-3);margin-bottom:10px}
+h1{font-size:38px;line-height:1.1;letter-spacing:-.02em;font-weight:700}
+.sub{margin-top:8px;color:var(--ink-2);font-size:16px;max-width:52ch}
+
+/* verification stamp */
+.stamp{border:2px solid var(--ok);background:var(--ok-wash);padding:14px 18px;min-width:230px;flex-shrink:0}
+.stamp .t{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ok);font-weight:700}
+.stamp .v{font-size:19px;font-weight:700;margin-top:3px;color:var(--ok)}
+.stamp .d{font-size:13px;color:var(--ink-2);margin-top:7px;line-height:1.45}
+
+/* two column body */
+.body{display:grid;grid-template-columns:1fr 300px;gap:0}
+.main{padding:0 32px 36px}
+.side{border-left:1px solid var(--rule);background:var(--paper-2);padding:28px 24px}
+
+section.blk{padding:26px 0;border-bottom:1px solid var(--rule-soft)}
+section.blk:last-child{border-bottom:0}
+h2{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+h2::after{content:"";flex:1;height:1px;background:var(--rule-soft)}
+
+/* credential rows — the core of this direction */
+.cred{display:grid;grid-template-columns:1.4fr 1fr 132px;gap:0;border:1px solid var(--rule)}
+.cred > div{padding:11px 14px;border-bottom:1px solid var(--rule-soft);font-size:14px}
+.cred > div:last-child{border-bottom:0}
+.cred .hd{background:var(--paper-2);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:700;border-bottom:1px solid var(--rule)}
+.cred .hd:hover{background:var(--paper-2)}
+.cred .lbl{font-weight:700}
+.pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:2px}
+.pill.ok{background:var(--ok-wash);color:var(--ok);border:1px solid #bcdccb}
+.pill.pend{background:var(--warn-wash);color:var(--warn);border:1px solid #ecd9ae}
+.reg{color:var(--brand-deep);font-weight:700}
+
+/* experience table */
+table.exp{width:100%;border-collapse:collapse;font-size:14px}
+table.exp th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);padding:0 0 8px;font-weight:700;border-bottom:1px solid var(--rule)}
+table.exp td{padding:10px 0;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+table.exp td:first-child{font-weight:700;width:34%}
+table.exp tr:last-child td{border-bottom:0}
+
+/* side widgets */
+.side h3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:700;margin:0 0 11px}
+.side .grp{padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid var(--rule)}
+.side .grp:last-of-type{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.side ul{list-style:none;font-size:14px}
+.side li{padding:5px 0;display:flex;justify-content:space-between;gap:10px}
+.side li span:last-child{color:var(--ink-3);font-size:13px}
+.lvl{display:flex;align-items:center;gap:9px;padding:7px 0;font-size:14px}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.dot.y{background:var(--ok)}
+.dot.n{background:var(--rule)}
+.dot.p{background:var(--brand)}
+
+/* actions */
+.acts{display:flex;gap:10px;padding:20px 32px;border-top:1px solid var(--rule);background:var(--paper-2)}
+.btn{padding:11px 20px;font-size:15px;font-weight:700;border:1px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
+.btn.sec{background:transparent;color:var(--ink)}
+.acts .note{margin-left:auto;align-self:center;font-size:13px;color:var(--ink-3)}
+footer.strip{border-top:1px solid var(--rule);padding:14px 32px;font-size:13px;color:var(--ink-3);
+  display:flex;justify-content:space-between;gap:20px}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="mast">
+    <div class="lockup"><img src="brand/wordmark-blue.png" alt="MedicSupport Network"></div>
+    <nav>
+      <a href="#" class="on">Directory</a><a href="#">Employers</a><a href="#">Clinicians</a><a href="#">Verify</a>
+    </nav>
+  </div>
+
+  <div class="mock-banner">
+    <span><strong>Design mockup A — “The Ledger”.</strong> Sample data throughout; not a real clinician.</span>
+    <span class="mono">/ama-boateng</span>
+  </div>
+
+  <div class="rec-head">
+    <div>
+      <div class="rec-id mono">RECORD NO. MSN-2026-04417 · CREATED 12 MAR 2026</div>
+      <h1>Ama Boateng</h1>
+      <p class="sub">Registered Nurse, Adult Care · 7 years post-registration · seeking a permanent post or fixed-term contract.</p>
+    </div>
+    <div class="stamp">
+      <div class="t">Credential status</div>
+      <div class="v">Verified 3 Mar 2026</div>
+      <div class="d">Checked against Ghana Nursing and Midwifery Council. Re-verification due 3 Mar 2027.</div>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="main">
+
+      <section class="blk">
+        <h2>Registration &amp; licence</h2>
+        <div class="cred">
+          <div class="hd">Credential</div><div class="hd">Issuing body</div><div class="hd">Status</div>
+          <div><span class="lbl">Professional registration</span><br><span class="mono reg">GNMC-NUR-88214</span></div>
+          <div>Ghana Nursing &amp; Midwifery Council</div>
+          <div><span class="pill ok">Active</span></div>
+          <div><span class="lbl">Licence / permit</span><br><span class="mono reg">NMC-UK-EN/A-4471</span></div>
+          <div>Nursing &amp; Midwifery Council (UK)</div>
+          <div><span class="pill ok">Active</span></div>
+          <div><span class="lbl">Destination eligibility</span><br>Republic of Ireland</div>
+          <div>Nursing and Midwifery Board</div>
+          <div><span class="pill pend">In progress</span></div>
+          <div><span class="lbl">Identity</span><br><span class="mono">GHA-••••-4471-02</span></div>
+          <div>National Identification Authority</div>
+          <div><span class="pill ok">Verified</span></div>
+        </div>
+      </section>
+
+      <section class="blk">
+        <h2>Clinical history</h2>
+        <table class="exp">
+          <tr><th>Post</th><th>Employer</th><th>Period</th></tr>
+          <tr><td>Senior Registered Nurse — surgical ward</td><td>Korhogo Regional Hospital</td><td class="mono">2022 – 2026</td></tr>
+          <tr><td>Registered Nurse — medical ward</td><td>Cape Coast Teaching Hospital</td><td class="mono">2019 – 2022</td></tr>
+          <tr><td>Staff Nurse — emergency</td><td>Aburi Poly Clinic</td><td class="mono">2018 – 2019</td></tr>
+        </table>
+      </section>
+
+      <section class="blk">
+        <h2>Scope of practice</h2>
+        <div class="cred">
+          <div class="hd">Specialism</div><div class="hd">Years</div><div class="hd">Last practised</div>
+          <div><span class="lbl">Surgical nursing</span></div><div>7</div><div class="mono">Current</div>
+          <div><span class="lbl">Emergency &amp; trauma</span></div><div>5</div><div class="mono">Current</div>
+          <div><span class="lbl">Paediatric nursing</span></div><div>2</div><div class="mono">2023</div>
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="side">
+      <div class="grp">
+        <h3>Languages</h3>
+        <div class="lvl"><span class="dot y"></span>English — fluent</div>
+        <div class="lvl"><span class="dot y"></span>Twi — native</div>
+        <div class="lvl"><span class="dot p"></span>Ga — conversational</div>
+      </div>
+      <div class="grp">
+        <h3>Credentialed for</h3>
+        <div class="lvl"><span class="dot y"></span>United Kingdom</div>
+        <div class="lvl"><span class="dot p"></span>Republic of Ireland</div>
+        <div class="lvl"><span class="dot p"></span>United Arab Emirates</div>
+        <div class="lvl"><span class="dot n"></span>United States</div>
+      </div>
+      <div class="grp">
+        <h3>Documents on file</h3>
+        <ul>
+          <li><span>Registration certificate</span><span class="pill ok">Held</span></li>
+          <li><span>Passport</span><span class="pill ok">Held</span></li>
+          <li><span>References (2)</span><span class="pill ok">Held</span></li>
+          <li><span>IELTS / OET</span><span class="pill pend">Not taken</span></li>
+          <li><span>Criminal record check</span><span class="pill pend">Pending</span></li>
+        </ul>
+      </div>
+      <div class="grp">
+        <h3>Availability</h3>
+        <ul><li><span>Earliest start</span><span class="mono">Sep 2026</span></li></ul>
+      </div>
+    </aside>
+  </div>
+
+  <div class="acts">
+    <span class="btn">Request this clinician</span>
+    <span class="btn sec">Download verified record</span>
+    <span class="note">Contact details released only to employers you nominate.</span>
+  </div>
+
+  <footer class="strip">
+    <span>MedicSupport Network — verification record</span>
+    <span class="mono">Last updated 3 Mar 2026 · Record hash 7f2a…c914</span>
+  </footer>
+</div>
+</body>
+</html>

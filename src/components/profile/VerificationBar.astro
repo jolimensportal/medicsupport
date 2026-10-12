@@ -1,0 +1,52 @@
+---
+interface Props {
+	record: {
+		verifiedOn: Date;
+		reverifyOn: Date;
+		hash: string;
+	};
+	references?: string[];
+}
+
+const { record, references = [] } = Astro.props;
+
+const fmt = (date: Date) =>
+	date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+---
+
+<div
+	class="sticky top-0 z-40 bg-[#0f3d57] text-white border-b border-white/15"
+	role="region"
+	aria-label="Credential status"
+>
+	<div class="flex items-center gap-4 sm:gap-5 px-6 sm:px-10 py-2.5 max-w-[1120px] mx-auto">
+		<svg class="w-6 h-6 shrink-0" viewBox="0 0 100 100" aria-hidden="true">
+			<circle cx="50" cy="50" r="48" fill="#0086C4"></circle>
+			<path
+				d="M 38.4,18.1 H 61.6 V 38.4 H 81.9 V 61.6 H 61.6 V 81.9 H 38.4 V 61.6 H 18.1 V 38.4 H 38.4 Z"
+				fill="#fff"></path>
+		</svg>
+
+		<div class="shrink-0 leading-tight">
+			<div
+				class="text-[0.68rem] tracking-[0.16em] uppercase font-bold text-[#8fb6c9] whitespace-nowrap"
+			>
+				Credential status
+			</div>
+			<div class="flex items-center gap-2 font-bold whitespace-nowrap">
+				<span class="w-2 h-2 rounded-full bg-[#4ade80] shrink-0"></span>
+				Verified {fmt(record.verifiedOn)}
+			</div>
+		</div>
+
+		<span class="w-px h-[22px] bg-white/25 shrink-0 max-sm:hidden" aria-hidden="true"></span>
+
+		<div
+			class="ml-auto hidden md:flex items-center gap-6 text-[0.82rem] text-[#c4d9e4] whitespace-nowrap"
+		>
+			{references.map((r) => <span>{r}</span>)}
+			<span>Re-verifies <b class="text-white font-mono">{fmt(record.reverifyOn)}</b></span>
+			<span>Record <b class="text-white font-mono">{record.hash}</b></span>
+		</div>
+	</div>
+</div>
