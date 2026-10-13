@@ -1,0 +1,134 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { ENTITY } from "../data/legal";
+
+const UPDATED = "2026-10-12";
+---
+
+<LegalLayout
+	title="Privacy Policy"
+	description="How MedicSupport Network collects, uses and protects personal data about clinicians, clients and visitors."
+	updated={UPDATED}
+>
+	<p>
+		This policy explains how {ENTITY.tradingName} ("we", "the group") handles
+		personal data. It applies to this website and to the personal data we process as an
+		employer and as an operator of healthcare facilities.
+	</p>
+
+	<h2>Who we are</h2>
+	<p>
+		The data controller is <strong>{ENTITY.name}</strong>, trading as {ENTITY.tradingName}.
+		Registered in {ENTITY.registration}, with our registered office at {ENTITY.address}.
+	</p>
+	<p>
+		We are a hospital and clinic group. We <strong>employ our own clinicians</strong> and
+		operate our own licensed facilities. We are not a recruitment agency and we do not sell
+		or trade personal data.
+	</p>
+
+	<h2>What we collect, and why</h2>
+	<h3>Clinicians and staff</h3>
+	<p>
+		To employ someone and to place them in a clinical role we must hold their identity,
+		qualification, registration and health-related records. This includes application and
+		recruitment records, identity documents, professional registration numbers, verified
+		references, qualifications, mandatory health screening, immunisation status, and the
+		employment and placement history of our own staff.
+	</p>
+	<p>
+		<strong>Special category data.</strong> Health screening and occupational health records
+		are special category data. We process them because clinical roles require fitness
+		practitioner determinations and statutory health screening, and because patient safety
+		depends on knowing who is fit to practise.
+	</p>
+	<p>
+		<strong>Secondments.</strong> Where we second one of our own clinicians to a hospital in
+		Europe or America, the receiving employer processes their data under its own
+		responsibility. We share only what that placement requires, and the transfer is covered
+		by appropriate safeguards — see below.
+	</p>
+
+	<h3>Patients</h3>
+	<p>
+		Where we operate a facility we process patient records as the provider of the care. That
+		is governed primarily by the healthcare law and regulator of the country the facility is
+		in, and this policy does not override it. Patient data is governed by clinical
+		confidentiality rules, not merely by this website policy.
+	</p>
+
+	<h3>Clients, partners and website visitors</h3>
+	<p>
+		We hold business contact details for employers and partners who approach us about
+		secondment, and enquiry details for people who contact us. For website visitors we hold
+		server logs (IP address, browser type, requested page, timestamp) for security and
+		diagnostics.
+	</p>
+
+	<h2>Lawful bases</h2>
+	<ul>
+		<li><strong>Contract</strong> — for staff and for clients we are under contract with.</li>
+		<li>
+			<strong>Legal obligation</strong> — statutory record keeping, professional registration,
+			health and safety duties, and tax and employment law in each country we operate in.
+		</li>
+		<li>
+			<strong>Public interest</strong> — for the parts of health data necessary to deliver
+			care safely and to operate a licensed facility.
+		</li>
+		<li><strong>Legitimate interests</strong> — security logging and fraud prevention.</li>
+		<li><strong>Consent</strong> — for optional marketing, where you have asked for it.</li>
+	</ul>
+
+	<h2>International transfers</h2>
+	<p>
+		We operate across Africa and Asia and second staff to Europe and America. Personal data
+		therefore moves between countries with different data protection laws. Each transfer is
+		made under an appropriate safeguard — adequacy regulations where they apply, otherwise
+		standard contractual clauses — supported by a transfer risk assessment and technical and
+		organisational controls. Access is granted per placement, not by default.
+	</p>
+
+	<h2>How long we keep data</h2>
+	<p>
+		Employment and clinical records are retained for the period required by the employment,
+		health and regulatory record-keeping rules of the country concerned, which is typically
+		substantially longer than an ordinary business record. Enquiry data that does not lead to
+		an engagement is deleted within 24 months. Server logs are retained for up to 90 days.
+	</p>
+
+	<h2>Your rights</h2>
+	<p>Where the law that applies to you provides them, you may have the right to:</p>
+	<ul>
+		<li>access your personal data and receive a copy;</li>
+		<li>correct data that is inaccurate or incomplete;</li>
+		<li>request erasure where there is no overriding legal reason to keep it;</li>
+		<li>restrict or object to certain processing;</li>
+		<li>receive data you gave us in a portable format;</li>
+		<li>complain to your local data protection authority.</li>
+	</ul>
+	<p>
+		We do not delete clinical or registration records on request where we are legally
+		required to retain them, and we will explain why if that applies to your request.
+	</p>
+
+	<h2>Security</h2>
+	<p>
+		Access to personnel and clinical records is restricted to those who need it for their
+		role, is individually attributable, and is logged. Credentials that appear on this site
+		are published only where the individual has been verified for that purpose.
+	</p>
+
+	<h2>Contact</h2>
+	<p>
+		Data protection queries: <a href={`mailto:${ENTITY.dpoEmail}`}>{ENTITY.dpoEmail}</a>.
+		General enquiries: <a href={`mailto:${ENTITY.generalEmail}`}>{ENTITY.generalEmail}</a>.
+	</p>
+
+	<h2>Changes</h2>
+	<p>
+		We will update the date at the top of this page when this policy changes. Material
+		changes affecting how we use your data will be notified directly where we have your
+		contact details.
+	</p>
+</LegalLayout>

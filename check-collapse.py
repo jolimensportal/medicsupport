@@ -46,6 +46,11 @@ for path in sorted(glob.glob("dist/**/*.html", recursive=True)):
     raw = re.sub(r"<script\b.*?</script>", " ", raw, flags=re.S | re.I)
     raw = re.sub(r"<style\b.*?</style>", " ", raw, flags=re.S | re.I)
     raw = re.sub(r"<svg\b.*?</svg>", " ", raw, flags=re.S | re.I)
+    # Code spans are identifiers, not prose. "localStorage", "sessionStorage" and
+    # "IndexedDB" are legitimately camelCase and were four false positives when
+    # the cookie page started naming them. Same reasoning as <script>/<style>.
+    raw = re.sub(r"<code\b.*?</code>", " ", raw, flags=re.S | re.I)
+    raw = re.sub(r"<(pre|kbd|samp)\b.*?</\1>", " ", raw, flags=re.S | re.I)
     raw = re.sub(r"<[^>]+>", "\x00", raw)          # tag boundaries -> sentinel
     text = raw.replace("\x00", " ").replace("\n", " ")
     text = htmllib.unescape(text)

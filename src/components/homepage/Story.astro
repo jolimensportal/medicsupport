@@ -1,5 +1,9 @@
 ---
 import Image from "astro/components/Image.astro";
+import { HOSPITALS, COUNTRIES } from "../../data/hospitals";
+
+const firstOpening = HOSPITALS.reduce((a, b) => (b.opened < a.opened ? b : a)).opened;
+const yearsTrading = new Date().getFullYear() - firstOpening;
 ---
 
 <section class="section">
@@ -28,9 +32,9 @@ import Image from "astro/components/Image.astro";
         </div>
         <div class="h-full flex flex-col justify-between align-start">
           <p class="mb-5">
-            For 18 years MedicSupport Network has built and operated hospitals and clinics across
+            For {yearsTrading} years MedicSupport Network has built and operated hospitals and clinics across
             Africa and Asia. We started with a single facility in Ghana. We now operate
-            18 across six countries, and the clinicians who staff them are people we employ and
+            {HOSPITALS.length} across {COUNTRIES.length} countries, and the clinicians who staff them are people we employ and
             train rather than people we source.
           </p>
           <p class="mb-5">

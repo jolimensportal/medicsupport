@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "python3 check-collapse.py"
+    "check": "python3 check-collapse.py && python3 check-links.py",
+    "check:links": "python3 check-links.py"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.0",

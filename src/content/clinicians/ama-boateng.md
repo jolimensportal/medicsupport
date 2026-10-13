@@ -98,5 +98,4 @@ across three hospitals. She is registered with the Ghana Nursing and Midwifery
 Council and licensed by the UK Nursing and Midwifery Council, and she is looking
 for a permanent post abroad.
 
-Seven years on the ward is the whole of it. The record below is the part that can
-be checked by someone who has never met her.
+The record below is the part that can be checked by someone who has never met her.

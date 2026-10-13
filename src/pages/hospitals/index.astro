@@ -16,6 +16,53 @@ const byCountry = byCountrySize.map(({ country }) => ({
 
 const fmt = (n: number) => n.toLocaleString("en-GB");
 
+// ── the footprint panel ────────────────────────────────────────────────────
+// Grouped by region rather than by country, because a reader asking "where do
+// you operate?" wants West Africa as a whole, not eight separate headings.
+//
+// EVERYTHING HERE IS DERIVED. Region comes from countryCode, the filled dot
+// comes from `level`, and the totals come from hospitals.ts. Nothing is typed
+// in by hand, so this panel cannot drift out of step with the facilities list
+// when the real data file replaces the placeholders.
+//
+// An unmapped country falls back to being its own group rather than being
+// dropped, so a new country in the real file still appears somewhere.
+const REGION_OF: Record<string, string> = {
+	NG: "West Africa", GH: "West Africa", CI: "West Africa", SN: "West Africa",
+	GM: "West Africa", SL: "West Africa", LR: "West Africa", BF: "West Africa",
+	KE: "East Africa", TZ: "East Africa", UG: "East Africa", ET: "East Africa",
+	RW: "East Africa", SS: "East Africa",
+	ZA: "Southern Africa", NA: "Southern Africa", BW: "Southern Africa",
+	ZW: "Southern Africa", MZ: "Southern Africa",
+	MA: "North Africa", EG: "North Africa", DZ: "North Africa", TN: "North Africa",
+	PH: "Asia", IN: "Asia", PK: "Asia", BD: "Asia", LK: "Asia", NP: "Asia",
+};
+
+const REGION_ORDER = [
+	"West Africa",
+	"East Africa",
+	"Southern Africa",
+	"North Africa",
+	"Asia",
+];
+
+const groups = new Map<string, typeof HOSPITALS>();
+for (const h of HOSPITALS) {
+	const region = REGION_OF[h.countryCode] ?? h.country;
+	if (!groups.has(region)) groups.set(region, []);
+	groups.get(region)!.push(h);
+}
+
+// Known regions first in geographic order, then anything unexpected, sorted.
+const byRegion = [
+	...REGION_ORDER.filter((r) => groups.has(r)).map((r) => [r, groups.get(r)!] as const),
+	...[...groups.entries()]
+		.filter(([r]) => !REGION_ORDER.includes(r))
+		.sort((a, b) => a[0].localeCompare(b[0])),
+];
+
+const firstOpening = HOSPITALS.reduce((a, b) => (b.opened < a.opened ? b : a)).opened;
+
 const ageOf = (h: Hospital) => {
 	const start = new Date().getFullYear() - h.opened;
 	if (start < 3) return "New";
@@ -63,6 +110,61 @@ const ageOf = (h: Hospital) => {
 					<p class="text-[0.72rem] tracking-[0.12em] uppercase font-bold text-[#8a8078]">Staffed beds</p>
 				</div>
 			</div>
+
+			<!-- where we operate, at a glance -->
+			<aside class="bg-[#0f3d57] border border-white/15 px-7 sm:px-8 py-7 mb-16">
+				<p class="text-[0.68rem] tracking-[0.16em] uppercase font-bold text-[#8fb6c9] mb-7">
+					Where we operate
+				</p>
+
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+					{
+						byRegion.map(([region, facilities]) => (
+							<div class="border-t border-white/25 pt-4">
+								<h3 class="text-[0.78rem] tracking-[0.1em] uppercase font-bold mb-3">
+									{region}
+								</h3>
+								<ul class="space-y-2">
+									{facilities.map((h) => (
+										<li class="flex items-baseline gap-2 text-[0.84rem] leading-snug text-[#b9cbd9]">
+											<span
+												class={`shrink-0 w-1.5 h-1.5 rounded-full translate-y-[-1px] ${
+													h.level === "Tertiary"
+														? "bg-[#0086C4]"
+														: "bg-transparent border border-white/45"
+												}`}
+											/>
+											<span>{h.name}</span>
+										</li>
+									))}
+								</ul>
+							</div>
+						))
+					}
+				</div>
+
+				<div class="mt-7 pt-5 border-t border-white/15 flex flex-wrap gap-x-8 gap-y-3 text-[0.84rem] text-[#c4d9e4]">
+					<span><span class="text-[#8fb6c9]">Beds</span>{' '}
+						<b class="text-white">{fmt(totalBeds)}</b></span>
+					<span><span class="text-[#8fb6c9]">Staffed</span>{' '}
+						<b class="text-white">{fmt(totalStaffed)}</b></span>
+					<span><span class="text-[#8fb6c9]">Workforce</span>{' '}
+						<b class="text-white">~{fmt(totalStaff)}</b></span>
+					<span><span class="text-[#8fb6c9]">Since</span>{' '}
+						<b class="text-white">{firstOpening}</b></span>
+				</div>
+
+				<p class="mt-4 text-[0.7rem] text-[#8fb6c9] flex flex-wrap gap-x-5 gap-y-1">
+					<span class="flex items-center gap-1.5">
+						<span class="w-1.5 h-1.5 rounded-full bg-[#0086C4]"></span>
+						Tertiary referral centre
+					</span>
+					<span class="flex items-center gap-1.5">
+						<span class="w-1.5 h-1.5 rounded-full border border-white/45"></span>
+						Secondary and community
+					</span>
+				</p>
+			</aside>
 
 			<!-- grouped by country -->
 			{byCountry.map(({ country, facilities }) => (

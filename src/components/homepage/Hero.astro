@@ -12,72 +12,257 @@ const figures = [
 	{ n: String(HOSPITALS.length), l: "Hospitals & clinics" },
 	{ n: String(COUNTRIES.length), l: "Countries" },
 	{ n: fmt(totalBeds), l: "Licensed beds" },
-	{ n: String(yearsTrading), l: "Years, since 2007" },
+	{ n: String(yearsTrading), l: `Years, since ${firstOpening}` },
 ];
 ---
 
-<section class="section section-hero py-14 sm:py-20 my-0!">
-	<div class="container">
-		<p
-			class="text-[0.68rem] tracking-[0.18em] uppercase font-bold text-main-200 mb-7"
-		>
-			MedicSupport Network
-		</p>
+<section class="hero">
+	<img
+		class="hero-img"
+		src="/img/hero-clinician.jpg"
+		width="1600"
+		height="900"
+		alt="A MedicSupport clinician taking a patient's blood pressure"
+		fetchpriority="high"
+		decoding="async"
+	/>
 
-		<h1
-			class="text-[clamp(2.6rem,5.4vw,4.6rem)] leading-[0.98] tracking-[-0.035em]"
-		>
-			<span class="block">We run</span>
-			<span class="block">hospitals.</span>
-			<span
-				class="block bg-linear-to-r from-[#0179B4] to-[#88D8FF] bg-clip-text text-transparent"
-				>And we staff them</span
-			>
-			<span
-				class="block bg-linear-to-r from-[#0179B4] to-[#88D8FF] bg-clip-text text-transparent"
-				>with our own people.</span
-			>
-		</h1>
+	<div class="hero-ov" aria-hidden="true"></div>
 
-		<div class="h-px bg-white/20 my-9"></div>
+	<div class="hero-wrap">
+		<div class="hero-card">
+			<p class="eyebrow">MedicSupport Network</p>
 
-		<div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-x-12 gap-y-9 items-end">
-			<div>
-				<p class="text-[1.06rem] text-gray-300 max-w-[52ch] leading-relaxed">
-					{yearsTrading} years of operating hospitals and clinics across{" "}
-					<span class="text-main-200 font-bold">Africa and Asia</span>. The clinicians we
-					place in Europe and America are not strangers we sourced — they are our own
-					employees, already working in our own licensed facilities, already held to our
-					standard.
-				</p>
-				<div class="flex flex-wrap gap-3.5 mt-7">
-					<a
-						href="/hospitals"
-						class="btn bg-[linear-gradient(125deg,var(--color-main-100),var(--color-main-200))] text-white border-0 rounded-xl text-lg py-3 px-6 h-auto shadow-xl hover:shadow-2xl"
-						>See our facilities <ChevronRight /></a
-					>
-					<a
-						href="/secondment"
-						class="btn border-2 border-main-200 bg-transparent text-white rounded-xl text-lg py-3 px-6 h-auto shadow-none hover:bg-white hover:text-black hover:border-white"
-						>Enquire about secondment</a
-					>
-				</div>
+			<h1 class="h1">
+				Care that crosses borders.<br />
+				<em>Standards that don't.</em>
+			</h1>
+
+			<p class="intro">
+				MedicSupport Network has operated hospitals and clinics across Africa and Asia
+				for {yearsTrading} years — {HOSPITALS.length} facilities, {COUNTRIES.length} countries,
+				{" "}{fmt(totalBeds)} licensed beds. Our doctors, nurses, midwives and paramedics work
+				in our hospitals. Some are seconded to hospitals and health systems in Europe and
+				America.
+			</p>
+
+			<div class="btns">
+				<a href="/hospitals" class="btn-p">See our facilities <ChevronRight /></a>
+				<a href="/secondment" class="btn-g">Enquire about secondment</a>
 			</div>
 
-			<div class="grid grid-cols-2 gap-x-8 gap-y-7">
+			<div class="figures">
 				{
 					figures.map((f) => (
-						<div>
-							<p class="font-[Georgia,serif] text-[2.4rem] leading-none tracking-[-0.03em]">
-								{f.n}
-							</p>
-							<p class="text-[0.68rem] tracking-[0.14em] uppercase font-bold text-main-200 mt-2">
-								{f.l}
-							</p>
+						<div class="fig">
+							<p class="fig-n">{f.n}</p>
+							<p class="fig-l">{f.l}</p>
 						</div>
 					))
 				}
 			</div>
 		</div>
 	</div>
-</section>
+
+	</section>
+
+<style>
+	.hero {
+		position: relative;
+		isolation: isolate;
+		display: flex;
+		align-items: center;
+		/* Subtracting the header (5.25rem) matters: at 100vh the figures row
+		   fell below the fold and was clipped. svh keeps mobile browser
+		   chrome from inflating the height. */
+		min-height: clamp(32rem, calc(100svh - 5.25rem), 54rem);
+		overflow: hidden;
+		background: #030b14;
+	}
+
+	.hero-img {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		/* 22% pushes the clinician into the left third and pushes the busy
+		   patient/wall area under the dark ramp where the copy sits. */
+		object-position: 22% 50%;
+	}
+
+	/* Duotone treatment — brand blue washing the lit side, blue-black carrying
+	   the copy side. */
+	.hero-ov {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		background-image: linear-gradient(
+			105deg,
+			rgba(2, 119, 194, 0.26) 0%,
+			rgba(6, 26, 45, 0.8) 34%,
+			rgba(2, 10, 19, 0.96) 58%,
+			rgba(2, 8, 16, 0.99) 100%
+		);
+	}
+
+	.hero-wrap {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+		max-width: 80rem;
+		margin-inline: auto;
+		padding-inline: 2.5rem;
+		display: grid;
+		grid-template-columns: 1fr minmax(0, 37.5rem);
+		align-items: center;
+		gap: 2.5rem;
+	}
+
+	.hero-card {
+		grid-column: 2;
+		max-width: 37.5rem;
+	}
+
+	.eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6rem;
+		font-size: 0.8125rem;
+		font-weight: 700;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+		color: var(--color-main-100);
+		margin-bottom: 1.25rem;
+	}
+
+	.eyebrow::before {
+		content: "";
+		width: 2rem;
+		height: 2px;
+		background: var(--color-main-200);
+		flex: none;
+	}
+
+	.h1 {
+		font-size: clamp(2.06rem, 4.4vw, 3.625rem);
+		line-height: 1.07;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		text-shadow: 0 2px 30px rgb(0 0 0 / 0.55);
+	}
+
+	.h1 em {
+		font-style: normal;
+		color: #7fd4ff;
+	}
+
+	.intro {
+		margin-top: 1.25rem;
+		font-size: clamp(1rem, 1.3vw, 1.1875rem);
+		line-height: 1.55;
+		color: #d3e3ee;
+		text-shadow: 0 1px 14px rgb(0 0 0 / 0.6);
+	}
+
+	.btns {
+		margin-top: 2rem;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.8125rem;
+	}
+
+	.btn-p,
+	.btn-g {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.55rem;
+		padding: 0.875rem 1.75rem;
+		font-size: 1.0625rem;
+		font-weight: 700;
+		border-radius: 3px;
+		text-decoration: none;
+		transition: 0.18s;
+	}
+
+	.btn-p {
+		background: var(--color-main-200);
+		color: #fff;
+	}
+
+	.btn-p:hover {
+		background: #0a94e2;
+	}
+
+	.btn-g {
+		border: 1.5px solid rgb(255 255 255 / 0.4);
+		color: #fff;
+		background: rgb(3 11 20 / 0.35);
+	}
+
+	.btn-g:hover {
+		border-color: #fff;
+		background: rgb(255 255 255 / 0.14);
+	}
+
+	.figures {
+		margin-top: 2.625rem;
+		padding-top: 1.625rem;
+		border-top: 1px solid rgb(167 226 255 / 0.24);
+		display: grid;
+		grid-template-columns: repeat(4, auto);
+		justify-content: start;
+		gap: 2.125rem;
+	}
+
+	.fig-n {
+		font-size: clamp(1.5625rem, 2.3vw, 2.125rem);
+		font-weight: 700;
+		line-height: 1;
+		color: var(--color-main-100);
+		text-shadow: 0 2px 16px rgb(0 0 0 / 0.6);
+	}
+
+	.fig-l {
+		margin-top: 0.4rem;
+		font-size: 0.75rem;
+		letter-spacing: 0.06em;
+		color: #a9c0d0;
+	}
+
+	@media (max-width: 56.25rem) {
+		.hero {
+			min-height: calc(100svh - 5.25rem);
+		}
+
+		.hero-img {
+			object-position: 26% 34%;
+		}
+
+		/* Stacked layout puts the copy over the photograph, so the whole
+		   frame needs to be dark rather than ramped. */
+		.hero-ov {
+			background-image: linear-gradient(
+				180deg,
+				rgb(3 11 20 / 0.62) 0%,
+				rgb(2 8 15 / 0.95) 100%
+			);
+		}
+
+		.hero-wrap {
+			grid-template-columns: 1fr;
+			padding-inline: 1.25rem;
+			padding-bottom: 4.375rem;
+		}
+
+		.hero-card {
+			grid-column: 1;
+		}
+
+		.figures {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1.25rem;
+		}
+	}
+</style>

@@ -1,0 +1,78 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { ENTITY } from "../data/legal";
+
+const UPDATED = "2026-10-12";
+---
+
+<LegalLayout
+	title="Cookie Notice"
+	description="Which cookies and similar storage this MedicSupport Network website uses — and which it does not."
+	updated={UPDATED}
+>
+	<h2>The short version</h2>
+	<p>
+		<strong>This website does not set any cookies.</strong> It runs no analytics, no
+		advertising technology, no social-media trackers, no fingerprinting, and no
+		third-party marketing scripts. There is no cookie banner on this site because there is
+		nothing to consent to.
+	</p>
+
+	<h2>Why there is no banner</h2>
+	<p>
+		A consent banner exists to let visitors refuse tracking that requires consent. Since we
+		collect no such data, adding a banner would be misleading: it would imply we track
+		people when we do not. We will add one, and change this page, if that ever ceases to be
+		true.
+	</p>
+
+	<h2>What we do not do</h2>
+	<ul>
+		<li>No analytics packages (no Google Analytics, Plausible, Matomo, Fathom or similar).</li>
+		<li>No advertising, retargeting or conversion pixels.</li>
+		<li>No social media embeds or share widgets that would phone home when you read a page.</li>
+		<li>No consent-management platform writing to <code>localStorage</code>.</li>
+		<li>No canvas, audio or font-based fingerprinting.</li>
+		<li>No cross-site or cross-page tracking of your reading.</li>
+	</ul>
+
+	<h2>What is stored on your device</h2>
+	<p>Nothing. This site does not write to <code>localStorage</code>, <code>sessionStorage</code>,
+		IndexedDB, or the Cache API for its own purposes.</p>
+
+	<h2>Server logs</h2>
+	<p>
+		Like any web server, the platform that hosts this site records request logs — IP address,
+		timestamp, requested URL, user agent, response status — in order to serve the site,
+		detect abuse, and diagnose faults. These are <strong>server logs, not cookies</strong>,
+		and they are not used to build a profile of you or to follow you elsewhere. They are
+		handled in line with our <a href="/privacy">Privacy Policy</a>.
+	</p>
+
+	<h2>Embedded content and third parties</h2>
+	<p>
+		Where a page embeds or links to another organisation's service — for example a
+		professional register — that organisation's own privacy terms apply once you follow the
+		link. We do not embed third-party content that would track you without your action.
+	</p>
+
+	<h2>Fonts</h2>
+	<p>
+		Typography is served from our own asset host. No request is made to a font provider that
+		would reveal your visit to them.
+	</p>
+
+	<h2>If this changes</h2>
+	<p>
+		If we introduce cookies or similar storage that requires consent, this page will be
+		updated first, and a consent banner will appear before any such technology is set. Until
+		then, this page is the accurate description of what the site does.
+	</p>
+
+	<h2>Contact</h2>
+	<p>
+		Questions about this notice: <a href={`mailto:${ENTITY.generalEmail}`}
+			>{ENTITY.generalEmail}</a
+		>.
+	</p>
+</LegalLayout>

@@ -1,0 +1,56 @@
+---
+import Layout from "./MainLayout.astro";
+import { LEGAL_DRAFT, MISSING } from "../data/legal";
+
+interface Props {
+	title: string;
+	description: string;
+	updated: string;
+}
+
+const { title, description, updated } = Astro.props;
+---
+
+<Layout title={`${title} | MedicSupport Network`} description={description}>
+	<div class="bg-[#fbf8f3] text-[#1a1714] min-h-[60vh]">
+		<div class="max-w-[760px] mx-auto px-6 sm:px-10 pt-14 pb-20">
+			<header class="mb-12">
+				<h1
+					class="font-[Georgia,serif] text-[clamp(2.1rem,5vw,3.1rem)] leading-[1.05] tracking-[-0.02em] mb-4"
+				>
+					{title}
+				</h1>
+				<p class="text-[0.95rem] text-[#7a7069]">
+					Last updated <time datetime={updated}>{updated}</time>
+				</p>
+			</header>
+
+			{
+				LEGAL_DRAFT && (
+					<aside class="mb-12 border-l-4 border-[#b4762a] bg-[#fdf4e3] px-6 py-5">
+						<p class="font-bold text-[1.05rem] mb-2">Draft — not yet legal advice</p>
+						<p class="text-[0.95rem] leading-relaxed text-[#4a423b]">
+							This document is a working draft describing how the group actually operates. Some
+							company details are still outstanding
+							{MISSING.length === 1 ? " (missing: " : " (missing: "}
+							{MISSING.join(", ")}). It has not been reviewed by a lawyer and must be
+							reviewed before commercial launch.
+						</p>
+					</aside>
+				)
+			}
+
+			<article
+				class="legal-body text-[1.06rem] leading-[1.72] text-[#2b2724]
+					[&_h2]:font-[Georgia,serif] [&_h2]:text-[1.5rem] [&_h2]:mt-12 [&_h2]:mb-4
+					[&_h3]:font-bold [&_h3]:text-[1.08rem] [&_h3]:mt-8 [&_h3]:mb-3
+					[&_p]:mb-5 [&_ul]:mb-5 [&_ul]:pl-5 [&_ul]:list-disc
+					[&_li]:mb-2.5 [&_ol]:mb-5 [&_ol]:pl-5 [&_ol]:list-decimal
+					[&_strong]:font-bold
+					[&_a]:text-[#0f3d57] [&_a]:underline"
+			>
+				<slot />
+			</article>
+		</div>
+	</div>
+</Layout>

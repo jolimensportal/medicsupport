@@ -1,0 +1,114 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { ENTITY } from "../data/legal";
+
+const UPDATED = "2026-10-12";
+---
+
+<LegalLayout
+	title="Terms of Use"
+	description="The terms that apply to your use of the MedicSupport Network website."
+	updated={UPDATED}
+>
+	<h2>About these terms</h2>
+	<p>
+		These terms apply to your use of the {ENTITY.tradingName} website. By using the site you
+		accept them. If you do not accept them, please stop using the site.
+	</p>
+	<p>
+		The company operating this site is <strong>{ENTITY.name}</strong>, registered in
+		{ENTITY.registration}, with its registered office at {ENTITY.address}.
+	</p>
+
+	<h2>What this website is — and is not</h2>
+	<p>
+		We are a hospital and clinic group. We own and operate hospitals and clinics across
+		Africa and Asia, and we employ our own clinicians. Some of those clinicians are
+		seconded to hospitals in Europe and America.
+	</p>
+	<p>
+		<strong>
+			Nothing on this website is medical advice, a diagnosis, a treatment recommendation, or
+			an offer of treatment.
+		</strong>
+		If you need care, contact a clinician or an emergency service. Do not rely on this site
+		to decide whether to seek urgent medical attention.
+	</p>
+
+	<h2>Credential verification</h2>
+	<p>
+		We publish clinician profiles and reference numbers so that a professional body,
+		employer or patient can confirm that a person is who they claim to be and holds the
+		registration we have verified.
+	</p>
+	<p>
+		<strong>
+			A verification result confirms only what was checked, on what date, against which
+			register.
+		</strong> It is not a fitness-to-practise certificate, not a guarantee of current
+		competence, and not an endorsement by us of a specific treatment. Registration status can
+		change after the date shown on the record. Always confirm directly with the relevant
+		register where a decision depends on it.
+	</p>
+	<p>
+		We publish credential records we have verified and nothing else. Where a record is
+		withdrawn, we remove it.
+	</p>
+
+	<h2>Intellectual property</h2>
+	<p>
+		The site design, text, logo and code are owned by {ENTITY.tradingName} or its licensors.
+		You may view, print and share pages for your own use. You may not reproduce material to
+		build a competing service, present our content as your own, or use our name or marks
+		without written permission.
+	</p>
+	<p>
+		Clinical and operational details about our facilities are ours to publish, but please do
+		not scrape or republish them at scale.
+	</p>
+
+	<h2>Third-party links</h2>
+	<p>
+		Where we link to a professional register or another external body, we do not control it
+		and are not responsible for its content or availability. A link is not an endorsement.
+	</p>
+
+	<h2>Enquiries and applications</h2>
+	<p>
+		Enquiries sent through this site are an invitation to discuss, not an offer, an
+		engagement, or a contract. Any engagement is governed by a separate written agreement.
+		Nothing on this site creates a contract between you and us.
+	</p>
+
+	<h2>Liability</h2>
+	<p>
+		To the extent permitted by law, we exclude liability for loss arising from reliance on
+		the content of this site, and for any indirect or consequential loss. Nothing in these
+		terms excludes liability for fraud, for death or personal injury caused by negligence,
+		for clinical negligence, or for anything else that cannot lawfully be excluded.
+	</p>
+	<p>
+		Nothing in these terms affects the statutory rights of patients treated at our facilities,
+		which are governed by the law of the country where the treatment took place.
+	</p>
+
+	<h2>Availability</h2>
+	<p>
+		We aim to keep the site available but do not guarantee it. We may change, suspend or
+		withdraw any part of it.
+	</p>
+
+	<h2>Governing law</h2>
+	<p>
+		These terms are governed by the law of {ENTITY.registration}, and the courts of that
+		jurisdiction have exclusive jurisdiction, except that the mandatory rights of patients
+		treat at our facilities remain governed by the law of the country where that treatment
+		took place.
+	</p>
+
+	<h2>Contact</h2>
+	<p>
+		<a href={`mailto:${ENTITY.generalEmail}`}>{ENTITY.generalEmail}</a>. Write to us at
+		{ENTITY.address}.
+	</p>
+</LegalLayout>

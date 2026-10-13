@@ -1,0 +1,111 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { ENTITY } from "../data/legal";
+
+const UPDATED = "2026-10-12";
+---
+
+<LegalLayout
+	title="Clinical Governance & Safeguarding"
+	description="How MedicSupport Network regulates its clinicians, verifies credentials, and handles safeguarding and complaints."
+	updated={UPDATED}
+>
+	<h2>Who this applies to</h2>
+	<p>
+		This describes how {ENTITY.tradingName} operates the clinical side of the group — our own
+		clinicians, and the hospitals and clinics we run. It applies to every country in which we
+		operate, alongside — never instead of — the professional and healthcare regulation of that
+		country.
+	</p>
+
+	<h2>Our clinicians are our own employees</h2>
+	<p>
+		Every clinician working under the {ENTITY.tradingName} name is employed by the group, on
+		the group's payroll, and subject to the group's own clinical governance, appraisal,
+		safeguarding and disciplinary procedures. This includes clinicians seconded to hospitals
+		in Europe and America: they remain our employees throughout, and remain accountable to us,
+		even where a partner hospital holds day-to-day supervision.
+	</p>
+
+	<h2>Registration and scope of practice</h2>
+	<p>
+		Before any clinical role begins, we confirm current registration with the relevant
+		professional body and confirm that the registration covers the work being assigned.
+		Registration is re-checked at defined intervals and on any change of employer, country or
+		specialism. A clinician is not placed in a role their registration does not cover.
+	</p>
+	<p>Our regulatory registrations are: {ENTITY.regulators}.</p>
+
+	<h2>Credential verification</h2>
+	<p>
+		Where we publish a clinician profile or issue a credential reference, the record states
+		<strong>what was verified, against which register, and on what date</strong>. We publish
+		records we have verified and nothing else.
+	</p>
+	<p>
+		A verification confirms identity and registration status on the stated date. It is not a
+		fitness-to-practise certificate, not a statement of current clinical competence, and not an
+		endorsement of a specific treatment. Full terms are in our
+		<a href="/terms">Terms of Use</a>.
+	</p>
+
+	<h2>Safeguarding</h2>
+	<p>
+		We operate facilities where vulnerable people — including children, older adults and
+		patients with reduced capacity — are treated. Every member of clinical staff is required
+		to complete safeguarding training and to report concerns. We have a named safeguarding
+		lead at each facility and a central escalation route to group level.
+	</p>
+	<p>
+		Concerns about the safety of a child or a vulnerable adult are raised with the safeguarding
+		lead and escalated immediately to the statutory authority in the country concerned. We
+		cooperate with any statutory investigation.
+	</p>
+
+	<h2>Clinical incidents and complaints</h2>
+	<p>
+		Clinical incidents, near misses and adverse events are recorded and reviewed. Serious
+		incidents are escalated to group clinical governance and, where the law requires, to the
+		statutory regulator.
+	</p>
+	<p>
+		Complaints about care received at one of our facilities are handled by that facility
+		under the complaints procedure of the country it operates in, and — where the patient
+		was treated elsewhere — we will still investigate a complaint about the conduct of one of
+		our clinicians.
+	</p>
+
+	<h2>Raising a concern about a clinician</h2>
+	<p>
+		If you wish to raise a concern about a clinician carrying our credential, contact us at
+		<a href={`mailto:${ENTITY.generalEmail}`}>{ENTITY.generalEmail}</a> with the reference
+		number shown on the credential. We will acknowledge it, investigate it, and tell you the
+		outcome in line with the applicable procedure.
+	</p>
+	<p>
+		<strong>
+			If a clinician's conduct may put a patient at immediate risk, contact the emergency
+			services or the relevant regulator first — do not wait for our reply.
+		</strong>
+	</p>
+
+	<h2>Clinical audit and quality</h2>
+	<p>
+		Facilities are subject to internal clinical audit covering patient safety, infection
+		control, medicines management, record keeping and consent. Findings are reported to group
+		clinical governance and actions are tracked to completion.
+	</p>
+
+	<h2>Limits of this document</h2>
+	<p>
+		This is a summary of our arrangements, not a complete governance framework, and it does
+		not replace the regulatory requirements of any country in which we operate. Where this
+		page and a national regulator's requirements differ, the regulator's requirements apply.
+	</p>
+	<p>
+		<strong>
+			This document has not been reviewed by a lawyer or a clinical governance
+			adviser and must be before commercial launch.
+		</strong>
+	</p>
+</LegalLayout>
