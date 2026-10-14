@@ -21,6 +21,8 @@
  * Have counsel review all four documents before commercial launch.
  */
 
+import { HOSPITALS } from "./hospitals";
+
 export interface LegalEntity {
 	/** Registered company name. */
 	name: string;
@@ -69,6 +71,18 @@ export const ENTITY: LegalEntity = {
 
 /** True while any required entity detail is still outstanding. */
 export const LEGAL_DRAFT = Object.values(ENTITY._complete).some((v) => !v);
+
+/**
+ * The year the group was first established, as a number.
+ *
+ * Derived from the earliest facility opening rather than hardcoded, so the
+ * footer copyright range, the hero figure and the legal pages cannot drift
+ * apart. ENTITY.established stays a string because it is a display value that
+ * may eventually need to read "2007, as MedicSupport Health Services Ltd".
+ */
+export const ESTABLISHED: number = HOSPITALS.reduce(
+	(a, b) => (b.opened < a.opened ? b : a),
+).opened;
 
 /**
  * Human-readable labels for the outstanding fields.

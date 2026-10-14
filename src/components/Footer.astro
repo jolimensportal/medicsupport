@@ -1,6 +1,8 @@
 ---
-const today = new Date();
 import Logo from "./Logo.astro";
+import { ESTABLISHED } from "../data/legal";
+const copyrightFrom = ESTABLISHED;
+const copyrightTo = new Date().getFullYear();
 ---
 
 <footer class="footer w-full bg-[#F2FAFF] gap-0 dark:bg-black">
@@ -93,9 +95,9 @@ import Logo from "./Logo.astro";
     <div class="container pb-5">
       <hr class="border-t border-main-200 mb-5" />
       <div class="flex flex-wrap gap-4 items-center justify-between">
-        <p>
-          MedicSupport Network &copy; {today.getFullYear()}. All Rights Reserved
-        </p>
+<p>
+            MedicSupport Network &copy; {copyrightFrom}&ndash;{copyrightTo}. All Rights Reserved
+          </p>
       </div>
     </div>
   </div>
