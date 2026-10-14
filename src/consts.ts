@@ -3,4 +3,4 @@
 
 export const SITE_TITLE = "MedicSupport Network";
 export const SITE_DESCRIPTION =
-  "MedicSupport Network verifies and places African nurses, doctors, midwives and paramedics with hospitals in Europe, the United States and the Gulf.";
+  "MedicSupport Network operates hospitals and clinics across Africa and Asia, staffed by its own clinicians. Some of those clinicians are seconded to hospitals and health systems in Europe and America.";
