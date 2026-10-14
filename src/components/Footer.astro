@@ -35,12 +35,8 @@ const copyrightTo = new Date().getFullYear();
                 >Verify a record reference</a
               >
               <a
-                href="mailto:clinicians@medicsupport.network"
-                class="hover:text-main-200 hover:underline">clinicians@medicsupport.network</a
-              >
-              <a
-                href="mailto:employers@medicsupport.network"
-                class="hover:text-main-200 hover:underline">employers@medicsupport.network</a
+                href="mailto:info@medicsupport.org"
+                class="footer-link break-all hover:text-main-200 hover:underline">info@medicsupport.org</a
               >
             </nav>
           </div>
@@ -102,3 +98,37 @@ const copyrightTo = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<style>
+  /*
+   * The three link columns are a grid, and grid items default to
+   * min-width:auto — so a single unbreakable string (an email, a long URL)
+   * sets the column's minimum width and every sibling link is laid out wider
+   * than the cell, spilling into the neighbouring column. On a 390px viewport
+   * the column was 159px but the widest link rendered at 225px.
+   *
+   * min-w-0 on the columns and navs lets them shrink below their content
+   * width, and overflow-wrap:anywhere on the links lets the long string break
+   * instead of overflowing. Together these make the layout immune to whatever
+   * text is put in it later.
+   */
+  .footer-top .grid > div {
+    min-width: 0;
+  }
+
+  .footer-top nav {
+    min-width: 0;
+  }
+
+  .footer-top nav a {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  @media (max-width: 40rem) {
+    .footer-top .grid.grid-cols-2 {
+      column-gap: 1.5rem;
+      row-gap: 2rem;
+    }
+  }
+</style>
